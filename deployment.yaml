@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: interia-website
-          image: interia-website:latest # Ensure this image is built/pushed to your registry
+          image: nawazs786/interia-website-new:latest
           imagePullPolicy: IfNotPresent # Useful for local testing with Minikube/Docker Desktop
           ports:
             - containerPort: 3000
@@ -37,7 +37,7 @@ metadata:
 spec:
   selector:
     app: interia-website
-  type: LoadBalancer # Change to NodePort or ClusterIP based on your cluster (e.g., Minikube usually needs `minikube tunnel` for LoadBalancer)
+  type: ClusterIP # Change to NodePort or ClusterIP based on your cluster (e.g., Minikube usually needs `minikube tunnel` for LoadBalancer)
   ports:
     - protocol: TCP
       port: 80
