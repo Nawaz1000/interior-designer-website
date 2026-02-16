@@ -1,0 +1,11 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8083:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      # MONGODB_URI is optional if you want to override the default stored in server.js
+      # - MONGODB_URI=mongodb+srv://...
+    restart: always

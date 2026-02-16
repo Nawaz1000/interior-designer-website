@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Interia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            400: '#D4AF37',
+                            500: '#C5A028',
+                            600: '#B8941F',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#141414',
+                            700: '#1a1a1a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E5C2 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glass {
+            background: #141414;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+        }
+
+        .custom-select {
+            appearance: none;
+            background: #141414;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 40px 12px 14px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .custom-select:hover,
+        .custom-select:focus {
+            border-color: #D4AF37;
+            outline: none;
+        }
+
+        .custom-select-arrow {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #6b7280;
+        }
+
+        .custom-input {
+            background: #141414;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 12px 14px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .custom-input:hover,
+        .custom-input:focus {
+            border-color: #D4AF37;
+            outline: none;
+        }
+
+        .custom-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon .custom-input {
+            padding-left: 42px;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #9ca3af;
+            margin-bottom: 6px;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .password-toggle:hover {
+            color: #D4AF37;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #D4AF37 0%, #C5A028 100%);
+            transition: all 0.2s ease;
+            font-weight: 600;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Multiple Media Upload */
+        .media-upload-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .media-upload-item {
+            aspect-ratio: 1;
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+
+        .media-upload-item:hover {
+            border-color: #D4AF37;
+            background: #fefdf9;
+        }
+
+        .media-upload-item.has-media {
+            border-style: solid;
+            border-color: #D4AF37;
+        }
+
+        .media-upload-item img,
+        .media-upload-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .media-remove-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 24px;
+            height: 24px;
+            background: rgba(239, 68, 68, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .media-upload-item:hover .media-remove-btn {
+            opacity: 1;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #141414;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 400px;
+            width: 100%;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        /* Calendar Popup */
+        .calendar-popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .calendar-popup {
+            background: #141414;
+            border-radius: 16px;
+            padding: 20px;
+            width: 100%;
+            max-width: 340px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .calendar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .calendar-nav-btn {
+            border-radius: 50%;
+            border: none;
+            background: #262626;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            color: #d1d5db;
+        }
+
+        .calendar-nav-btn:hover {
+            background: #333;
+        }
+
+        .calendar-month-year {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #9ca3af;
+            padding: 8px 0;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            border: none;
+            background: transparent;
+        }
+
+        .calendar-day:hover:not(.disabled) {
+            background: #262626;
+        }
+
+        .calendar-day.other-month {
+            color: #525252;
+        }
+
+        .calendar-day.selected {
+            background: #D4AF37;
+            color: white;
+        }
+
+        .calendar-day.today {
+            color: #D4AF37;
+            font-weight: 600;
+        }
+
+        .date-input-field {
+            position: relative;
+        }
+
+        .date-input-field .custom-input {
+            cursor: pointer;
+        }
+
+        .date-input-icon {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            pointer-events: none;
+        }
+
+        /* ============================================
+           PROJECT LIST - Like Reference Image
+           ============================================ */
+        .project-list {
+            background: #141414;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .project-list-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            gap: 16px;
+            padding: 16px 20px;
+            background: #141414;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .project-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .project-list-item:hover {
+            background: #1a1a1a;
+        }
+
+        .project-code-badge {
+            min-width: 52px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #262626;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .project-list-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .project-list-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .project-list-subtitle {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .project-list-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-pending {
+            background: rgba(212, 175, 55, 0.1);
+            color: #D4AF37;
+        }
+
+        .status-upcoming {
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+        }
+
+        .status-completed {
+            background: rgba(74, 222, 128, 0.1);
+            color: #4ade80;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            background: transparent;
+        }
+
+        .action-btn:hover {
+            background: #262626;
+        }
+
+        .action-btn.delete:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .tab-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            background: transparent;
+            color: #9ca3af;
+        }
+
+        .tab-btn:hover {
+            color: #ffffff;
+            background: #262626;
+        }
+
+        .tab-btn.active {
+            background: #D4AF37;
+            color: #0a0a0a;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: #141414;
+            border-radius: 12px;
+        }
+
+        .empty-state-icon {
+            width: 64px;
+            height: 64px;
+            background: #262626;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .toggle-switch input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            background: #4b5563;
+            border-radius: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-slider:before {
+            content: '';
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-switch input:checked+.toggle-slider {
+            background: #D4AF37;
+        }
+
+        .toggle-switch input:checked+.toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .toggle-label {
+            margin-left: 10px;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        /* Dark header for admin */
+        .admin-header {
+            background: #0a0a0a;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- Calendar Popup Overlay -->
+    <div id="calendar-popup-overlay" class="calendar-popup-overlay" onclick="closeCalendarPopup(event)">
+        <div class="calendar-popup" onclick="event.stopPropagation()">
+            <div class="calendar-header">
+                <button type="button" class="calendar-nav-btn" onclick="changeCalendarMonth(-1)">
+                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                </button>
+                <span class="calendar-month-year" id="popup-calendar-month-year">February 2026</span>
+                <button type="button" class="calendar-nav-btn" onclick="changeCalendarMonth(1)">
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <div class="calendar-grid" id="popup-calendar-grid"></div>
+            <div class="flex justify-end gap-2 mt-4 pt-4 border-t border-white/10">
+                <button type="button" onclick="clearCalendarSelection()"
+                    class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
+                    Clear
+                </button>
+                <button type="button" onclick="confirmCalendarSelection()"
+                    class="px-4 py-2 text-sm bg-gold-400 text-dark-900 font-bold rounded-lg hover:bg-gold-500 transition-colors">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div id="delete-modal" class="modal-overlay">
+        <div class="modal-content text-center">
+            <div class="w-14 h-14 rounded-full bg-red-900/20 flex items-center justify-center mx-auto mb-4">
+                <i data-lucide="alert-triangle" class="w-7 h-7 text-red-400"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-2 text-white">Delete Project?</h3>
+            <p class="text-gray-400 text-sm mb-6" id="delete-modal-text">This action cannot be undone.</p>
+            <div class="flex gap-3">
+                <button onclick="closeDeleteModal()"
+                    class="flex-1 py-2.5 rounded-lg border border-white/10 hover:bg-white/5 transition-all text-gray-300 text-sm">
+                    Cancel
+                </button>
+                <button onclick="confirmDelete()"
+                    class="flex-1 py-2.5 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-all text-sm">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+        <div class="bg-dark-800 p-8 rounded-2xl w-full max-w-md shadow-2xl border border-white/10 animate-slide-in">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-serif font-bold text-white mb-1">INTERIA</h1>
+                <p class="text-gray-400 text-sm uppercase tracking-wider">Admin Portal</p>
+            </div>
+
+            <form id="login-form" onsubmit="return checkLogin(event)">
+                <div class="mb-5">
+                    <label class="input-label">Username</label>
+                    <div class="input-with-icon">
+                        <i data-lucide="user" class="input-icon w-4 h-4"></i>
+                        <input type="text" id="admin-user" class="custom-input" placeholder="Enter username">
+                    </div>
+                </div>
+
+                <div class="mb-6 hidden">
+
+
+                    <p class="text-xs text-gray-500 mb-4">Paste the link and click "Fetch & Add". We'll automatically
+                        get the video and thumbnail.</p>
+
+                    <!-- Hidden fields for checks -->
+                    <input type="hidden" name="thumbnail" id="thumbnail-hidden">
+
+                    <div class="media-upload-grid" id="media-grid"></div>
+                    <p class="text-xs text-gray-500 mt-2">Media Preview</p>
+                </div>
+                <div class="mb-5">
+                    <label class="input-label">Access Code</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="admin-pass" class="custom-input pr-12" placeholder="Enter password">
+                        <span class="password-toggle" onclick="togglePassword()">
+                            <i data-lucide="eye" class="w-5 h-5" id="eye-icon"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <p id="login-error" class="text-red-500 text-sm mb-4 hidden flex items-center gap-2">
+                    <i data-lucide="alert-triangle" class="w-4 h-4"></i> Invalid credentials
+                </p>
+
+                <button type="submit"
+                    class="w-full btn-gold text-white py-3 rounded-lg flex items-center justify-center gap-2">
+                    <span>Access Dashboard</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </form>
+
+            <div class="mt-6 flex items-center justify-between text-xs text-gray-400">
+                <span></span>
+                <a href="index.html" class="hover:text-gray-600 transition-colors flex items-center gap-1">
+                    <i data-lucide="external-link" class="w-3 h-3"></i> View Site
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
+    <div id="admin-dashboard" class="hidden min-h-screen">
+
+        <!-- Header -->
+        <nav class="admin-header sticky top-0 z-40">
+            <div class="max-w-6xl mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-4">
+                        <a href="index.html" target="_blank" class="text-xl font-serif font-bold gold-gradient-text">
+                            INTERIA<span class="text-gold-400">.</span>
+                        </a>
+                        <span
+                            class="hidden md:flex px-2 py-1 bg-gold-400/10 border border-gold-400/30 text-gold-400 text-xs rounded items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 bg-gold-400 rounded-full"></span>
+                            ADMIN
+                        </span>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <a href="projects.html" target="_blank"
+                            class="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-400 hover:text-white transition-all rounded-lg hover:bg-white/5">
+                            <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Projects</span>
+                        </a>
+                        <button onclick="exportData()"
+                            class="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-400 hover:text-white transition-all rounded-lg hover:bg-white/5">
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Export</span>
+                        </button>
+                        <button onclick="logout()"
+                            class="flex items-center gap-1.5 px-3 py-2 text-sm text-red-400 hover:text-red-300 transition-all rounded-lg hover:bg-red-400/10">
+                            <i data-lucide="log-out" class="w-4 h-4"></i>
+                            <span class="hidden sm:inline">Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-6xl mx-auto px-4 py-6">
+
+            <!-- Header Section -->
+            <div class="mb-8 animate-slide-in">
+                <h2 class="text-2xl font-bold text-white mb-1">Project Management</h2>
+                <p class="text-gray-400 text-sm">Manage your portfolio. Completed projects appear on your website.</p>
+            </div>
+
+            <!-- Stats -->
+            <!-- Stats -->
+            <div class="grid grid-cols-4 gap-3 mb-8 animate-slide-in">
+                <div class="bg-dark-800 p-4 rounded-xl border border-white/5 shadow-sm">
+                    <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total</p>
+                    <p class="text-2xl font-bold text-white" id="stat-total">0</p>
+                </div>
+                <div class="bg-dark-800 p-4 rounded-xl border border-white/5 shadow-sm">
+                    <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Pending</p>
+                    <p class="text-2xl font-bold text-gold-500" id="stat-pending">0</p>
+                </div>
+                <div class="bg-dark-800 p-4 rounded-xl border border-white/5 shadow-sm">
+                    <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Upcoming</p>
+                    <p class="text-2xl font-bold text-blue-400" id="stat-upcoming">0</p>
+                </div>
+                <div class="bg-dark-800 p-4 rounded-xl border border-white/5 shadow-sm">
+                    <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Published</p>
+                    <p class="text-2xl font-bold text-green-400" id="stat-completed">0</p>
+                </div>
+            </div>
+
+            <!-- ADD PROJECT FORM -->
+            <div class="bg-dark-800 rounded-xl mb-8 overflow-hidden shadow-sm border border-white/5 animate-slide-in">
+                <div class="p-5 border-b border-white/5 flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-gold-400/10 flex items-center justify-center">
+                        <i data-lucide="plus" class="w-5 h-5 text-gold-400"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-white">Add New Project</h3>
+                        <p class="text-gray-400 text-xs">Create a new project for your portfolio</p>
+                    </div>
+                </div>
+
+                <form id="add-project-form" onsubmit="addProject(event)" class="p-5">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        <input type="hidden" name="edit-id" id="edit-id">
+
+                        <!-- Column 1: Basic Info -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="input-label">Title *</label>
+                                <div class="input-with-icon">
+                                    <i data-lucide="type" class="input-icon w-4 h-4"></i>
+                                    <input type="text" name="clientName" required class="custom-input"
+                                        placeholder="e.g. Modern Apartment">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="input-label">Project Type *</label>
+                                <div class="custom-select-wrapper">
+                                    <select name="projectType" required class="custom-select">
+                                        <option value="">Select category</option>
+                                        <option value="Residential">Residential</option>
+                                        <option value="Commercial">Commercial</option>
+                                        <option value="Office">Office</option>
+                                        <option value="Restaurant">Restaurant</option>
+                                        <option value="Hotel">Hotel</option>
+                                        <option value="Retail">Retail</option>
+                                        <option value="For Rent">For Rent</option>
+                                        <option value="Industrial">Industrial</option>
+                                    </select>
+                                    <i data-lucide="chevron-down" class="custom-select-arrow w-4 h-4"></i>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="input-label">Location *</label>
+                                <div class="input-with-icon">
+                                    <i data-lucide="map-pin" class="input-icon w-4 h-4"></i>
+                                    <input type="text" name="location" required class="custom-input"
+                                        placeholder="City, Country">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="input-label">Instagram URL</label>
+                                <div class="input-with-icon">
+                                    <i data-lucide="instagram" class="input-icon w-4 h-4"></i>
+                                    <input type="url" name="instagramUrl" class="custom-input"
+                                        placeholder="https://instagram.com/p/...">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="input-label">Project Size (BHK/Type)</label>
+                                <div class="custom-select-wrapper">
+                                    <select name="projectSize" class="custom-select">
+                                        <option value="">Optional: Select size</option>
+                                        <option value="1 BHK">1 BHK</option>
+                                        <option value="2 BHK">2 BHK</option>
+                                        <option value="3 BHK">3 BHK</option>
+                                        <option value="4 BHK">4 BHK+</option>
+                                        <option value="Villa">Villa / Bungalow</option>
+                                        <option value="Commercial">Office / Retail</option>
+                                    </select>
+                                    <i data-lucide="chevron-down" class="custom-select-arrow w-4 h-4"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column 2: Project Details -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="input-label">Budget Range</label>
+                                <div class="input-with-icon">
+                                    <i data-lucide="wallet" class="input-icon w-4 h-4"></i>
+                                    <input type="text" name="budget" class="custom-input"
+                                        placeholder="e.g. $50,000 or $2,500/mo">
+                                </div>
+                            </div>
+
+                            <div class="mb-6">
+                                <label class="input-label">Status</label>
+                                <select name="status" class="custom-input">
+                                    <option value="pending">Pending (Draft)</option>
+                                    <option value="live">Live (Active)</option>
+                                    <option value="sold">Sold (Completed)</option>
+                                    <option value="upcoming">Upcoming</option>
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="input-label">Show Budget</label>
+                                    <label class="toggle-switch mt-2">
+                                        <input type="checkbox" name="showBudget" id="show-budget-toggle">
+                                        <span class="toggle-slider"></span>
+                                        <span class="toggle-label text-sm">Visible</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="input-label">Start Date</label>
+                                <div class="date-input-field" onclick="openCalendarPopup('start')">
+                                    <input type="text" name="startDate" id="start-date-input" class="custom-input"
+                                        placeholder="Select date" readonly>
+                                    <i data-lucide="calendar" class="date-input-icon w-4 h-4"></i>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="input-label">End Date</label>
+                                <div class="date-input-field" onclick="openCalendarPopup('end')">
+                                    <input type="text" name="endDate" id="end-date-input" class="custom-input"
+                                        placeholder="Select date" readonly>
+                                    <i data-lucide="calendar" class="date-input-icon w-4 h-4"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Column 3: Media Upload -->
+                        <div class="space-y-4">
+                            <div>
+                                <label class="input-label">Project Description</label>
+                                <textarea name="details" rows="8" class="custom-input resize-none"
+                                    placeholder="Brief description..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end mt-5 pt-5 border-t border-white/5">
+                        <button type="button" onclick="resetForm()"
+                            class="px-5 py-2.5 text-gray-400 hover:text-white transition-colors mr-3 rounded-lg hover:bg-white/5 text-sm">
+                            Clear
+                        </button>
+                        <button type="submit" id="submit-btn"
+                            class="btn-gold text-white px-6 py-2.5 rounded-lg flex items-center gap-2 text-sm">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span id="submit-btn-text">Create Project</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Projects List - Reference Image Style -->
+            <div class="animate-slide-in">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                    <div class="flex items-center gap-4">
+                        <h3 class="font-semibold text-white">All Projects</h3>
+                        <div id="bulk-actions" class="hidden flex items-center gap-2">
+                            <button onclick="bulkDelete()"
+                                class="px-3 py-1.5 bg-red-500/10 text-red-500 border border-red-500/20 rounded-lg text-xs font-bold hover:bg-red-500 hover:text-white transition-all">
+                                Delete Selected
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-1 p-1 bg-dark-800 rounded-lg shadow-sm border border-white/5">
+                        <button onclick="filterProjects('all')" class="tab-btn active" data-filter="all">All</button>
+                        <button onclick="filterProjects('pending')" class="tab-btn"
+                            data-filter="pending">Pending</button>
+                        <button onclick="filterProjects('upcoming')" class="tab-btn"
+                            data-filter="upcoming">Upcoming</button>
+                        <button onclick="filterProjects('completed')" class="tab-btn"
+                            data-filter="completed">Published</button>
+                    </div>
+                </div>
+
+                <div class="p-3 border-b border-white/5 bg-white/5 flex items-center gap-4">
+                    <input type="checkbox" id="select-all" onclick="toggleSelectAll()"
+                        class="w-4 h-4 rounded border-white/10 bg-dark-900 text-gold-400 focus:ring-gold-400">
+                    <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Select All</span>
+                </div>
+                <div id="projects-container" class="project-list shadow-sm border border-white/5"></div>
+
+                <div id="empty-state" class="empty-state hidden">
+                    <div class="empty-state-icon">
+                        <i data-lucide="folder-open" class="w-8 h-8 text-gray-500"></i>
+                    </div>
+                    <h4 class="font-semibold text-white mb-1">No projects found</h4>
+                    <p class="text-gray-400 text-sm">Create your first project to get started</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast"
+        class="fixed bottom-4 right-4 px-5 py-3 bg-gray-900 text-white rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-[10000] flex items-center gap-2 text-sm">
+        <i data-lucide="check-circle" class="w-4 h-4 text-green-400"></i>
+        <span id="toast-message">Success</span>
+    </div>
+
+    <script>
+        const ADMIN_USER = 'admin';
+        const ADMIN_PASSWORD = 'interia2024';
+        let projects = [];
+        let currentFilter = 'all';
+        let deleteTargetId = null;
+        let bulkDeleteTargets = null;
+        let projectMedia = []; // Array to store multiple media files
+
+        // Calendar State
+        let calendarPopupDate = new Date();
+        let calendarTargetField = null;
+        let tempSelectedDate = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('adminLoggedIn') === 'true') {
+                showDashboard();
+            } else {
+                lucide.createIcons();
+            }
+        });
+
+        function togglePassword() {
+            const input = document.getElementById('admin-pass');
+            const icon = document.getElementById('eye-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+
+        function checkLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('admin-user').value;
+            const pass = document.getElementById('admin-pass').value;
+
+            if (user === ADMIN_USER && pass === ADMIN_PASSWORD) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                showDashboard();
+                showNotification('Welcome back');
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+            return false;
+        }
+
+        function showDashboard() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-dashboard').classList.remove('hidden');
+            loadProjects();
+            lucide.createIcons();
+        }
+
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            location.reload();
+        }
+
+        // Calendar Functions
+        function openCalendarPopup(target) {
+            calendarTargetField = target;
+            tempSelectedDate = null;
+            calendarPopupDate = new Date();
+            renderCalendarPopup();
+            document.getElementById('calendar-popup-overlay').classList.add('active');
+        }
+
+        function closeCalendarPopup(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('calendar-popup-overlay').classList.remove('active');
+            calendarTargetField = null;
+            tempSelectedDate = null;
+        }
+
+        function renderCalendarPopup() {
+            const year = calendarPopupDate.getFullYear();
+            const month = calendarPopupDate.getMonth();
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('popup-calendar-month-year').textContent = `${monthNames[month]} ${year}`;
+
+            const grid = document.getElementById('popup-calendar-grid');
+            grid.innerHTML = '';
+
+            const dayHeaders = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+            dayHeaders.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-day-header';
+                header.textContent = day;
+                grid.appendChild(header);
+            });
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const dayBtn = document.createElement('button');
+                dayBtn.className = 'calendar-day other-month';
+                dayBtn.textContent = daysInPrevMonth - i;
+                dayBtn.disabled = true;
+                grid.appendChild(dayBtn);
+            }
+
+            const today = new Date();
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayBtn = document.createElement('button');
+                dayBtn.className = 'calendar-day';
+                dayBtn.textContent = day;
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) dayBtn.classList.add('today');
+                if (tempSelectedDate === dateStr) dayBtn.classList.add('selected');
+                dayBtn.onclick = () => selectCalendarDate(dateStr);
+                grid.appendChild(dayBtn);
+            }
+
+            const totalCells = grid.children.length - 7;
+            const remainingCells = 42 - totalCells - 7;
+            for (let day = 1; day <= remainingCells; day++) {
+                const dayBtn = document.createElement('button');
+                dayBtn.className = 'calendar-day other-month';
+                dayBtn.textContent = day;
+                dayBtn.disabled = true;
+                grid.appendChild(dayBtn);
+            }
+        }
+
+        function changeCalendarMonth(delta) {
+            calendarPopupDate.setMonth(calendarPopupDate.getMonth() + delta);
+            renderCalendarPopup();
+        }
+
+        function selectCalendarDate(dateStr) {
+            tempSelectedDate = dateStr;
+            renderCalendarPopup();
+        }
+
+        function clearCalendarSelection() {
+            tempSelectedDate = null;
+            renderCalendarPopup();
+        }
+
+        function confirmCalendarSelection() {
+            if (calendarTargetField === 'start') {
+                document.getElementById('start-date-input').value = tempSelectedDate || '';
+            } else if (calendarTargetField === 'end') {
+                document.getElementById('end-date-input').value = tempSelectedDate || '';
+            }
+            closeCalendarPopup();
+        }
+
+        // Project Management
+        async function addProject(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+
+            const editId = document.getElementById('edit-id').value;
+
+            const projectData = {
+                clientName: formData.get('clientName'),
+                projectType: formData.get('projectType'),
+                location: formData.get('location'),
+                instagramUrl: formData.get('instagramUrl') || '',
+                projectSize: formData.get('projectSize') || '',
+                budget: formData.get('budget') || 'Quote on request',
+                showBudget: document.getElementById('show-budget-toggle').checked,
+                status: formData.get('status'),
+                thumbnail: formData.get('thumbnail') || '',
+                startDate: document.getElementById('start-date-input').value || null,
+                endDate: document.getElementById('end-date-input').value || null,
+                details: formData.get('details') || '',
+                media: projectMedia,
+            };
+
+            try {
+                if (editId) {
+                    // Update existing project
+                    const response = await fetch(`/api/projects/${editId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(projectData)
+                    });
+                    if (!response.ok) throw new Error('Update failed');
+                    showNotification('Project updated successfully!');
+                } else {
+                    // Create new project
+                    const newProject = {
+                        id: Date.now(),
+                        code: generateProjectCode(),
+                        ...projectData,
+                        createdAt: new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })
+                    };
+
+                    if (newProject.status === 'live' || newProject.status === 'sold') {
+                        newProject.completedAt = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+                    }
+
+                    const response = await fetch('/api/projects', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(newProject)
+                    });
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.details || 'Creation failed');
+                    }
+                    showNotification(newProject.status === 'completed' ? 'Project created and published!' : 'Project created successfully!');
+                }
+
+                resetForm();
+                loadProjects(currentFilter);
+            } catch (err) {
+                console.error('Add/Update Error:', err);
+                let errorMsg = err.message || 'Error syncing with database';
+                if (errorMsg.includes('JSON')) {
+                    errorMsg = 'Server response error. Please check if server is running.';
+                }
+                showNotification(errorMsg + ' (Check console for details)', 'error');
+            }
+        }
+
+        function generateProjectCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let code = '';
+            for (let i = 0; i < 3; i++) code += chars.charAt(Math.floor(Math.random() * chars.length));
+            return code;
+        }
+
+        function resetForm() {
+            document.getElementById('add-project-form').reset();
+            document.getElementById('edit-id').value = '';
+            document.getElementById('submit-btn-text').textContent = 'Create Project';
+            const submitBtn = document.getElementById('submit-btn');
+            const icon = submitBtn.querySelector('i, svg');
+            if (icon) icon.setAttribute('data-lucide', 'plus-circle');
+            projectMedia = [];
+            document.getElementById('start-date-input').value = '';
+            document.getElementById('end-date-input').value = '';
+            document.getElementById('show-budget-toggle').checked = false;
+            lucide.createIcons();
+        }
+
+        function loadProjectForEdit(id) {
+            const project = projects.find(p => p.id == id);
+            if (!project) return;
+
+            document.getElementById('edit-id').value = project.id;
+            document.getElementById('submit-btn-text').textContent = 'Save Changes';
+            const submitBtn = document.getElementById('submit-btn');
+            const icon = submitBtn.querySelector('i, svg');
+            if (icon) icon.setAttribute('data-lucide', 'save');
+            lucide.createIcons();
+
+            const form = document.getElementById('add-project-form');
+            form.elements['clientName'].value = project.clientName || '';
+            form.elements['projectType'].value = project.projectType || '';
+            form.elements['location'].value = project.location || '';
+            form.elements['instagramUrl'].value = project.instagramUrl || '';
+            form.elements['projectSize'].value = project.projectSize || '';
+            form.elements['budget'].value = project.budget || '';
+            document.getElementById('show-budget-toggle').checked = project.showBudget || false;
+            form.elements['status'].value = project.status || 'pending';
+            document.getElementById('start-date-input').value = project.startDate || '';
+            document.getElementById('end-date-input').value = project.endDate || '';
+            form.elements['details'].value = project.details || '';
+
+            projectMedia = project.media || [];
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            lucide.createIcons();
+            showNotification('Project loaded for editing');
+        }
+
+        function deleteProject(id) {
+            bulkDeleteTargets = null;
+            const project = projects.find(p => p.id == id);
+            deleteTargetId = id;
+            document.getElementById('delete-modal-text').textContent = (project.status === 'live' || project.status === 'sold')
+                ? 'This will remove the project from your website and database.'
+                : 'Are you sure you want to delete this project?';
+            document.getElementById('delete-modal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('delete-modal').classList.remove('active');
+            deleteTargetId = null;
+            bulkDeleteTargets = null;
+        }
+
+        async function confirmDelete() {
+            if (deleteTargetId) {
+                try {
+                    const response = await fetch(`/api/projects/${deleteTargetId}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.details || 'Delete failed');
+                    }
+
+                    projects = projects.filter(p => String(p.id) !== String(deleteTargetId));
+                    updateStats();
+                    loadProjects(currentFilter);
+                    showNotification('Project deleted');
+                    closeDeleteModal();
+                } catch (err) {
+                    console.error('Delete error:', err);
+                    let errorMsg = err.message || 'Error deleting project';
+                    if (errorMsg.includes('Unexpected token') || errorMsg.includes('JSON')) {
+                        errorMsg = 'Server restart required! Please stop (Ctrl+C) and run "node server.js" again.';
+                    }
+                    showNotification(errorMsg, 'error');
+                }
+            } else if (bulkDeleteTargets) {
+                try {
+                    const response = await fetch('/api/projects/bulk', {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ ids: bulkDeleteTargets })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.details || 'Bulk delete failed');
+                    }
+
+                    projects = projects.filter(p => !bulkDeleteTargets.includes(String(p.id)));
+                    updateStats();
+                    loadProjects(currentFilter);
+                    showNotification(`${bulkDeleteTargets.length} projects deleted`);
+                    closeDeleteModal();
+                } catch (err) {
+                    console.error('Bulk delete error:', err);
+                    let errorMsg = err.message || 'Error performing bulk delete';
+                    if (errorMsg.includes('Unexpected token') || errorMsg.includes('JSON')) {
+                        errorMsg = 'Server restart required! Please stop (Ctrl+C) and run "node server.js" again.';
+                    }
+                    showNotification(errorMsg, 'error');
+                }
+            }
+        }
+
+        async function changeStatus(id, newStatus) {
+            const project = projects.find(p => p.id === id);
+            if (!project || project.status === newStatus) return;
+
+            const updatedData = { ...project, status: newStatus };
+            if (newStatus === 'completed') {
+                updatedData.completedAt = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+            }
+
+            try {
+                const response = await fetch(`/api/projects/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedData)
+                });
+                if (!response.ok) throw new Error('Status update failed');
+
+                project.status = newStatus;
+                if (newStatus === 'completed') project.completedAt = updatedData.completedAt;
+
+                updateStats();
+                loadProjects(currentFilter);
+                showNotification(newStatus === 'completed' ? 'Project published!' : `Status updated to ${newStatus}`);
+            } catch (err) {
+                console.error(err);
+                showNotification('Error updating status', 'error');
+            }
+        }
+
+        function saveProjects() {
+            // LocalStorage sync removed - now uses backend API
+            updateStats();
+        }
+
+        // Project List Display
+        async function loadProjects(filter = 'all') {
+            currentFilter = filter;
+            const container = document.getElementById('projects-container');
+            const emptyState = document.getElementById('empty-state');
+
+            // Fetch from API
+            try {
+                const response = await fetch('/api/projects');
+                if (!response.ok) throw new Error('Fetch failed');
+                projects = await response.json();
+            } catch (err) {
+                console.error("API error, fallback to memory:", err);
+            }
+
+            updateStats();
+            updateTabButtons(filter);
+
+            let displayProjects;
+
+            if (filter === 'all') {
+                displayProjects = [...projects];
+                const statusOrder = { 'pending': 0, 'upcoming': 1, 'live': 2, 'sold': 3 };
+                displayProjects.sort((a, b) => (statusOrder[a.status] || 0) - (statusOrder[b.status] || 0));
+            } else {
+                displayProjects = projects.filter(p => p.status === filter);
+            }
+
+            if (displayProjects.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                lucide.createIcons();
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            container.innerHTML = displayProjects.map(project => {
+                const statusClass = {
+                    pending: 'status-pending',
+                    upcoming: 'status-upcoming',
+                    live: 'status-completed',
+                    sold: 'bg-red-500/10 text-red-500 border border-red-500/20'
+                }[project.status] || 'status-pending';
+
+                const statusText = {
+                    pending: 'Pending',
+                    upcoming: 'Upcoming',
+                    live: 'Live',
+                    sold: 'Sold'
+                }[project.status] || project.status;
+
+                return `
+                <div class="project-list-item" onclick="loadProjectForEdit('${project.id}')">
+                    <div class="flex items-center gap-4" onclick="event.stopPropagation()">
+                        <input type="checkbox" class="project-checkbox w-4 h-4 rounded border-white/10 bg-dark-900 text-gold-400 focus:ring-gold-400" value="${project.id}" onchange="updateBulkActions()">
+                        <div class="project-code-badge">${project.code}</div>
+                    </div>
+                    <div class="project-list-content">
+                        <div class="project-list-title">${project.clientName}</div>
+                        <div class="project-list-subtitle">${project.projectType} &bull; ${project.location}</div>
+                    </div>
+                    <div class="project-list-actions" onclick="event.stopPropagation()">
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                        ${project.status !== 'live' ? `
+                            <button onclick="changeStatus('${project.id}', 'live')" class="action-btn" title="Mark Live">
+                                <i data-lucide="check" class="w-4 h-4 text-green-400"></i>
+                            </button>
+                        ` : `
+                            <button onclick="changeStatus('${project.id}', 'sold')" class="action-btn" title="Mark Sold">
+                                <i data-lucide="tag" class="w-4 h-4 text-red-500"></i>
+                            </button>
+                        `}
+                        <button onclick="deleteProject('${project.id}')" class="action-btn delete" title="Delete">
+                            <i data-lucide="trash-2" class="w-4 h-4 text-gray-400"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            }).join('');
+
+            lucide.createIcons();
+            updateBulkActions();
+        }
+
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('select-all');
+            const checkboxes = document.querySelectorAll('.project-checkbox');
+            checkboxes.forEach(cb => cb.checked = selectAll.checked);
+            updateBulkActions();
+        }
+
+        function updateBulkActions() {
+            const selectedCount = document.querySelectorAll('.project-checkbox:checked').length;
+            const bulkActions = document.getElementById('bulk-actions');
+            if (bulkActions) {
+                if (selectedCount > 0) {
+                    bulkActions.classList.remove('hidden');
+                } else {
+                    bulkActions.classList.add('hidden');
+                }
+            }
+
+            // Sync select-all state
+            const selectAll = document.getElementById('select-all');
+            const total = document.querySelectorAll('.project-checkbox').length;
+            if (selectAll) {
+                selectAll.checked = total > 0 && selectedCount === total;
+            }
+        }
+
+        async function bulkDelete() {
+            const checkboxes = document.querySelectorAll('.project-checkbox:checked');
+            const idsToDelete = Array.from(checkboxes).map(cb => cb.value);
+
+            if (idsToDelete.length === 0) return;
+
+            deleteTargetId = null;
+            bulkDeleteTargets = idsToDelete;
+            document.getElementById('delete-modal-text').textContent = `Are you sure you want to delete ${idsToDelete.length} projects ? This action cannot be undone.`;
+            document.getElementById('delete-modal').classList.add('active');
+        }
+
+        function updateTabButtons(activeFilter) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === activeFilter);
+            });
+        }
+
+        function updateStats() {
+            const total = projects.length;
+            const pending = projects.filter(p => p.status === 'pending').length;
+            const upcoming = projects.filter(p => p.status === 'upcoming').length;
+            const live = projects.filter(p => p.status === 'live' || p.status === 'sold').length;
+
+            if (document.getElementById('stat-total')) document.getElementById('stat-total').textContent = total;
+            if (document.getElementById('stat-pending')) document.getElementById('stat-pending').textContent = pending;
+            if (document.getElementById('stat-upcoming')) document.getElementById('stat-upcoming').textContent = upcoming;
+            if (document.getElementById('stat-completed')) document.getElementById('stat-completed').textContent = live;
+        }
+
+        function filterProjects(status) {
+            loadProjects(status);
+        }
+
+        function showNotification(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
+        }
+
+        document.getElementById('delete-modal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeDeleteModal();
+        });
+    </script>
+</body>
+
+</html>

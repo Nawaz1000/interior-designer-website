@@ -1,0 +1,197 @@
+/* Pure White Theme Overrides */
+body.white-theme {
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    /* Nearly Black */
+}
+
+/* Navbar */
+body.white-theme nav {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+body.white-theme .nav-blur {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+body.white-theme nav a {
+    color: #4b5563 !important;
+    /* Gray-600 */
+    font-weight: 500;
+}
+
+body.white-theme nav a:hover {
+    color: #b45309 !important;
+    /* Dark Gold/Amber-700 */
+}
+
+body.white-theme #mobile-menu {
+    background: rgba(255, 255, 255, 0.98) !important;
+}
+
+body.white-theme #mobile-menu a {
+    color: #1a1a1a !important;
+}
+
+body.white-theme #mobile-menu-btn {
+    color: #1a1a1a !important;
+}
+
+/* HERO SECTION EXCEPTION - CRITICAL FIX 
+   The hero section has a dark background image. The text MUST remain WHITE.
+*/
+body.white-theme #home h1,
+body.white-theme #home h2,
+body.white-theme #home p,
+body.white-theme #home span:not(.text-gold-400) {
+    color: #ffffff !important;
+}
+
+/* Headings elsewhere (not in hero) */
+body.white-theme section:not(#home) h1,
+body.white-theme section:not(#home) h2,
+body.white-theme section:not(#home) h3,
+body.white-theme section:not(#home) h4 {
+    color: #1a1a1a !important;
+}
+
+body.white-theme section:not(#home) p {
+    color: #4b5563 !important;
+    /* Gray-600 */
+}
+
+/* Service Cards */
+body.white-theme .service-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+body.white-theme .service-card h3 {
+    color: #1a1a1a !important;
+}
+
+body.white-theme .service-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    border-color: #D4AF37 !important;
+}
+
+/* Project Cards */
+body.white-theme .project-card-horizontal,
+body.white-theme .portfolio-item,
+body.white-theme .project-card-index,
+body.white-theme .project-card-premium {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+body.white-theme .card-title,
+body.white-theme .premium-card-title,
+body.white-theme .portfolio-title,
+body.white-theme .card-title-index {
+    color: #1a1a1a !important;
+}
+
+body.white-theme .card-description,
+body.white-theme .premium-card-meta,
+body.white-theme .portfolio-description {
+    color: #6b7280 !important;
+    /* Gray-500 */
+}
+
+body.white-theme .price-value {
+    color: #1a1a1a !important;
+}
+
+/* Inputs */
+body.white-theme input,
+body.white-theme select,
+body.white-theme textarea {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    color: #1a1a1a !important;
+}
+
+body.white-theme .filter-sidebar {
+    border-right: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+body.white-theme .filter-section {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+body.white-theme .filter-label,
+body.white-theme .filter-section-title {
+    color: #1a1a1a !important;
+}
+
+/* Modal */
+body.white-theme .project-modal-content {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+body.white-theme .modal-info-section {
+    background: #ffffff !important;
+    color: #1a1a1a !important;
+}
+
+body.white-theme .modal-media-section {
+    background: #f3f4f6 !important;
+    /* Gray-100 */
+}
+
+/* Footer */
+body.white-theme footer {
+    background: #f3f4f6 !important;
+    /* Gray-100 */
+    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+body.white-theme footer .text-gray-400 {
+    color: #6b7280 !important;
+}
+
+body.white-theme footer .text-white {
+    color: #1a1a1a !important;
+}
+
+/* Mobile Specifics */
+body.white-theme .filter-tab {
+    color: #6b7280 !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    background: white !important;
+}
+
+body.white-theme .filter-tab.active {
+    background: #D4AF37 !important;
+    color: #ffffff !important;
+    border-color: #D4AF37 !important;
+}
+
+/* Background Gradients/Images Override */
+body.white-theme .bg-dark-900 {
+    background-color: #ffffff !important;
+}
+
+body.white-theme .bg-dark-800 {
+    background-color: #f8f9fa !important;
+}
+
+/* Gold Text Adjustment */
+body.white-theme .text-gold-400 {
+    color: #b45309 !important;
+    /* Darker Gold/Amber-700 */
+}
+
+/* Buttons */
+body.white-theme .premium-cta-button {
+    background-color: #1a1a1a !important;
+    color: white !important;
+}
+
+body.white-theme .premium-cta-button:hover {
+    background-color: #000000 !important;
+}

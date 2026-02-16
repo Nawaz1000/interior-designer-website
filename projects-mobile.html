@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects (Mobile) | Interia Design Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js"></script>
+    <script>
+        // Desktop Redirection
+        if (window.innerWidth > 1100) {
+            window.location.href = "projects.html";
+        }
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1100) {
+                window.location.href = "projects.html";
+            }
+        });
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            400: '#D4AF37',
+                            500: '#C5A028',
+                            600: '#B8941F',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#141414',
+                            700: '#1a1a1a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+            min-height: 100vh;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E5C2 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Main Layout Grid */
+        .page-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 20px 40px;
+            /* Increased top padding from 40px to 80px */
+            width: 100%;
+        }
+
+        @media (max-width: 1024px) {
+            .page-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Filters */
+        .filter-sidebar {
+            height: calc(100vh - 140px);
+            position: sticky;
+            top: 100px;
+            overflow-y: auto;
+            padding-right: 15px;
+            /* Space for scrollbar */
+        }
+
+        .filter-sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .filter-sidebar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+
+        .filter-sidebar::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
+        }
+
+        .filter-sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(212, 175, 55, 0.5);
+        }
+
+        .filter-section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 24px;
+        }
+
+        .filter-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-label {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.01em;
+        }
+
+        .filter-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .filter-section-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: white;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .reset-link {
+            font-size: 0.85rem;
+            color: #6366f1;
+            /* Purple/Indigo like reset links */
+            text-decoration: none;
+            transition: opacity 0.2s;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .reset-link:hover {
+            opacity: 0.8;
+        }
+
+        .filter-input-group {
+            margin-bottom: 12px;
+        }
+
+        .filter-input-label {
+            display: block;
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .filter-input {
+            width: 100%;
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px 16px;
+            color: white;
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .filter-input:focus {
+            border-color: #D4AF37;
+        }
+
+        /* Range Slider */
+        .price-range-container {
+            padding: 10px 0;
+        }
+
+        .range-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+        }
+
+        .range-value {
+            font-size: 0.75rem;
+            color: #D4AF37;
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 4px;
+            background: #2a2a2a;
+            border-radius: 2px;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #D4AF37;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Instagram Reels Style Grid */
+        .reels-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            /* Default to list view as before */
+            gap: 24px;
+        }
+
+        /* Reel Item */
+        .reel-item {
+            position: relative;
+            aspect-ratio: 3/2;
+            overflow: hidden;
+            cursor: pointer;
+            background: #1a1a1a;
+            border-radius: 1rem;
+            /* Softened Curved shape */
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reel-item:hover {
+            border-color: #D4AF37;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        .reel-item:hover .reel-overlay {
+            opacity: 1;
+        }
+
+        .reel-item:hover .reel-media {
+            transform: scale(1.05);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            z-index: 20;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .status-live {
+            background: rgba(34, 197, 94, 0.9);
+            color: white;
+        }
+
+        .status-sold {
+            background: rgba(185, 28, 28, 0.9);
+            color: white;
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .reel-media {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .reel-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 100%);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 32px;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(20px);
+        }
+
+        .reel-item:hover .reel-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reel-info {
+            transform: translateY(20px);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            color: white;
+        }
+
+        .reel-item:hover .reel-info {
+            transform: translateY(0);
+        }
+
+        .reel-title {
+            letter-spacing: 0.02em;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .reel-description {
+            line-height: 1.6;
+            color: #d1d5db;
+            font-weight: 300;
+        }
+
+        .reel-client {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .reel-type {
+            font-size: 0.75rem;
+            color: #D4AF37;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .reel-budget {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .reel-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .reel-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: #d1d5db;
+        }
+
+        /* Video Play Icon */
+        .video-indicator {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Multiple Media Indicator */
+        .multi-media-indicator {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            gap: 4px;
+        }
+
+        .media-dot {
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        /* Horizontal Project Card (Booking.com Style) */
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            width: 100%;
+            padding: 0;
+            margin-top: 40px;
+            /* Increased top gap from 20px to 40px */
+        }
+
+        .project-card-horizontal {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            /* Slimmer image to prevent overlap */
+            background: #0b0b0b;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            height: 280px;
+            /* Fixed height for consistency */
+            width: 100%;
+            min-width: 0;
+            /* Prevents card from pushing parent width */
+        }
+
+        @media (max-width: 768px) {
+            .project-card-horizontal {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+        }
+
+        .project-card-horizontal:hover {
+            border-color: #D4AF37;
+            box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .card-image-wrapper {
+            position: relative;
+            height: 100%;
+            min-height: 120px;
+            overflow: hidden;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card-horizontal:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: #D4AF37;
+            margin-bottom: 6px;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: -0.01em;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            /* Limit title to 1 line */
+            line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-description {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            /* Limit description to 3 lines */
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-location {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-bottom: 12px;
+        }
+
+        .card-facilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .facility-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: #d1d5db;
+        }
+
+        .card-footer {
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .price-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-label {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .price-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .cta-button {
+            background: #1e1b4b;
+            /* Deep Indigo/Purple */
+            color: white;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: #312e81;
+            transform: translateX(4px);
+            background: #2e1065;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(30, 27, 75, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .star-rating {
+            display: flex;
+            gap: 2px;
+            color: #D4AF37;
+        }
+
+        .rating-badge {
+            background: #1e1b4b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px 4px 4px 0;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .project-card-horizontal {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image-wrapper {
+                height: 200px;
+            }
+        }
+
+        .project-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .project-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .project-modal-content {
+            width: 90%;
+            max-width: 1000px;
+            /* Increased width */
+            max-height: 90vh;
+            /* Better than fixed height */
+            background: #0d0d0d;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            /* Use grid for reliable layout Split */
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .project-modal.active .project-modal-content {
+            transform: scale(1);
+        }
+
+        .modal-media-section {
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        .modal-media {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-info-section {
+            padding: 32px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background: #0d0d0d;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        /* Media Navigation in Modal */
+        .media-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .media-nav-btn {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .media-nav-btn.active {
+            background: #D4AF37;
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .media-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .media-arrow:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .media-arrow.prev {
+            left: 16px;
+        }
+
+        .media-arrow.next {
+            right: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .project-modal-content {
+                flex-direction: column;
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            .modal-media-section {
+                flex: 1;
+            }
+
+            .modal-info-section {
+                flex: 0;
+                max-height: 40vh;
+                padding: 20px;
+            }
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        /* Loading */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border-top-color: #D4AF37;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .filter-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-tab {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            color: #9ca3af;
+        }
+
+        .filter-tab:hover {
+            border-color: #D4AF37;
+            color: #D4AF37;
+        }
+
+        .filter-tab.active {
+            background: #D4AF37;
+            color: #0a0a0a;
+            border-color: #D4AF37;
+        }
+
+        /* Thumbnail Grid */
+        .thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .thumbnail {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            border-color: #D4AF37;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Force Mobile Layout for this specific file */
+        .project-card-horizontal {
+            grid-template-columns: 1fr !important;
+            height: auto !important;
+            min-height: auto !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        /* Projects List Container */
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            /* Replaces space-y-8 */
+        }
+
+        .card-image-wrapper {
+            height: 200px !important;
+            width: 100% !important;
+        }
+
+        /* Tablet Optimization (768px - 1100px) */
+        @media (min-width: 768px) {
+            .projects-list {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 24px !important;
+                /* 1.5rem gap for grid */
+            }
+
+            .card-image-wrapper {
+                height: 240px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 header">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 z-50 relative">
+                <img src="logo.png" alt="Excellence Logo" class="h-10 w-auto">
+                <span class="text-lg font-serif font-bold tracking-wider hidden sm:inline-block">EXCELLENCE</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html#home"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Home</a>
+                <a href="index.html#about"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">About</a>
+                <a href="index.html#services"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Services</a>
+                <a href="#" class="text-sm uppercase tracking-widest text-gold-400 transition-colors">Projects</a>
+                <a href="index.html#portfolio"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Portfolio</a>
+                <a href="index.html#testimonials"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Reviews</a>
+                <a href="admin.html"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Admin</a>
+                <div class="flex items-center gap-4 ml-4 pl-4 border-l border-white/10 text-white">
+                    <a href="https://wa.me/919867866488" target="_blank" class="hover:text-[#25D366] transition-colors"
+                        title="WhatsApp Us">
+                        <i data-lucide="phone" class="w-4 h-4"></i>
+                    </a>
+                    <a href="https://www.instagram.com/homesbyexcellence" target="_blank"
+                        class="hover:text-gold-400 transition-colors" title="Instagram">
+                        <i data-lucide="instagram" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <button onclick="toggleTheme()"
+                class="p-2 text-white hover:text-gold-400 transition-colors mr-2 z-50 relative"
+                aria-label="Toggle Theme">
+                <i data-lucide="sun" class="w-5 h-5 theme-toggle-icon"></i>
+            </button>
+
+            <button id="mobile-menu-btn" class="md:hidden text-white z-50 relative">
+                <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu"
+            class="fixed inset-0 bg-dark-900/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden">
+            <a href="index.html#home"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Home</a>
+            <a href="index.html#about"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">About</a>
+            <a href="index.html#services"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Services</a>
+            <a href="#"
+                class="text-2xl font-serif uppercase tracking-widest text-gold-400 transition-colors mobile-link">Projects</a>
+            <a href="index.html#portfolio"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Portfolio</a>
+            <a href="index.html#testimonials"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Reviews</a>
+            <a href="admin.html"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Admin</a>
+            <a href="https://wa.me/919867866488" target="_blank"
+                class="text-2xl font-serif uppercase tracking-widest text-[#25D366] mobile-link flex items-center gap-2">
+                <i data-lucide="phone" class="w-6 h-6"></i> WhatsApp</a>
+            <a href="https://www.instagram.com/homesbyexcellence" target="_blank"
+                class="text-2xl font-serif uppercase tracking-widest text-gold-400 mobile-link flex items-center gap-2">
+                <i data-lucide="instagram" class="w-6 h-6"></i> Instagram</a>
+        </div>
+    </nav>
+
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-w-0">
+        <!-- Loading State -->
+        <div id="loading-state" class="py-20 text-center">
+            <div class="loading-spinner"></div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-state" class="empty-state hidden">
+            <div class="empty-icon">
+                <i data-lucide="image-off" class="w-10 h-10 text-gray-600"></i>
+            </div>
+            <h2 class="text-xl font-bold mb-2">No projects yet</h2>
+            <p class="text-gray-500">Check back soon for our latest work!</p>
+        </div>
+
+        <div class="page-layout !block !p-5 !pt-20">
+            <!-- Mobile Filters (Horizontal Scroll) -->
+            <div class="filter-tabs mb-6">
+                <button class="filter-tab active" onclick="filterProjects('all')">All</button>
+                <button class="filter-tab" onclick="filterProjects('Residential')">Residential</button>
+                <button class="filter-tab" onclick="filterProjects('Commercial')">Commercial</button>
+            </div>
+
+            <!-- Search Bar (Mobile Optimized) -->
+            <div class="mb-6 relative">
+                <i data-lucide="search"
+                    class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4"></i>
+                <input type="text" id="search-name"
+                    class="w-full bg-dark-800 border border-white/10 rounded-full py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-gold-400 placeholder-gray-500"
+                    placeholder="Search projects..." oninput="handleFiltersChange()">
+            </div>
+
+            <section class="flex-1">
+                <!-- Projects Grid -->
+                <div id="projects-grid" class="reels-grid hidden"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 pt-16 pb-8 border-t border-dark-700 mt-20">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <a href="index.html" class="flex items-center gap-2 mb-6">
+                        <img src="logo.png" alt="Excellence Logo" class="h-12 w-auto">
+                        <span class="text-3xl font-serif font-bold tracking-wider uppercase">Excellence</span>
+                    </a>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        Creating extraordinary interiors that inspire and delight. We bring your vision to life with
+                        precision, creativity, and unparalleled craftsmanship.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/homesbyexcellence" target="_blank"
+                            class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-gold-400 hover:text-dark-900 transition-all">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="https://wa.me/919867866488" target="_blank"
+                            class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all">
+                            <i data-lucide="phone" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-serif font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html#home"
+                                class="text-gray-400 hover:text-gold-400 transition-colors">Home</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-gold-400 transition-colors">About
+                                Us</a></li>
+                        <li><a href="index.html#services"
+                                class="text-gray-400 hover:text-gold-400 transition-colors">Services</a></li>
+                        <li><a href="https://wa.me/919867866488" target="_blank"
+                                class="text-gray-400 hover:text-gold-400 transition-colors">WhatsApp</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif font-bold text-lg mb-6">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe for design tips and inspiration.</p>
+                    <form onsubmit="event.preventDefault(); showNotification('Subscribed successfully!');" class="flex">
+                        <input type="email" placeholder="Your email"
+                            class="flex-1 bg-dark-800 border border-dark-700 rounded-l-lg px-4 py-2 focus:border-gold-400 focus:outline-none text-white">
+                        <button type="submit"
+                            class="bg-gold-400 text-dark-900 px-4 py-2 rounded-r-lg hover:bg-gold-500 transition-colors">
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-dark-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">&copy; 2026 Excellence Real Estate & Interior. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <a href="#" class="hover:text-gold-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-gold-400 transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed bottom-6 right-6 px-6 py-4 bg-gold-400 text-dark-900 rounded-lg shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3 font-semibold">
+        <i data-lucide="check-circle" class="w-5 h-5"></i>
+        <span id="toast-message">Success</span>
+    </div>
+
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="project-modal" onclick="closeModal(event)">
+        <div class="project-modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="modal-media-section">
+                <!-- Media Navigation Arrows -->
+                <button id="media-prev" class="media-arrow prev hidden" onclick="changeMedia(-1)">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
+                <button id="media-next" class="media-arrow next hidden" onclick="changeMedia(1)">
+                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                </button>
+
+                <!-- Media Dots -->
+                <div id="media-nav" class="media-nav"></div>
+
+                <!-- Main Media Display -->
+                <img id="modal-image" class="modal-media hidden" alt="Project">
+                <video id="modal-video" class="modal-media hidden" controls loop></video>
+            </div>
+
+            <div class="modal-info-section">
+                <div class="mb-6">
+                    <span id="modal-type" class="text-gold-400 text-xs uppercase tracking-wider"></span>
+                    <h2 id="modal-client" class="text-2xl font-bold mt-1"></h2>
+                    <p id="modal-location" class="text-gray-500 text-sm mt-1 flex items-center gap-1">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        <span></span>
+                    </p>
+                </div>
+
+                <div id="modal-budget-section" class="mb-6 p-4 bg-dark-800 rounded-lg hidden">
+                    <p class="text-gray-500 text-xs uppercase tracking-wider mb-1">Budget</p>
+                    <p id="modal-budget" class="text-lg font-semibold text-gold-400"></p>
+                </div>
+
+                <div class="mb-8">
+                    <p class="text-gray-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-3">Timeline</p>
+                    <div
+                        class="flex items-center gap-4 text-sm bg-dark-800/50 p-3 rounded-lg border border-white/5 w-fit">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="calendar" class="w-4 h-4 text-gray-500"></i>
+                            <span id="modal-start-date" class="text-gray-200 font-medium"></span>
+                        </div>
+                        <span class="text-gray-600">→</span>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-green-500"></i>
+                            <span id="modal-end-date" class="text-gray-200 font-medium"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <p class="text-gray-500 text-[10px] uppercase tracking-[0.2em] font-bold mb-3">About Project</p>
+                    <p id="modal-details" class="text-gray-300 text-sm leading-relaxed font-light"></p>
+                </div>
+
+                <!-- Thumbnail Grid -->
+                <div id="modal-thumbnails" class="thumbnail-grid hidden"></div>
+
+                <div class="mt-auto pt-6 border-t border-white/5">
+                    <a id="modal-instagram" href="#" target="_blank"
+                        class="flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 rounded-lg text-white font-medium hover:opacity-90 transition-opacity">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                        View on Instagram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allProjects = [];
+        let currentFilter = 'all';
+        let currentProject = null;
+        let currentMediaIndex = 0;
+
+        async function loadProjects() {
+            const loadingState = document.getElementById('loading-state');
+            const projectsGrid = document.getElementById('projects-grid');
+
+            try {
+                const response = await fetch('/api/projects');
+                if (!response.ok) throw new Error('Failed to fetch projects');
+                allProjects = await response.json();
+
+                if (allProjects.length === 0) {
+                    loadingState.classList.add('hidden');
+                    document.getElementById('empty-state').classList.remove('hidden');
+                    return;
+                }
+
+                loadingState.classList.add('hidden');
+                projectsGrid.classList.remove('hidden');
+                renderProjects();
+            } catch (err) {
+                console.error("Error loading projects:", err);
+                // Fallback to empty state or static data if server is down
+                loadingState.innerHTML = `
+                    <div class="text-center">
+                        <p class="text-red-400 mb-4">Offline: Unable to connect to MongoDB server.</p>
+                        <button onclick="loadProjects()" class="px-4 py-2 bg-indigo-600 rounded text-sm">Retry Connection</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Fallback images for projects without thumbnails
+        const fallbackImages = [
+            'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80',
+            'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80',
+            'https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=1200&q=80',
+            'https://images.unsplash.com/photo-1631675591470-4e5b72f7be62?w=1200&q=80',
+            'https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1200&q=80',
+            'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1200&q=80',
+            'https://images.unsplash.com/photo-1616486701797-0f33f61038ec?w=1200&q=80',
+            'https://images.unsplash.com/photo-1615529328331-f8917597711f?w=1200&q=80',
+            'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=1200&q=80',
+            'https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=1200&q=80'
+        ];
+
+        function getRandomImage(id, seedStr = "") {
+            const base64Fallback = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%231a1a1a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='serif' font-size='32' fill='%23D4AF37'%3EExcellence Design Studio%3C/text%3E%3C/svg%3E";
+
+            if (!fallbackImages || fallbackImages.length === 0) return base64Fallback;
+
+            let hash = parseInt(id) || 0;
+            if (seedStr) {
+                for (let i = 0; i < seedStr.length; i++) {
+                    hash = ((hash << 5) - hash) + seedStr.charCodeAt(i);
+                    hash |= 0;
+                }
+            }
+            const index = Math.abs(hash) % fallbackImages.length;
+            return fallbackImages[index] || base64Fallback;
+        }
+
+        function showNotification(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            const links = document.querySelectorAll('.mobile-link');
+            let isOpen = false;
+
+            btn.addEventListener('click', () => {
+                isOpen = !isOpen;
+                if (isOpen) {
+                    menu.classList.remove('translate-x-full');
+                    icon.setAttribute('data-lucide', 'x');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    menu.classList.add('translate-x-full');
+                    icon.setAttribute('data-lucide', 'menu');
+                    document.body.style.overflow = 'auto';
+                }
+                lucide.createIcons();
+            });
+
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    isOpen = false;
+                    menu.classList.add('translate-x-full');
+                    icon.setAttribute('data-lucide', 'menu');
+                    document.body.style.overflow = 'auto';
+                    lucide.createIcons();
+                });
+            });
+        }
+
+        function filterProjects(type) {
+            currentFilter = type;
+
+            // Update Tab Active State
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                if (tab.textContent.includes(type) || (type === 'all' && tab.textContent === 'All')) {
+                    tab.classList.add('active');
+                } else {
+                    tab.classList.remove('active');
+                }
+            });
+
+            renderProjects();
+        }
+
+        function handleFiltersChange() {
+            renderProjects();
+        }
+
+        function resetAllFilters() {
+            document.getElementById('search-name').value = '';
+            document.getElementById('search-location').value = '';
+            document.getElementById('size-filter').value = 'all';
+            filterProjects('all');
+        }
+
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            const searchName = document.getElementById('search-name').value.toLowerCase();
+            // Mobile simplified: No location/size filter for now
+            const searchLoc = '';
+            const sizeFilter = 'all';
+
+            let displayProjects = allProjects.filter(p => {
+                // Category Filter (Current active tag)
+                const matchesType = currentFilter === 'all' || p.projectType === currentFilter;
+
+                // Text Search (Name/Details)
+                const searchNameLower = searchName.toLowerCase();
+                const matchesName = !searchName ||
+                    (p.clientName || '').toLowerCase().includes(searchNameLower) ||
+                    (p.details || '').toLowerCase().includes(searchNameLower);
+
+                return matchesType && matchesName;
+            });
+
+            if (displayProjects.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-20">
+                        <p class="text-gray-500">No projects found for these filters.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            grid.className = "projects-list";
+            grid.innerHTML = displayProjects.map(project => {
+                // Image Handling with improved fallback
+                let displayImage = project.thumbnail;
+                if (!displayImage && project.media && project.media.length > 0) {
+                    const firstImage = project.media.find(m => !m.type || m.type.startsWith('image/'));
+                    if (firstImage) displayImage = firstImage.data;
+                }
+
+                if (!displayImage || displayImage === "" || (typeof displayImage === 'string' && displayImage.includes('instagram.com'))) {
+                    displayImage = getRandomImage(project.id || project._id, project.clientName);
+                }
+
+                const price = project.budget || 'Quote on request';
+                const status = project.status ? project.status.toLowerCase() : 'live';
+                const projectBudgetNum = project.budget ? parseInt(project.budget.replace(/[^0-9]/g, '')) : 0;
+                const isBestRating = (parseFloat(project.rating) || 0) >= 4.5;
+                const isBestBudget = projectBudgetNum > 0 && projectBudgetNum < 2000000;
+
+                // Safety variables for HTML attributes
+                const safetyName = (project.clientName || 'Project').replace(/'/g, "\\'");
+                const safetyId = project.id || project._id || '';
+
+                return `
+                <div class="project-card-horizontal group" onclick="openModal('${safetyId}')">
+                    <div class="card-image-wrapper">
+                        <img src="${displayImage}" class="card-image" alt="${project.clientName}" onerror="this.src=getRandomImage('${safetyId}', '${safetyName}')">
+                        <div class="absolute top-4 left-4 flex flex-col gap-2">
+                           ${status === 'sold' ? '<div class="status-badge status-sold">Sold Out</div>' : '<div class="status-badge status-live">Live Now</div>'}
+                           ${isBestRating ? '<div class="bg-indigo-600/90 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold text-white uppercase tracking-tighter w-fit border border-white/10">Best Rating</div>' : ''}
+                           ${isBestBudget ? '<div class="bg-gold-600/90 backdrop-blur-md px-2 py-1 rounded text-[9px] font-bold text-white uppercase tracking-tighter w-fit border border-white/10">Best Budget</div>' : ''}
+                        </div>
+                        <div class="absolute bottom-4 left-4 inline-flex items-center gap-2 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-md text-[11px] font-medium text-white border border-white/10">
+                            View images
+                        </div>
+                    </div>
+                    
+                    <div class="card-content">
+                        <div class="card-header items-start">
+                            <div class="flex-1 pr-16">
+                                <h3 class="card-title">${project.clientName}</h3>
+                                <div class="star-rating mb-2">
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                    <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                </div>
+                                <div class="card-location text-xs flex items-center gap-1.5 text-gray-400 mb-4">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-gold-400"></i>
+                                    <span>${project.location || 'Luxury Project'}</span>
+                                </div>
+                                
+                                <p class="card-description">
+                                    ${project.details || 'A premium luxury interior design project crafted with excellence and high-end materials.'}
+                                </p>
+                            </div>
+
+                            <div class="absolute top-6 right-6 flex flex-col items-end">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <div class="text-right">
+                                        <div class="text-[10px] uppercase tracking-tighter font-extrabold text-blue-500 leading-tight">Excellent</div>
+                                        <div class="text-[9px] text-gray-500 leading-tight">Verified Project</div>
+                                    </div>
+                                    <div class="bg-[#1e1b4b] text-white p-1.5 px-2.5 rounded-md font-bold text-sm shadow-lg">4.9</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto pt-6 border-t border-white/5 flex justify-end items-end">
+                            
+                            <button class="cta-button shadow-2xl shadow-indigo-500/10 px-6 py-2.5 rounded-xl hover:scale-105 active:scale-95" onclick="event.stopPropagation(); window.open('${project.instagramUrl || 'https://www.instagram.com/homesbyexcellence'}', '_blank');">
+                                <span class="tracking-tight">See details</span>
+                                <i data-lucide="instagram" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function openModal(projectId) {
+            // Check both id and _id as MongoDB uses _id by default
+            currentProject = allProjects.find(p => (p.id === projectId || p._id === projectId));
+            if (!currentProject) {
+                console.error("Project not found with ID:", projectId);
+                return;
+            }
+
+            currentMediaIndex = 0;
+
+            // Set modal content
+            document.getElementById('modal-type').textContent = currentProject.projectType;
+            document.getElementById('modal-client').textContent = currentProject.clientName;
+            document.getElementById('modal-location').querySelector('span').textContent = currentProject.location;
+            document.getElementById('modal-start-date').textContent = currentProject.startDate || 'Not set';
+            document.getElementById('modal-end-date').textContent = currentProject.endDate || currentProject.completedAt || 'Ongoing';
+            document.getElementById('modal-details').textContent = currentProject.details || 'No description available.';
+
+            // Instagram link
+            const instagramBtn = document.getElementById('modal-instagram');
+            if (currentProject.instagramUrl) {
+                instagramBtn.href = currentProject.instagramUrl;
+                instagramBtn.classList.remove('hidden');
+            } else {
+                instagramBtn.href = 'https://www.instagram.com/homesbyexcellence?igsh=MTNnNThzdngydTlzMA%3D%3D&utm_source=qr';
+            }
+
+            // Budget section
+            const budgetSection = document.getElementById('modal-budget-section');
+            if (currentProject.showBudget && currentProject.budget && currentProject.budget !== 'Not specified') {
+                budgetSection.classList.remove('hidden');
+                document.getElementById('modal-budget').textContent = currentProject.budget;
+            } else {
+                budgetSection.classList.add('hidden');
+            }
+
+            // Setup media
+            setupMedia();
+
+            document.getElementById('project-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+        }
+
+        function setupMedia() {
+            const hasMedia = currentProject.media && currentProject.media.length > 0;
+            const imgEl = document.getElementById('modal-image');
+            const videoEl = document.getElementById('modal-video');
+            const prevBtn = document.getElementById('media-prev');
+            const nextBtn = document.getElementById('media-next');
+            const navDots = document.getElementById('media-nav');
+            const thumbnails = document.getElementById('modal-thumbnails');
+
+            if (!hasMedia) {
+                imgEl.classList.remove('hidden');
+                imgEl.src = 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80';
+                videoEl.classList.add('hidden');
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                navDots.innerHTML = '';
+                thumbnails.classList.add('hidden');
+                return;
+            }
+
+            const mediaCount = currentProject.media.length;
+
+            // Show/hide navigation
+            if (mediaCount > 1) {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+                thumbnails.classList.remove('hidden');
+            } else {
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                thumbnails.classList.add('hidden');
+            }
+
+            // Create nav dots
+            navDots.innerHTML = currentProject.media.map((_, i) => `
+                    <div class="media-nav-btn ${i === currentMediaIndex ? 'active' : ''}" onclick="goToMedia(${i})"></div>
+                `).join('');
+
+            // Create thumbnails
+            thumbnails.innerHTML = currentProject.media.map((media, i) => {
+                const isVideo = media.type && media.type.startsWith('video/');
+                return `
+                    <div class="thumbnail ${i === currentMediaIndex ? 'active' : ''}" onclick="goToMedia(${i})">
+                        ${isVideo ? `
+                            <div class="w-full h-full bg-gray-800 flex items-center justify-center">
+                                <i data-lucide="play" class="w-4 h-4 text-white"></i>
+                            </div>
+                        ` : `
+                            <img src="${media.data}" alt="">
+                        `}
+                    </div>
+                `;
+            }).join('');
+
+            displayCurrentMedia();
+        }
+
+        function displayCurrentMedia() {
+            if (!currentProject.media || currentProject.media.length === 0) return;
+
+            const media = currentProject.media[currentMediaIndex];
+            const isVideo = media.type && media.type.startsWith('video/');
+            const imgEl = document.getElementById('modal-image');
+            const videoEl = document.getElementById('modal-video');
+
+            // Update nav dots
+            document.querySelectorAll('.media-nav-btn').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentMediaIndex);
+            });
+
+            // Update thumbnails
+            document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === currentMediaIndex);
+            });
+
+            if (isVideo) {
+                imgEl.classList.add('hidden');
+                videoEl.classList.remove('hidden');
+                // Hide instagram frame if exists
+                const instaFrame = document.getElementById('modal-instagram-embed');
+                if (instaFrame) instaFrame.classList.add('hidden');
+
+                videoEl.src = media.data;
+                videoEl.play();
+            } else if (media.type === 'instagram') {
+                imgEl.classList.add('hidden');
+                videoEl.classList.add('hidden');
+                videoEl.pause();
+
+                let instaFrame = document.getElementById('modal-instagram-embed');
+                if (!instaFrame) {
+                    instaFrame = document.createElement('iframe');
+                    instaFrame.id = 'modal-instagram-embed';
+                    instaFrame.className = 'modal-media';
+                    instaFrame.style.border = 'none';
+                    document.querySelector('.modal-media-section').appendChild(instaFrame);
+                }
+                instaFrame.classList.remove('hidden');
+                // Use Instagram Embed URL format
+                // Transform https://www.instagram.com/reel/CODE/ to https://www.instagram.com/reel/CODE/embed
+                let embedUrl = media.data;
+                if (!embedUrl.endsWith('/embed') && !embedUrl.endsWith('/embed/')) {
+                    embedUrl = embedUrl.split('?')[0].replace(/\/$/, '') + '/embed';
+                }
+                instaFrame.src = embedUrl;
+
+            } else {
+                videoEl.classList.add('hidden');
+                videoEl.pause();
+                const instaFrame = document.getElementById('modal-instagram-embed');
+                if (instaFrame) instaFrame.classList.add('hidden');
+
+                imgEl.classList.remove('hidden');
+                imgEl.src = media.data;
+            }
+        }
+
+        function changeMedia(direction) {
+            if (!currentProject.media || currentProject.media.length <= 1) return;
+
+            currentMediaIndex += direction;
+            if (currentMediaIndex < 0) currentMediaIndex = currentProject.media.length - 1;
+            if (currentMediaIndex >= currentProject.media.length) currentMediaIndex = 0;
+
+            displayCurrentMedia();
+        }
+
+        function goToMedia(index) {
+            currentMediaIndex = index;
+            displayCurrentMedia();
+        }
+
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+
+            document.getElementById('project-modal').classList.remove('active');
+            document.body.style.overflow = '';
+
+            // Stop video if playing
+            const video = document.getElementById('modal-video');
+            if (video) {
+                video.pause();
+                video.src = '';
+            }
+
+            currentProject = null;
+            currentMediaIndex = 0;
+        }
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('project-modal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProjects();
+        });
+        // Page Transition Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('loaded');
+        });
+
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            if (link && link.href && link.href.startsWith(window.location.origin) && !link.hash && link.target !== '_blank') {
+                e.preventDefault();
+                document.body.classList.remove('loaded');
+                setTimeout(() => {
+                    window.location.href = link.href;
+                }, 400);
+            }
+        });
+    </script>
+</body>
+
+</html>

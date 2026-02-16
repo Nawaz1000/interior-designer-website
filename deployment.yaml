@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interia-website-deployment
+  labels:
+    app: interia-website
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: interia-website
+  template:
+    metadata:
+      labels:
+        app: interia-website
+    spec:
+      containers:
+        - name: interia-website
+          image: interia-website:latest # Ensure this image is built/pushed to your registry
+          imagePullPolicy: IfNotPresent # Useful for local testing with Minikube/Docker Desktop
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: NODE_ENV
+              value: "production"
+          # Uncomment and set if you want to override the MongoDB URI
+          # - name: MONGODB_URI
+          #   value: "mongodb+srv://..."
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: interia-website-service
+spec:
+  selector:
+    app: interia-website
+  type: LoadBalancer # Change to NodePort or ClusterIP based on your cluster (e.g., Minikube usually needs `minikube tunnel` for LoadBalancer)
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000

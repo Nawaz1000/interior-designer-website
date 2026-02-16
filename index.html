@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interia - Luxury Interior Design Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            400: '#D4AF37',
+                            500: '#C5A028',
+                            600: '#B8941F',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#141414',
+                            700: '#1a1a1a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E5C2 50%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-card {
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(212, 175, 55, 0.15);
+        }
+
+        .service-icon-wrapper {
+            position: relative;
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover .service-icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .service-icon-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.4) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .service-card:hover .service-icon-glow {
+            opacity: 1;
+        }
+
+        .image-zoom {
+            overflow: hidden;
+        }
+
+        .image-zoom img {
+            transition: transform 0.7s ease;
+        }
+
+        .image-zoom:hover img {
+            transform: scale(1.1);
+        }
+
+        .loader-overlay {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            border-top-color: #D4AF37;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Testimonials Slider - Fixed */
+        .testimonial-slide {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .testimonial-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+            position: relative;
+        }
+
+        .testimonial-slide.prev {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .portfolio-item {
+            position: relative;
+            aspect-ratio: 3/2;
+            overflow: hidden;
+            cursor: pointer;
+            background: #141414;
+            border-radius: 1rem;
+            /* Softened Curved shape */
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .portfolio-item:hover {
+            border-color: #D4AF37;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            transform: translateY(-5px);
+            z-index: 10;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            z-index: 20;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .status-live {
+            background: rgba(34, 197, 94, 0.9);
+            color: white;
+        }
+
+        .status-sold {
+            background: rgba(185, 28, 28, 0.9);
+            color: white;
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 100%);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 32px;
+            transform: translateY(20px);
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.7);
+        }
+
+        .portfolio-title {
+            letter-spacing: 0.02em;
+            margin-bottom: 8px;
+        }
+
+        .portfolio-description {
+            line-height: 1.6;
+            color: #d1d5db;
+            font-weight: 300;
+        }
+
+        .portfolio-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .project-card-index {
+            position: relative;
+            background: #141414;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            aspect-ratio: 4/5;
+        }
+
+        .project-card-index:hover {
+            border-color: #D4AF37;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -15px rgba(212, 175, 55, 0.2);
+        }
+
+        .card-image-index {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .project-card-index:hover .card-image-index {
+            transform: scale(1.1);
+            filter: brightness(0.6);
+        }
+
+        .card-overlay-index {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .project-card-index:hover .card-overlay-index {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-title-index {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .card-budget-index {
+            font-size: 1rem;
+            color: #D4AF37;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        @media (max-width: 1024px) {
+            .portfolio-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .portfolio-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .video-indicator {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+            color: #D4AF37;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* New Premium Vertical Card */
+        .project-card-premium {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .white-theme .project-card-premium {
+            background: #ffffff;
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Dark mode default override if needed, assuming body has dark background by default but cards are white? 
+           Actually the design in image shows white card. Let's make it adaptive.
+        */
+        body:not(.white-theme) .project-card-premium {
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-card-premium:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .premium-card-image {
+            height: 240px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .premium-card-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .premium-card-title {
+            font-family: 'Playfair Display', serif;
+            /* Changed to Serif as requested */
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #111827;
+        }
+
+        body:not(.white-theme) .premium-card-title {
+            color: #ffffff;
+        }
+
+        .premium-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #6B7280;
+            margin-bottom: 1rem;
+        }
+
+        body:not(.white-theme) .premium-card-meta {
+            color: #9ca3af;
+        }
+
+        .premium-cta-button {
+            margin-top: auto;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1e1b4b;
+            color: white;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .premium-cta-button:hover {
+            background-color: #312e81;
+        }
+
+        .bg-gradient-overlay {
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-gold-400 selection:text-dark-900">
+
+    <!-- Page Loader -->
+    <div id="loader" class="loader-overlay">
+        <div class="text-center">
+            <div class="spinner mx-auto mb-4"></div>
+            <h2 class="font-serif text-2xl text-gold-400 tracking-widest">INTERIA</h2>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2 z-50 relative">
+                <img src="logo.png" alt="Excellence Logo" class="h-12 w-auto">
+                <span class="text-xl font-serif font-bold tracking-wider hidden sm:inline-block">EXCELLENCE</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Home</a>
+                <a href="#about"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">About</a>
+                <a href="#services"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Services</a>
+                <a href="projects.html"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Projects</a>
+                <a href="#portfolio"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Portfolio</a>
+                <a href="#testimonials"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Reviews</a>
+                <a href="admin.html"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Admin</a>
+                <a href="#contact"
+                    class="px-6 py-2 border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-dark-900 transition-all duration-300 text-sm uppercase tracking-widest rounded-sm">Contact</a>
+                <div class="flex items-center gap-4 ml-4 pl-4 border-l border-white/10">
+                    <a href="https://wa.me/919867866488" target="_blank"
+                        class="text-gray-400 hover:text-[#25D366] transition-colors" title="WhatsApp Us">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://www.instagram.com/homesbyexcellence" target="_blank"
+                        class="text-gray-400 hover:text-gold-400 transition-colors" title="Instagram">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <button onclick="toggleTheme()"
+                class="p-2 text-white hover:text-gold-400 transition-colors mr-4 z-50 relative"
+                aria-label="Toggle Theme">
+                <i data-lucide="sun" class="w-5 h-5 theme-toggle-icon"></i>
+            </button>
+
+            <button id="mobile-menu-btn" class="md:hidden text-white z-50 relative">
+                <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu"
+            class="fixed inset-0 bg-dark-900/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden">
+            <a href="#home"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Home</a>
+            <a href="#about"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">About</a>
+            <a href="#services"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Services</a>
+            <a href="projects.html"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Projects</a>
+            <a href="#portfolio"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Portfolio</a>
+            <a href="#testimonials"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Reviews</a>
+            <a href="admin.html"
+                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Admin</a>
+            <a href="https://wa.me/919867866488" target="_blank"
+                class="text-2xl font-serif uppercase tracking-widest text-[#25D366] mobile-link flex items-center gap-2">
+                <i data-lucide="phone" class="w-6 h-6"></i> WhatsApp</a>
+            <a href="https://www.instagram.com/homesbyexcellence" target="_blank"
+                class="text-2xl font-serif uppercase tracking-widest text-gold-400 mobile-link flex items-center gap-2">
+                <i data-lucide="instagram" class="w-6 h-6"></i> Instagram</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+        style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1974&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed;">
+        <div class="absolute inset-0 bg-black/70 z-0"></div>
+        <canvas id="hero-canvas" class="absolute inset-0 w-full h-full z-0 opacity-40"></canvas>
+        <div
+            class="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-dark-900 z-0 pointer-events-none">
+        </div>
+
+        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+            <div class="mb-6" style="animation: fadeInUp 0.8s ease-out 0.5s both;">
+                <span class="text-gold-400 text-sm uppercase tracking-[0.3em] font-medium">Excellence Real Estate &
+                    Interior</span>
+            </div>
+
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+                <span id="typewriter" class="typing-cursor"></span>
+            </h1>
+
+            <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
+                style="animation: fadeInUp 0.8s ease-out 0.9s both;">
+                Transform your space into a masterpiece of elegance and comfort. We craft bespoke interiors that reflect
+                your unique personality and lifestyle.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                style="animation: fadeInUp 0.8s ease-out 1.1s both;">
+                <a href="projects.html"
+                    class="group px-8 py-4 bg-gold-400 text-dark-900 font-semibold hover:bg-gold-500 transition-all duration-300 flex items-center gap-2 rounded-sm">
+                    View Our Work
+                    <i data-lucide="arrow-right" class="w-5 h-5 transition-transform group-hover:translate-x-1"></i>
+                </a>
+                <a href="https://wa.me/919867866488" target="_blank"
+                    class="px-8 py-4 border border-white/30 hover:bg-[#25D366] hover:text-white transition-all duration-300 backdrop-blur-sm rounded-sm flex items-center gap-2">
+                    <i data-lucide="phone" class="w-5 h-5"></i>
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
+            <i data-lucide="chevron-down" class="w-6 h-6 text-gold-400"></i>
+        </div>
+    </section>
+
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-dark-900 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="relative reveal order-2 md:order-1">
+                    <div class="relative z-10">
+                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80"
+                            alt="Interior Design Process"
+                            class="w-full rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="absolute -bottom-6 -right-6 w-full h-full border-2 border-gold-400/30 rounded-lg z-0">
+                    </div>
+                </div>
+
+                <div class="reveal order-1 md:order-2">
+                    <span class="text-gold-400 text-sm uppercase tracking-[0.3em] font-medium mb-4 block">About
+                        Us</span>
+                    <h2 class="font-serif text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                        Creating Spaces That <span class="italic text-gold-400">Inspire</span> Living
+                    </h2>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        At Interia, we believe that great design is more than just aesthetics—it's about creating
+                        environments that enhance your daily life. Our team of passionate designers brings together
+                        creativity, functionality, and luxury.
+                    </p>
+                    <p class="text-gray-400 mb-8 leading-relaxed">
+                        With over 15 years of experience in high-end residential and commercial design, we've mastered
+                        the art of balancing timeless elegance with modern innovation.
+                    </p>
+
+                    <div class="flex items-center gap-4 p-4 bg-dark-800/50 rounded-xl border border-white/5">
+                        <img src="logo.png" alt="Founder"
+                            class="w-16 h-16 rounded-full object-contain bg-white/5 border-2 border-gold-400 p-1">
+                        <div>
+                            <div class="font-serif font-bold text-lg">homesbyexcellence</div>
+                            <div class="text-gold-400 text-sm">Founder & Creative Director</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-dark-800 relative overflow-hidden">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-gold-400/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-gold-400/5 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-gold-400 text-sm uppercase tracking-[0.3em] font-medium mb-4 block">Our
+                    Services</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">What We Offer</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Comprehensive interior design solutions tailored to transform
+                    your vision into reality.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="service-card p-8 rounded-2xl reveal cursor-pointer group">
+                    <div
+                        class="service-icon-wrapper w-20 h-20 rounded-2xl bg-gradient-to-br from-gold-400/20 to-gold-400/5 flex items-center justify-center mb-6 relative">
+                        <div class="service-icon-glow rounded-2xl"></div>
+                        <i data-lucide="home" class="w-10 h-10 text-gold-400 relative z-10 animate-float"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-4 group-hover:text-gold-400 transition-colors">
+                        Residential Design</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Transform your home into a sanctuary of comfort and
+                        style. From apartments to villas, we create living spaces that reflect your personality.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Space Planning</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Custom Furniture</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Lighting Design</li>
+                    </ul>
+                </div>
+
+                <div class="service-card p-8 rounded-2xl reveal cursor-pointer group" style="transition-delay: 0.1s;">
+                    <div
+                        class="service-icon-wrapper w-20 h-20 rounded-2xl bg-gradient-to-br from-gold-400/20 to-gold-400/5 flex items-center justify-center mb-6 relative">
+                        <div class="service-icon-glow rounded-2xl"></div>
+                        <i data-lucide="building-2" class="w-10 h-10 text-gold-400 relative z-10 animate-float"
+                            style="animation-delay: 0.5s;"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-4 group-hover:text-gold-400 transition-colors">
+                        Commercial Spaces</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Elevate your business environment with designs that
+                        inspire productivity and impress clients. Offices, hotels, and retail spaces.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Brand Integration</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Space Optimization</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Ergonomic Design</li>
+                    </ul>
+                </div>
+
+                <div class="service-card p-8 rounded-2xl reveal cursor-pointer group" style="transition-delay: 0.2s;">
+                    <div
+                        class="service-icon-wrapper w-20 h-20 rounded-2xl bg-gradient-to-br from-gold-400/20 to-gold-400/5 flex items-center justify-center mb-6 relative">
+                        <div class="service-icon-glow rounded-2xl"></div>
+                        <i data-lucide="palette" class="w-10 h-10 text-gold-400 relative z-10 animate-float"
+                            style="animation-delay: 1s;"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-4 group-hover:text-gold-400 transition-colors">Design
+                        Consultation</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Expert guidance for your DIY projects or renovations.
+                        Get professional advice on color schemes, furniture selection, and space planning.</p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Color Consultation</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Shopping Assistance</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Renovation Planning</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section - Shows Same Projects as Projects Page -->
+    <section id="portfolio" class="py-24 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <span class="text-gold-400 text-sm uppercase tracking-[0.3em] font-medium mb-4 block">Portfolio</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">Featured Projects</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Explore our latest completed projects.</p>
+            </div>
+
+            <div id="portfolio-grid" class="portfolio-grid reveal">
+                <!-- Projects loaded dynamically -->
+            </div>
+
+            <div class="text-center mt-10">
+                <a href="projects.html"
+                    class="inline-flex items-center gap-2 px-8 py-3 border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-dark-900 transition-all duration-300 rounded-sm">
+                    View All Projects
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Slider - Fixed -->
+    <section id="testimonials" class="py-24 bg-dark-800 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span
+                    class="text-gold-400 text-sm uppercase tracking-[0.3em] font-medium mb-4 block">Testimonials</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold">What Clients Say</h2>
+            </div>
+
+            <div class="relative" id="testimonials-container">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-slide active" data-index="0">
+                    <div class="text-center max-w-3xl mx-auto">
+                        <div class="flex justify-center mb-8">
+                            <div class="flex gap-1">
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                            </div>
+                        </div>
+                        <p class="text-xl md:text-2xl text-gray-300 italic mb-10 leading-relaxed font-light">
+                            "Interia transformed our house into a home we never want to leave. Their attention to detail
+                            and understanding of our lifestyle was impeccable. Every room tells a story of elegance and
+                            comfort."
+                        </p>
+                        <div class="flex items-center justify-center gap-4">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
+                                alt="Sarah Johnson"
+                                class="w-16 h-16 rounded-full object-cover border-2 border-gold-400/50">
+                            <div class="text-left">
+                                <div class="font-serif font-bold text-lg text-white">Sarah Johnson</div>
+                                <div class="text-gold-400 text-sm">Homeowner, Beverly Hills</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-slide" data-index="1">
+                    <div class="text-center max-w-3xl mx-auto">
+                        <div class="flex justify-center mb-8">
+                            <div class="flex gap-1">
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                            </div>
+                        </div>
+                        <p class="text-xl md:text-2xl text-gray-300 italic mb-10 leading-relaxed font-light">
+                            "Working with Interia on our office redesign was a game-changer. Employee satisfaction
+                            increased by 40%, and clients constantly compliment our space. Truly world-class design."
+                        </p>
+                        <div class="flex items-center justify-center gap-4">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
+                                alt="Michael Chen"
+                                class="w-16 h-16 rounded-full object-cover border-2 border-gold-400/50">
+                            <div class="text-left">
+                                <div class="font-serif font-bold text-lg text-white">Michael Chen</div>
+                                <div class="text-gold-400 text-sm">CEO, Tech Innovations</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-slide" data-index="2">
+                    <div class="text-center max-w-3xl mx-auto">
+                        <div class="flex justify-center mb-8">
+                            <div class="flex gap-1">
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                                <i data-lucide="star" class="w-5 h-5 text-gold-400 fill-gold-400"></i>
+                            </div>
+                        </div>
+                        <p class="text-xl md:text-2xl text-gray-300 italic mb-10 leading-relaxed font-light">
+                            "The team's ability to blend luxury with comfort is unmatched. They didn't just design our
+                            hotel; they created an experience that our guests remember and talk about for years."
+                        </p>
+                        <div class="flex items-center justify-center gap-4">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
+                                alt="Isabella Romano"
+                                class="w-16 h-16 rounded-full object-cover border-2 border-gold-400/50">
+                            <div class="text-left">
+                                <div class="font-serif font-bold text-lg text-white">Isabella Romano</div>
+                                <div class="text-gold-400 text-sm">Hotel Owner, Paris</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="flex justify-center items-center gap-4 mt-12">
+                    <button onclick="prevTestimonial()"
+                        class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-all">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    </button>
+
+                    <div class="flex gap-2" id="testimonial-dots">
+                        <button onclick="goToTestimonial(0)" class="w-3 h-3 rounded-full bg-gold-400 transition-all"
+                            data-index="0"></button>
+                        <button onclick="goToTestimonial(1)"
+                            class="w-3 h-3 rounded-full bg-white/30 hover:bg-gold-400/50 transition-all"
+                            data-index="1"></button>
+                        <button onclick="goToTestimonial(2)"
+                            class="w-3 h-3 rounded-full bg-white/30 hover:bg-gold-400/50 transition-all"
+                            data-index="2"></button>
+                    </div>
+
+                    <button onclick="nextTestimonial()"
+                        class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:border-gold-400 hover:text-gold-400 transition-all">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 pt-16 pb-8 border-t border-dark-700">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-2">
+                    <a href="#" class="flex items-center gap-2 mb-6">
+                        <img src="logo.png" alt="Excellence Logo" class="h-12 w-auto">
+                        <span class="text-3xl font-serif font-bold tracking-wider">EXCELLENCE</span>
+                    </a>
+                    <p class="text-gray-400 mb-6 max-w-md">
+                        Creating extraordinary interiors that inspire and delight. We bring your vision to life with
+                        precision, creativity, and unparalleled craftsmanship.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://www.instagram.com/homesbyexcellence?igsh=MTNnNThzdngydTlzMA%3D%3D&utm_source=qr"
+                            target="_blank"
+                            class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-gold-400 hover:text-dark-900 transition-all">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-gold-400 hover:text-dark-900 transition-all">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-gold-400 hover:text-dark-900 transition-all">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-serif font-bold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-gray-400 hover:text-gold-400 transition-colors">About Us</a>
+                        </li>
+                        <li><a href="#services" class="text-gray-400 hover:text-gold-400 transition-colors">Services</a>
+                        </li>
+                        <li><a href="projects.html"
+                                class="text-gray-400 hover:text-gold-400 transition-colors">Projects</a></li>
+                        <li><a href="#portfolio"
+                                class="text-gray-400 hover:text-gold-400 transition-colors">Portfolio</a></li>
+                        <li><a href="https://wa.me/919867866488" target="_blank"
+                                class="text-gray-400 hover:text-gold-400 transition-colors">WhatsApp</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-serif font-bold text-lg mb-6">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe for design tips and inspiration.</p>
+                    <form onsubmit="event.preventDefault(); showNotification('Subscribed successfully!');" class="flex">
+                        <input type="email" placeholder="Your email"
+                            class="flex-1 bg-dark-800 border border-dark-700 rounded-l-lg px-4 py-2 focus:border-gold-400 focus:outline-none text-white">
+                        <button type="submit"
+                            class="bg-gold-400 text-dark-900 px-4 py-2 rounded-r-lg hover:bg-gold-500 transition-colors">
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-dark-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">&copy; 2026 Excellence Real Estate & Interior. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <a href="#" class="hover:text-gold-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-gold-400 transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast"
+        class="fixed bottom-6 right-6 px-6 py-4 bg-gold-400 text-dark-900 rounded-lg shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3 font-semibold">
+        <i data-lucide="check-circle" class="w-5 h-5"></i>
+        <span id="toast-message">Success</span>
+    </div>
+
+    <script>
+        // Initialize
+        let currentTestimonial = 0;
+        const totalTestimonials = 3;
+        let testimonialInterval;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').remove(), 500);
+            }, 800);
+
+            lucide.createIcons();
+            initCanvas();
+            initObserver();
+            loadPortfolioProjects();
+            startTestimonialAutoPlay();
+        });
+
+
+        // Canvas Animation
+        function initCanvas() {
+            const canvas = document.getElementById('hero-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let width, height;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.size = Math.random() * 2 + 1;
+                    this.alpha = Math.random() * 0.5 + 0.1;
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212, 175, 55, ${this.alpha})`;
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                const count = window.innerWidth < 768 ? 30 : 60;
+                for (let i = 0; i < count; i++) particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 150) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(212, 175, 55, ${0.15 * (1 - dist / 150)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                    particles[i].update();
+                    particles[i].draw();
+                }
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => { resize(); initParticles(); });
+            resize();
+            initParticles();
+            animate();
+        }
+
+        // Scroll Observer
+        function initObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+
+        // Fallback images for projects without thumbnails
+        const fallbackImages = [
+            'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80',
+            'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80',
+            'https://images.unsplash.com/photo-1616137466211-f939a420be84?w=800&q=80',
+            'https://images.unsplash.com/photo-1616594039964-40891a90c6b9?w=800&q=80',
+            'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=80',
+            'https://images.unsplash.com/photo-1615529328331-f8917597711f?w=800&q=80',
+            'https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=800&q=80',
+            'https://images.unsplash.com/photo-1615873968403-89e068629275?w=800&q=80',
+            'https://images.unsplash.com/photo-1617103996702-96ff29b1c467?w=800&q=80',
+            'https://images.unsplash.com/photo-1617806118233-f8e1374d619c?w=800&q=80',
+            'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=800&q=80',
+            'https://images.unsplash.com/photo-1618221469555-7f3bb97540c6?w=800&q=80',
+            'https://images.unsplash.com/photo-1618219740975-d4198263cadd?w=800&q=80',
+            'https://images.unsplash.com/photo-1618219944342-824e40a13285?w=800&q=80',
+            'https://images.unsplash.com/photo-1618219888342-83b652889240?w=800&q=80',
+            'https://images.unsplash.com/photo-1618219741244-67dce8a9561b?w=800&q=80',
+            'https://images.unsplash.com/photo-1618220179428-22790b461013?w=800&q=80',
+            'https://images.unsplash.com/photo-1618219904291-7647226f30e9?w=800&q=80',
+            'https://images.unsplash.com/photo-1631675591470-4e5b72f7be62?w=800&q=80',
+            'https://images.unsplash.com/photo-1631675665057-37651c629e4d?w=800&q=80',
+            'https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?w=800&q=80',
+            'https://images.unsplash.com/photo-1616046229478-9901c5536a45?w=800&q=80',
+            'https://images.unsplash.com/photo-1616047006789-b7af5afb8c20?w=800&q=80',
+            'https://images.unsplash.com/photo-1615876234886-fd9a39faa97f?w=800&q=80',
+            'https://images.unsplash.com/photo-1615876751522-6db4509e5300?w=800&q=80',
+            'https://images.unsplash.com/photo-1615875389345-0d6766440263?w=800&q=80'
+        ];
+
+        function getRandomImage(id, seedStr = "") {
+            const base64Fallback = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%231a1a1a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='serif' font-size='32' fill='%23D4AF37'%3EExcellence Design Studio%3C/text%3E%3C/svg%3E";
+
+            if (!fallbackImages || fallbackImages.length === 0) return base64Fallback;
+
+            // Create a hash from ID and string (like client name) to ensure uniqueness
+            let hash = parseInt(id) || 0;
+            if (seedStr) {
+                const s = String(seedStr);
+                for (let i = 0; i < s.length; i++) {
+                    hash = ((hash << 5) - hash) + s.charCodeAt(i);
+                    hash |= 0;
+                }
+            }
+            const index = Math.abs(hash) % fallbackImages.length;
+            return fallbackImages[index] || base64Fallback;
+        }
+
+        // Load Portfolio Projects from MongoDB API
+        async function loadPortfolioProjects() {
+            const grid = document.getElementById('portfolio-grid');
+
+            try {
+                const response = await fetch('/api/projects');
+                if (!response.ok) throw new Error('Failed to fetch');
+                const allProjects = await response.json();
+
+                // Show latest 6 live/sold projects
+                const completedProjects = allProjects
+                    .filter(p => !p.status || p.status === 'live' || p.status === 'sold' || p.status === 'completed')
+                    .slice(0, 6);
+
+                if (completedProjects.length === 0) {
+                    grid.innerHTML = `
+                        <div class="col-span-full text-center py-12">
+                            <p class="text-gray-500">Discovering excellence... stay tuned.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                grid.className = "portfolio-grid reveal active";
+                grid.innerHTML = completedProjects.map(project => {
+                    const imageUrl = project.thumbnail || getRandomImage(project._id || project.id, project.clientName);
+                    const isBestRating = (parseFloat(project.rating) || 0) >= 4.5;
+                    const price = project.budget || 'Quote on request';
+
+                    // Escaping for HTML attribute context (inline JS)
+                    const safetyName = (project.clientName || 'Project').replace(/'/g, "\\'");
+                    const projectId = project._id || project.id || '';
+
+                    return `
+                    <div class="project-card-premium group" onclick="window.location.href='projects.html'">
+                        <div class="relative overflow-hidden">
+                            <img src="${imageUrl}" class="premium-card-image transition-transform duration-500 group-hover:scale-110" alt="${project.clientName}" onerror="this.src=getRandomImage('${projectId}', '${safetyName}')">
+                            <div class="absolute top-3 left-3 flex flex-col gap-2">
+                                <div class="bg-green-500/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shadow-lg">Live Now</div>
+                                ${isBestRating ? '<div class="bg-indigo-600/90 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shadow-lg">Top Rated</div>' : ''}
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <span class="text-white text-xs font-medium">View Project Details</span>
+                            </div>
+                        </div>
+                        
+                        <div class="premium-card-content">
+                            <h3 class="premium-card-title">${project.clientName}</h3>
+                            <div class="flex gap-1 mb-2">
+                                <i data-lucide="star" class="w-3 h-3 text-gold-400 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 text-gold-400 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 text-gold-400 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 text-gold-400 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 text-gold-400 fill-current"></i>
+                            </div>
+                            
+                            <div class="premium-card-meta">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-gold-400"></i>
+                                <span class="truncate">${project.location || 'Premium Location'}</span>
+                            </div>
+                            
+                            <p class="text-sm text-gray-500 mb-4 line-clamp-2" style="min-height: 40px">
+                                ${project.details || 'Exclusive interior design project.'}
+                            </p>
+                            
+                            <button class="premium-cta-button">
+                                See details <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                    `;
+                }).join('');
+
+                lucide.createIcons();
+            } catch (err) {
+                console.error("Error loading index projects:", err);
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">Discovering excellence... Please check back later.</div>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initHeroCanvas === 'function') initHeroCanvas();
+            initObserver();
+            loadPortfolioProjects();
+
+            // Hero Typewriter
+            const typewriter = document.getElementById('typewriter');
+            if (typewriter) {
+                const text = "Inspired Interior Design.";
+                let i = 0;
+                function type() {
+                    if (i < text.length) {
+                        typewriter.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(type, 100);
+                    }
+                }
+                setTimeout(type, 1500);
+            }
+        });
+
+        // Testimonials - Fixed
+        function startTestimonialAutoPlay() {
+            testimonialInterval = setInterval(() => {
+                nextTestimonial();
+            }, 6000);
+        }
+
+        function updateTestimonials() {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            const dots = document.querySelectorAll('#testimonial-dots button');
+
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentTestimonial) {
+                    slide.classList.add('active');
+                } else if (index < currentTestimonial) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                if (index === currentTestimonial) {
+                    dot.classList.remove('bg-white/30');
+                    dot.classList.add('bg-gold-400');
+                } else {
+                    dot.classList.add('bg-white/30');
+                    dot.classList.remove('bg-gold-400');
+                }
+            });
+
+            lucide.createIcons();
+        }
+
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % totalTestimonials;
+            updateTestimonials();
+        }
+
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + totalTestimonials) % totalTestimonials;
+            updateTestimonials();
+        }
+
+        function goToTestimonial(index) {
+            currentTestimonial = index;
+            updateTestimonials();
+            clearInterval(testimonialInterval);
+            startTestimonialAutoPlay();
+        }
+
+        // Navigation
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-blur', 'py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.remove('nav-blur', 'py-2');
+                navbar.classList.add('py-4');
+            }
+        });
+
+        // Mobile Menu
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        let isMenuOpen = false;
+
+        mobileBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('translate-x-full');
+                menuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                menuIcon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.add('translate-x-full');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+
+        // Contact Form
+        function handleSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const originalContent = btn.innerHTML;
+
+            btn.disabled = true;
+            btn.innerHTML = `<div class="w-5 h-5 border-2 border-dark-900 border-t-transparent rounded-full animate-spin"></div> Sending...`;
+
+            setTimeout(() => {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+                lucide.createIcons();
+                showNotification('Message sent successfully!');
+                e.target.reset();
+            }, 1500);
+        }
+
+        // Notification
+        function showNotification(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').textContent = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 3000);
+        }
+
+        // Page Transition Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('loaded');
+        });
+
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a');
+            if (link && link.href && link.href.startsWith(window.location.origin) && !link.hash && link.target !== '_blank') {
+                e.preventDefault();
+                document.body.classList.remove('loaded');
+                setTimeout(() => {
+                    window.location.href = link.href;
+                }, 400);
+            }
+        });
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
