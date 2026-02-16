@@ -1230,6 +1230,9 @@
                         imageUrl = getRandomImage(projectId, project.clientName);
                     }
 
+                    const isBestRating = (parseFloat(project.rating) || 0) >= 4.5;
+                    const price = project.budget || 'Quote on request';
+
                     return `
                     <div class="project-card-premium group" onclick="window.location.href='projects.html'">
                         <div class="relative overflow-hidden">
