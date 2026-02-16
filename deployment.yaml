@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: interia-website
-          image: nawazs786/interia-website-new:latest
+          image: nawazs786/interia-website-latest:latest
           imagePullPolicy: IfNotPresent # Useful for local testing with Minikube/Docker Desktop
           ports:
             - containerPort: 3000
