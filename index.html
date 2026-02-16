@@ -1174,15 +1174,14 @@
 
             if (!fallbackImages || fallbackImages.length === 0) return base64Fallback;
 
-            // Create a hash from ID and string (like client name) to ensure uniqueness
-            let hash = parseInt(id) || 0;
-            if (seedStr) {
-                const s = String(seedStr);
-                for (let i = 0; i < s.length; i++) {
-                    hash = ((hash << 5) - hash) + s.charCodeAt(i);
-                    hash |= 0;
-                }
+            // Generate a robust hash from the project ID or seed string
+            let hash = 0;
+            const str = String(id || seedStr || Math.random());
+            for (let i = 0; i < str.length; i++) {
+                hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                hash |= 0;
             }
+
             const index = Math.abs(hash) % fallbackImages.length;
             return fallbackImages[index] || base64Fallback;
         }
@@ -1212,13 +1211,24 @@
 
                 grid.className = "portfolio-grid reveal active";
                 grid.innerHTML = completedProjects.map(project => {
-                    const imageUrl = project.thumbnail || getRandomImage(project._id || project.id, project.clientName);
-                    const isBestRating = (parseFloat(project.rating) || 0) >= 4.5;
-                    const price = project.budget || 'Quote on request';
+                    // Image Handling with improved robustness
+                    let imageUrl = project.thumbnail;
 
-                    // Escaping for HTML attribute context (inline JS)
-                    const safetyName = (project.clientName || 'Project').replace(/'/g, "\\'");
+                    // If thumbnail is empty/invalid, try media array
+                    if (!imageUrl || imageUrl.trim() === "" || imageUrl.includes('instagram.com/reel/')) {
+                        if (project.media && project.media.length > 0) {
+                            const firstImg = project.media.find(m => m.type === 'image' || (m.data && !m.data.includes('instagram.com/reel/')));
+                            if (firstImg) imageUrl = firstImg.data;
+                        }
+                    }
+
+                    // If still no valid image, use unique fallback
                     const projectId = project._id || project.id || '';
+                    const safetyName = (project.clientName || 'Project').replace(/'/g, "\\'");
+
+                    if (!imageUrl || imageUrl.trim() === "" || imageUrl.includes('instagram.com/reel/')) {
+                        imageUrl = getRandomImage(projectId, project.clientName);
+                    }
 
                     return `
                     <div class="project-card-premium group" onclick="window.location.href='projects.html'">
