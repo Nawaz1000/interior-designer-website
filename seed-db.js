@@ -3,101 +3,82 @@ const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://sayednawaz2006_db_user:78xBA3bzR9xzKcfX@cluster0.chvkyar.mongodb.net/";
 const client = new MongoClient(uri);
 
-const projects = [
-    {
-        id: "1",
-        clientName: "DK Residency Sankli Street",
-        projectType: "Residential",
-        location: "DK residency",
-        budget: "₹85L",
-        rating: 4.9,
-        thumbnail: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80",
-        details: "A premium luxury interior design project crafted with excellence and high-end materials.",
-        status: "live",
-        media: [{ type: "image", data: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80" }]
-    },
-    {
-        id: "2",
-        clientName: "Fortune Pearl Tower",
-        projectType: "Residential",
-        location: "Dongri , chawal gali",
-        budget: "₹15L",
-        rating: 4.7,
-        thumbnail: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80",
-        details: "Minimalist modern living space designed for comfort and elegance.",
-        status: "live",
-        media: [{ type: "image", data: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80" }]
-    },
-    {
-        id: "3",
-        clientName: "Skyline Heights",
-        projectType: "Commercial",
-        location: "Worli, Mumbai",
-        budget: "₹2.5Cr",
-        rating: 4.8,
-        thumbnail: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80",
-        details: "State-of-the-art office interior with sustainable design elements.",
-        status: "live",
-        media: [{ type: "image", data: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&q=80" }]
-    },
-    {
-        id: "4",
-        clientName: "Ocean View Villa",
-        projectType: "Residential",
-        location: "Alibaug",
-        budget: "₹4.2Cr",
-        rating: 5.0,
-        thumbnail: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&q=80",
-        details: "Luxury beachfront villa with Mediterranean-inspired interiors.",
-        status: "live",
-        media: [{ type: "image", data: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&q=80" }]
-    },
-    {
-        id: "5",
-        clientName: "The Grand Atrium",
-        projectType: "Commercial",
-        location: "BKC, Mumbai",
-        budget: "₹5Cr",
-        rating: 4.9,
-        thumbnail: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&q=80",
-        details: "Corporate headquarters featuring premium materials and open-plan design.",
-        status: "sold",
-        media: [{ type: "image", data: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200&q=80" }]
-    }
+// Pool of valid Unsplash luxury interior images
+const imagePool = [
+    "1616486333803-29e5a420f67e",
+    "1618221195710-dd6b41faaea6",
+    "1615874959474-d609969a20ed",
+    "1631675591470-4e5b72f7be62",
+    "1616137466211-f939a420be84",
+    "1600210492493-0946911123ea",
+    "1616486701797-0f33f61038ec",
+    "1615529328331-f8917597711f",
+    "1618219908412-a29a1bb7b86e",
+    "1616046229478-9901c5536a45",
+    "1616486338812-3dadae4b4ace",
+    "1497366216548-37526070297c",
+    "1613490493576-7fde63acd811",
+    "1497366811353-6870744d04b2",
+    "1600607687920-4e2a12cf6a58",
+    "1600607687644-c7171b42498f",
+    "1600585154340-be6161a56a0c",
+    "1600585153490-75f1f1d287a2",
+    "1600566753190-17811886722d",
+    "1600566753086-00f18fb6326c"
 ];
 
-// Add 15 more placeholder projects to reach 20 as requested
-for (let i = 6; i <= 20; i++) {
+const projects = [];
+
+// Generate 50 unique projects
+for (let i = 1; i <= 50; i++) {
+    const imageId = imagePool[i % imagePool.length];
+    const imageUrl = `https://images.unsplash.com/photo-${imageId}?w=1200&q=80`;
+
     projects.push({
         id: i.toString(),
-        clientName: `Luxury Project ${i}`,
-        projectType: i % 2 === 0 ? "Residential" : "Commercial",
-        location: "South Mumbai",
-        budget: `₹${(Math.random() * 5 + 0.5).toFixed(1)}Cr`,
+        clientName: i <= 5 ? [
+            "DK Residency Sankli Street",
+            "Fortune Pearl Tower",
+            "Skyline Heights",
+            "Ocean View Villa",
+            "The Grand Atrium"
+        ][i - 1] : `Luxury Residence ${i}`,
+        projectType: i % 3 === 0 ? "Commercial" : "Residential",
+        location: i <= 5 ? [
+            "DK residency",
+            "Dongri, chawal gali",
+            "Worli, Mumbai",
+            "Alibaug",
+            "BKC, Mumbai"
+        ][i - 1] : (i % 2 === 0 ? "South Mumbai" : "Bandra, Mumbai"),
+        budget: i <= 5 ? ["₹85L", "₹15L", "₹2.5Cr", "₹4.2Cr", "₹5Cr"][i - 1] : `₹${(Math.random() * 2 + 0.5).toFixed(1)}Cr`,
         rating: (Math.random() * 0.5 + 4.5).toFixed(1),
-        thumbnail: `https://images.unsplash.com/photo-${1616486000000 + i}?w=1200&q=80`,
-        details: "Exquisite interior design project showcasing premium craftsmanship and attention to detail.",
-        status: "live",
-        media: [{ type: "image", data: `https://images.unsplash.com/photo-${1616486000000 + i}?w=1200&q=80` }]
+        thumbnail: imageUrl,
+        details: "Exquisite interior design project showcasing premium craftsmanship and attention to detail. This project features high-end materials and custom furniture.",
+        status: i % 7 === 0 ? "sold" : "live",
+        media: [{ type: "image", data: imageUrl }],
+        instagramUrl: "https://www.instagram.com/homesbyexcellence"
     });
 }
 
 async function seed() {
     try {
+        console.log("Connecting to MongoDB...");
         await client.connect();
         const database = client.db("interia_studio");
         const collection = database.collection("projects");
 
-        // Clear existing
+        console.log("Clearing existing projects...");
         await collection.deleteMany({});
 
-        // Insert new
+        console.log(`Inserting ${projects.length} projects...`);
         const result = await collection.insertMany(projects);
         console.log(`${result.insertedCount} projects seeded successfully!`);
     } catch (err) {
         console.error("Error seeding database:", err);
     } finally {
         await client.close();
+        process.exit();
     }
 }
 
