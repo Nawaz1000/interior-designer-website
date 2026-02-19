@@ -1506,13 +1506,6 @@
 
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
-            // Category Filter (Current active tag)
-            const matchesType = currentFilter === 'all' || p.projectType === currentFilter;
-
-            return matchesType;
-        });
-
-        if (displayProjects.length === 0) {
             grid.innerHTML = `
                     <div class="col-span-full text-center py-20">
                         <p class="text-gray-500">No projects found for these filters.</p>
