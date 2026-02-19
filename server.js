@@ -45,7 +45,7 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Serve static files from the current directory
-app.use(express.static(__dirname));
+app.use(express.static(__dirname, { extensions: ['html'] }));
 
 const uri = process.env.MONGODB_URI || "mongodb+srv://sayednawaz2006_db_user:78xBA3bzR9xzKcfX@cluster0.chvkyar.mongodb.net/excellence_studio?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {
@@ -247,7 +247,7 @@ async function startServer() {
 
         app.listen(port, () => {
             console.log(`Server running at http://localhost:${port}`);
-            console.log(`To view projects, open: http://localhost:${port}/index.html`);
+            console.log(`To view projects, open: http://localhost:${port}/index`);
         });
     } catch (err) {
         console.error("Failed to start server:", err);

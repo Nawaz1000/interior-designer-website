@@ -13,11 +13,14 @@
     <script>
         // Mobile Redirection
         if (window.innerWidth <= 1100) {
-            window.location.href = "projects-mobile.html";
+            window.location.href = "/projects-mobile";
+        }
+        if (window.innerWidth < 768) {
+            window.location.href = "/projects-mobile";
         }
         window.addEventListener('resize', () => {
             if (window.innerWidth <= 1100) {
-                window.location.href = "projects-mobile.html";
+                window.location.href = "/projects-mobile";
             }
         });
     </script>
@@ -909,7 +912,7 @@
     <!-- Navigation -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 header">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-2 z-50 relative">
+            <a href="/" class="flex items-center gap-2 z-50 relative">
                 <img src="logo.png" alt="Excellence Logo" class="h-10 w-10 rounded-full object-cover">
                 <span class="text-lg font-serif font-bold tracking-wider hidden sm:inline-block">EXCELLENCE</span>
             </a>
@@ -926,7 +929,7 @@
                     class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Portfolio</a>
                 <a href="index.html#testimonials"
                     class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Reviews</a>
-                <a href="admin.html"
+                <a href="/admin"
                     class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Admin</a>
                 <div class="flex items-center gap-4 ml-4 pl-4 border-l border-white/10 text-white">
                     <a href="https://wa.me/919867866488" target="_blank" class="hover:text-[#25D366] transition-colors"
@@ -966,7 +969,7 @@
                 class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Portfolio</a>
             <a href="index.html#testimonials"
                 class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Reviews</a>
-            <a href="admin.html"
+            <a href="/admin"
                 class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Admin</a>
             <a href="https://wa.me/919867866488" target="_blank"
                 class="text-2xl font-serif uppercase tracking-widest text-[#25D366] mobile-link flex items-center gap-2">
@@ -1089,7 +1092,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div class="md:col-span-2">
-                    <a href="index.html" class="flex items-center gap-2 mb-6">
+                    <a href="/" class="flex items-center gap-2 mb-6">
                         <img src="logo.png" alt="Excellence Logo" class="h-12 w-12 rounded-full object-cover">
                         <span class="text-2xl font-black tracking-tighter text-white">EXCELLENCE</span>
                     </a>
