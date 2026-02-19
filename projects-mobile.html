@@ -1075,14 +1075,7 @@
                 <button class="filter-tab" onclick="filterProjects('Commercial')">Commercial</button>
             </div>
 
-            <!-- Search Bar (Mobile Optimized) -->
-            <div class="mb-6 relative">
-                <i data-lucide="search"
-                    class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 w-4 h-4"></i>
-                <input type="text" id="search-name"
-                    class="w-full bg-dark-800 border border-white/10 rounded-full py-3 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-gold-400 placeholder-gray-500"
-                    placeholder="Search projects..." oninput="handleFiltersChange()">
-            </div>
+
 
             <section class="flex-1">
                 <!-- Projects Grid -->
@@ -1507,70 +1500,56 @@
         }
 
         function resetAllFilters() {
-            document.getElementById('search-name').value = '';
-            document.getElementById('search-location').value = '';
             document.getElementById('size-filter').value = 'all';
             filterProjects('all');
         }
 
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
-            const searchName = document.getElementById('search-name').value.toLowerCase();
-            // Mobile simplified: No location/size filter for now
-            const searchLoc = '';
-            const sizeFilter = 'all';
+            // Category Filter (Current active tag)
+            const matchesType = currentFilter === 'all' || p.projectType === currentFilter;
 
-            let displayProjects = allProjects.filter(p => {
-                // Category Filter (Current active tag)
-                const matchesType = currentFilter === 'all' || p.projectType === currentFilter;
+            return matchesType;
+        });
 
-                // Text Search (Name/Details)
-                const searchNameLower = searchName.toLowerCase();
-                const matchesName = !searchName ||
-                    (p.clientName || '').toLowerCase().includes(searchNameLower) ||
-                    (p.details || '').toLowerCase().includes(searchNameLower);
-
-                return matchesType && matchesName;
-            });
-
-            if (displayProjects.length === 0) {
-                grid.innerHTML = `
+        if (displayProjects.length === 0) {
+            grid.innerHTML = `
                     <div class="col-span-full text-center py-20">
                         <p class="text-gray-500">No projects found for these filters.</p>
                     </div>
                 `;
-                lucide.createIcons();
-                return;
+            lucide.createIcons();
+            return;
+        }
+
+        grid.className = "projects-list";
+        grid.innerHTML = displayProjects.map(project => {
+            // Image Handling with improved robustness
+            let displayImage = project.thumbnail;
+
+            // If thumbnail is empty or invalid, try to find an image in the media array
+            if (!displayImage || displayImage.trim() === "" || displayImage.includes('instagram.com/reel/')) {
+                if (project.media && project.media.length > 0) {
+                    const firstImg = project.media.find(m => m.type === 'image' || (m.data && !m.data.includes('instagram.com/reel/')));
+                    if (firstImg) displayImage = firstImg.data;
+                }
             }
 
-            grid.className = "projects-list";
-            grid.innerHTML = displayProjects.map(project => {
-                // Image Handling with improved robustness
-                let displayImage = project.thumbnail;
+            // If still no valid image, use a unique fallback from our pool
+            const safetyId = project._id || project.id || '';
+            const safetyName = (project.clientName || 'Project').replace(/'/g, "\\'");
 
-                // If thumbnail is empty or invalid, try to find an image in the media array
-                if (!displayImage || displayImage.trim() === "" || displayImage.includes('instagram.com/reel/')) {
-                    if (project.media && project.media.length > 0) {
-                        const firstImg = project.media.find(m => m.type === 'image' || (m.data && !m.data.includes('instagram.com/reel/')));
-                        if (firstImg) displayImage = firstImg.data;
-                    }
-                }
+            if (!displayImage || displayImage.trim() === "" || displayImage.includes('instagram.com/reel/')) {
+                displayImage = getRandomImage(safetyId, project.clientName);
+            }
 
-                // If still no valid image, use a unique fallback from our pool
-                const safetyId = project._id || project.id || '';
-                const safetyName = (project.clientName || 'Project').replace(/'/g, "\\'");
+            const price = project.budget || 'Quote on request';
+            const status = project.status ? project.status.toLowerCase() : 'live';
+            const projectBudgetNum = project.budget ? parseInt(project.budget.replace(/[^0-9]/g, '')) : 0;
+            const isBestRating = (parseFloat(project.rating) || 0) >= 4.5;
+            const isBestBudget = projectBudgetNum > 0 && projectBudgetNum < 2000000;
 
-                if (!displayImage || displayImage.trim() === "" || displayImage.includes('instagram.com/reel/')) {
-                    displayImage = getRandomImage(safetyId, project.clientName);
-                }
-
-                const price = project.budget || 'Quote on request';
-                const status = project.status ? project.status.toLowerCase() : 'live';
-                const projectBudgetNum = project.budget ? parseInt(project.budget.replace(/[^0-9]/g, '')) : 0;
-                const isBestRating = (parseFloat(project.rating) || 0) >= 4.5;
-                const isBestBudget = projectBudgetNum > 0 && projectBudgetNum < 2000000;
-
-                return `
+            return `
                 <div class="project-card-horizontal group" onclick="openModal('${safetyId}')">
                     <div class="card-image-wrapper">
                         <img src="${displayImage}" class="card-image" alt="${project.clientName}" onerror="this.src=getRandomImage('${safetyId}', '${safetyName}')">
@@ -1626,9 +1605,9 @@
                     </div>
                 </div>
                 `;
-            }).join('');
+        }).join('');
 
-            lucide.createIcons();
+        lucide.createIcons();
         }
 
         function openModal(projectId) {

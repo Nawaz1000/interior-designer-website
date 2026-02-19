@@ -989,25 +989,7 @@
                 </div>
 
 
-                <div class="filter-section">
-                    <div class="filter-section-header">
-                        <span class="filter-section-title">Project Name</span>
-                        <span class="reset-link text-[10px]"
-                            onclick="document.getElementById('search-name').value=''; handleFiltersChange()">Reset</span>
-                    </div>
-                    <input type="text" id="search-name" class="filter-input" placeholder="Search by name..."
-                        oninput="handleFiltersChange()">
-                </div>
 
-                <div class="filter-section">
-                    <div class="filter-section-header">
-                        <span class="filter-section-title">Location</span>
-                        <span class="reset-link text-[10px]"
-                            onclick="document.getElementById('search-location').value=''; handleFiltersChange()">Reset</span>
-                    </div>
-                    <input type="text" id="search-location" class="filter-input" placeholder="Search by location..."
-                        oninput="handleFiltersChange()">
-                </div>
 
                 <div class="filter-section">
                     <div class="filter-section-header">
@@ -1386,116 +1368,98 @@
         }
 
         function resetAllFilters() {
-            document.getElementById('search-name').value = '';
-            document.getElementById('search-location').value = '';
             document.getElementById('size-filter').value = 'all';
             filterProjects('all');
         }
 
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
-            const searchName = document.getElementById('search-name').value.toLowerCase();
-            const searchLoc = document.getElementById('search-location').value.toLowerCase();
-            const sizeFilter = document.getElementById('size-filter').value;
+            // Category Filter (Current active tag)
+            const matchesType = currentFilter === 'all' || p.projectType === currentFilter;
 
-            let displayProjects = allProjects.filter(p => {
-                // Category Filter (Current active tag)
-                const matchesType = currentFilter === 'all' || p.projectType === currentFilter;
+            // Helper to parse budget strings like "₹85L" or "₹2.5Cr"
+            const parseBudget = (str) => {
+                if (!str) return 0;
+                if (typeof str === 'number') return str;
+                const cleanStr = str.replace(/[^0-9.]/g, '');
+                const num = parseFloat(cleanStr) || 0;
+                if (str.toUpperCase().includes('CR')) return num * 10000000;
+                if (str.toUpperCase().includes('L')) return num * 100000;
+                return num;
+            };
 
-                // Text Search (Name/Details)
-                const searchNameLower = searchName.toLowerCase();
-                const matchesName = !searchName ||
-                    (p.clientName || '').toLowerCase().includes(searchNameLower) ||
-                    (p.details || '').toLowerCase().includes(searchNameLower);
+            const projectBudget = parseBudget(p.budget);
 
-                // Location Search
-                const searchLocLower = searchLoc.toLowerCase();
-                const matchesLoc = !searchLoc ||
-                    (p.location || '').toLowerCase().includes(searchLocLower);
+            // Size Filter with Smart Fallback
+            let matchesSize = sizeFilter === 'all';
+            if (!matchesSize) {
+                const filter = sizeFilter.toLowerCase();
+                const pSize = (p.projectSize || '').toLowerCase();
+                const pDetails = (p.details || '').toLowerCase();
+                const pType = (p.projectType || '').toLowerCase();
 
-                // Helper to parse budget strings like "₹85L" or "₹2.5Cr"
-                const parseBudget = (str) => {
-                    if (!str) return 0;
-                    if (typeof str === 'number') return str;
-                    const cleanStr = str.replace(/[^0-9.]/g, '');
-                    const num = parseFloat(cleanStr) || 0;
-                    if (str.toUpperCase().includes('CR')) return num * 10000000;
-                    if (str.toUpperCase().includes('L')) return num * 100000;
-                    return num;
-                };
-
-                const projectBudget = parseBudget(p.budget);
-
-                // Size Filter with Smart Fallback
-                let matchesSize = sizeFilter === 'all';
-                if (!matchesSize) {
-                    const filter = sizeFilter.toLowerCase();
-                    const pSize = (p.projectSize || '').toLowerCase();
-                    const pDetails = (p.details || '').toLowerCase();
-                    const pType = (p.projectType || '').toLowerCase();
-
-                    // 1. Check explicit field
-                    if (pSize.includes(filter)) matchesSize = true;
-                    // 2. Check details text
-                    else if (pDetails.includes(filter)) matchesSize = true;
-                    // 3. Smart Fallback for Residential
-                    else if (pType === 'residential') {
-                        if (filter === '1 bhk' && projectBudget > 0 && projectBudget < 3000000) matchesSize = true;
-                        else if (filter === '2 bhk' && projectBudget >= 3000000 && projectBudget < 6000000) matchesSize = true;
-                        else if (filter === '3 bhk' && projectBudget >= 6000000 && projectBudget < 12000000) matchesSize = true;
-                        else if (filter === '4 bhk' && projectBudget >= 12000000) matchesSize = true;
-                        else if (filter === 'villa' && (pDetails.includes('villa') || pDetails.includes('bungalow') || projectBudget > 30000000)) matchesSize = true;
-                    }
-                    // 4. Smart Fallback for Commercial
-                    else if (pType === 'commercial' && filter === 'commercial') matchesSize = true;
+                // 1. Check explicit field
+                if (pSize.includes(filter)) matchesSize = true;
+                // 2. Check details text
+                else if (pDetails.includes(filter)) matchesSize = true;
+                // 3. Smart Fallback for Residential
+                else if (pType === 'residential') {
+                    if (filter === '1 bhk' && projectBudget > 0 && projectBudget < 3000000) matchesSize = true;
+                    else if (filter === '2 bhk' && projectBudget >= 3000000 && projectBudget < 6000000) matchesSize = true;
+                    else if (filter === '3 bhk' && projectBudget >= 6000000 && projectBudget < 12000000) matchesSize = true;
+                    else if (filter === '4 bhk' && projectBudget >= 12000000) matchesSize = true;
+                    else if (filter === 'villa' && (pDetails.includes('villa') || pDetails.includes('bungalow') || projectBudget > 30000000)) matchesSize = true;
                 }
+                // 4. Smart Fallback for Commercial
+                else if (pType === 'commercial' && filter === 'commercial') matchesSize = true;
+            }
 
-                // Features Logic (Rating/Budget)
-                const isBestRating = (parseFloat(p.rating) || 0) >= 4.5;
-                const isBestBudget = projectBudget > 0 && projectBudget < 2000000; // Under 20L is "Best Budget"
+            // Features Logic (Rating/Budget)
+            const isBestRating = (parseFloat(p.rating) || 0) >= 4.5;
+            const isBestBudget = projectBudget > 0 && projectBudget < 2000000; // Under 20L is "Best Budget"
 
 
-                return matchesType && matchesName && matchesLoc && matchesSize;
-            });
+            return matchesType && matchesSize;
+        });
 
-            if (displayProjects.length === 0) {
-                grid.innerHTML = `
+        if (displayProjects.length === 0) {
+            grid.innerHTML = `
                     <div class="col-span-full text-center py-20">
                         <p class="text-gray-500">No projects found for these filters.</p>
                     </div>
                 `;
-                lucide.createIcons();
-                return;
+            lucide.createIcons();
+            return;
+        }
+
+        grid.className = "projects-list space-y-8";
+        grid.innerHTML = displayProjects.map(project => {
+            // Image Handling with improved robustness
+            let displayImage = project.thumbnail;
+
+            // If thumbnail is empty or invalid, try to find an image in the media array
+            if (!displayImage || displayImage.trim() === "" || displayImage.includes('instagram.com/reel/')) {
+                if (project.media && project.media.length > 0) {
+                    const firstImg = project.media.find(m => m.type === 'image' || (m.data && !m.data.includes('instagram.com/reel/')));
+                    if (firstImg) displayImage = firstImg.data;
+                }
             }
 
-            grid.className = "projects-list space-y-8";
-            grid.innerHTML = displayProjects.map(project => {
-                // Image Handling with improved robustness
-                let displayImage = project.thumbnail;
+            // If still no valid image, use a unique fallback from our pool
+            const safetyId = project._id || project.id || '';
+            const safetyName = (project.clientName || 'Project').replace(/'/g, "\\'");
 
-                // If thumbnail is empty or invalid, try to find an image in the media array
-                if (!displayImage || displayImage.trim() === "" || displayImage.includes('instagram.com/reel/')) {
-                    if (project.media && project.media.length > 0) {
-                        const firstImg = project.media.find(m => m.type === 'image' || (m.data && !m.data.includes('instagram.com/reel/')));
-                        if (firstImg) displayImage = firstImg.data;
-                    }
-                }
+            if (!displayImage || displayImage.trim() === "" || displayImage.includes('instagram.com/reel/')) {
+                displayImage = getRandomImage(safetyId, project.clientName);
+            }
 
-                // If still no valid image, use a unique fallback from our pool
-                const safetyId = project._id || project.id || '';
-                const safetyName = (project.clientName || 'Project').replace(/'/g, "\\'");
+            const price = project.budget || 'Quote on request';
+            const status = project.status ? project.status.toLowerCase() : 'live';
+            const projectBudgetNum = project.budget ? parseInt(project.budget.replace(/[^0-9]/g, '')) : 0;
+            const isBestRating = (parseFloat(project.rating) || 0) >= 4.5;
+            const isBestBudget = projectBudgetNum > 0 && projectBudgetNum < 2000000;
 
-                if (!displayImage || displayImage.trim() === "" || displayImage.includes('instagram.com/reel/')) {
-                    displayImage = getRandomImage(safetyId, project.clientName);
-                }
-
-                const price = project.budget || 'Quote on request';
-                const status = project.status ? project.status.toLowerCase() : 'live';
-                const projectBudgetNum = project.budget ? parseInt(project.budget.replace(/[^0-9]/g, '')) : 0;
-                const isBestRating = (parseFloat(project.rating) || 0) >= 4.5;
-                const isBestBudget = projectBudgetNum > 0 && projectBudgetNum < 2000000;
-
-                return `
+            return `
                 <div class="project-card-horizontal group" onclick="openModal('${safetyId}')">
                     <div class="card-image-wrapper">
                         <img src="${displayImage}" class="card-image" alt="${project.clientName}" onerror="this.src=getRandomImage('${safetyId}', '${safetyName}')">
@@ -1551,9 +1515,9 @@
                     </div>
                 </div>
                 `;
-            }).join('');
+        }).join('');
 
-            lucide.createIcons();
+        lucide.createIcons();
         }
 
         function openModal(projectId) {
