@@ -989,7 +989,25 @@
                 </div>
 
 
+                <div class="filter-section">
+                    <div class="filter-section-header">
+                        <span class="filter-section-title">Project Name</span>
+                        <span class="reset-link text-[10px]"
+                            onclick="document.getElementById('search-name').value=''; handleFiltersChange()">Reset</span>
+                    </div>
+                    <input type="text" id="search-name" class="filter-input" placeholder="Search by name..."
+                        oninput="handleFiltersChange()">
+                </div>
 
+                <div class="filter-section">
+                    <div class="filter-section-header">
+                        <span class="filter-section-title">Location</span>
+                        <span class="reset-link text-[10px]"
+                            onclick="document.getElementById('search-location').value=''; handleFiltersChange()">Reset</span>
+                    </div>
+                    <input type="text" id="search-location" class="filter-input" placeholder="Search by location..."
+                        oninput="handleFiltersChange()">
+                </div>
 
                 <div class="filter-section">
                     <div class="filter-section-header">
@@ -1368,15 +1386,32 @@
         }
 
         function resetAllFilters() {
+            document.getElementById('search-name').value = '';
+            document.getElementById('search-location').value = '';
             document.getElementById('size-filter').value = 'all';
             filterProjects('all');
         }
 
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
+            const searchName = document.getElementById('search-name').value.toLowerCase();
+            const searchLoc = document.getElementById('search-location').value.toLowerCase();
+            const sizeFilter = document.getElementById('size-filter').value;
+
             let displayProjects = allProjects.filter(p => {
                 // Category Filter (Current active tag)
                 const matchesType = currentFilter === 'all' || p.projectType === currentFilter;
+
+                // Text Search (Name/Details)
+                const searchNameLower = searchName.toLowerCase();
+                const matchesName = !searchName ||
+                    (p.clientName || '').toLowerCase().includes(searchNameLower) ||
+                    (p.details || '').toLowerCase().includes(searchNameLower);
+
+                // Location Search
+                const searchLocLower = searchLoc.toLowerCase();
+                const matchesLoc = !searchLoc ||
+                    (p.location || '').toLowerCase().includes(searchLocLower);
 
                 // Helper to parse budget strings like "₹85L" or "₹2.5Cr"
                 const parseBudget = (str) => {
@@ -1420,7 +1455,7 @@
                 const isBestBudget = projectBudget > 0 && projectBudget < 2000000; // Under 20L is "Best Budget"
 
 
-                return matchesType && matchesSize;
+                return matchesType && matchesName && matchesLoc && matchesSize;
             });
 
             if (displayProjects.length === 0) {

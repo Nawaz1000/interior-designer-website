@@ -15,13 +15,8 @@ spec:
         app: excellence-website
     spec:
       containers:
-<<<<<<< HEAD
-        - name: interia-website
-          image: nawazs786/interia-website-client-project:latest
-=======
         - name: excellence-website
           image: nawazs786/excellence-website-project-client:latest
->>>>>>> d7601fd (Refactor: Premium Champagne Gold palette, fixed mobile menu drawer globally, and simplified admin dashboard)
           imagePullPolicy: IfNotPresent # Useful for local testing with Minikube/Docker Desktop
           ports:
             - containerPort: 3000
