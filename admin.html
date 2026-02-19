@@ -75,6 +75,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             width: 100%;
+            max-width: 100%;
         }
 
         .custom-select:hover,
@@ -100,6 +101,7 @@
             color: #ffffff;
             font-size: 0.95rem;
             width: 100%;
+            max-width: 100%;
             transition: all 0.2s ease;
         }
 
@@ -779,13 +781,13 @@
 
             <!-- Header Section -->
             <div class="mb-8 animate-slide-in">
-                <h2 class="text-2xl font-bold text-white mb-1">Project Management</h2>
-                <p class="text-gray-400 text-sm">Manage your portfolio. Completed projects appear on your website.</p>
+                <h2 class="text-2xl font-bold text-white mb-1">Property Management</h2>
+                <p class="text-gray-400 text-sm">Manage your portfolio. Completed properties appear on your website.</p>
             </div>
 
             <!-- Stats -->
             <!-- Stats -->
-            <div class="grid grid-cols-4 gap-3 mb-8 animate-slide-in">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8 animate-slide-in">
                 <div class="bg-dark-800 p-4 rounded-xl border border-white/5 shadow-sm">
                     <p class="text-gray-400 text-xs uppercase tracking-wider mb-1">Total</p>
                     <p class="text-2xl font-bold text-white" id="stat-total">0</p>
@@ -811,8 +813,8 @@
                         <i data-lucide="plus" class="w-5 h-5 text-gold-400"></i>
                     </div>
                     <div>
-                        <h3 class="font-semibold text-white">Add New Project</h3>
-                        <p class="text-gray-400 text-xs">Create a new project for your portfolio</p>
+                        <h3 class="font-semibold text-white">Add New Property</h3>
+                        <p class="text-gray-400 text-xs">Create a new entry for your portfolio</p>
                     </div>
                 </div>
 
@@ -832,18 +834,17 @@
                             </div>
 
                             <div>
-                                <label class="input-label">Project Type *</label>
+                                <label class="input-label">Property Category *</label>
                                 <div class="custom-select-wrapper">
                                     <select name="projectType" required class="custom-select">
                                         <option value="">Select category</option>
-                                        <option value="Residential">Residential</option>
-                                        <option value="Commercial">Commercial</option>
-                                        <option value="Office">Office</option>
-                                        <option value="Restaurant">Restaurant</option>
-                                        <option value="Hotel">Hotel</option>
-                                        <option value="Retail">Retail</option>
-                                        <option value="For Rent">For Rent</option>
-                                        <option value="Industrial">Industrial</option>
+                                        <option value="Rental">Rental</option>
+                                        <option value="Sale (Residential)">Sale (Residential)</option>
+                                        <option value="Heavy Deposit Model">Heavy Deposit Model</option>
+                                        <option value="Plots / Land">Plots / Land</option>
+                                        <option value="Commercial Spaces">Commercial Spaces</option>
+                                        <option value="Bungalow / Luxury Properties">Bungalow / Luxury Properties
+                                        </option>
                                     </select>
                                     <i data-lucide="chevron-down" class="custom-select-arrow w-4 h-4"></i>
                                 </div>
@@ -952,7 +953,7 @@
                         <button type="submit" id="submit-btn"
                             class="btn-gold text-white px-6 py-2.5 rounded-lg flex items-center gap-2 text-sm">
                             <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                            <span id="submit-btn-text">Create Project</span>
+                            <span id="submit-btn-text">Add Property</span>
                         </button>
                     </div>
                 </form>
@@ -962,7 +963,7 @@
             <div class="animate-slide-in">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
                     <div class="flex items-center gap-4">
-                        <h3 class="font-semibold text-white">All Projects</h3>
+                        <h3 class="font-semibold text-white">All Properties</h3>
                         <div id="bulk-actions" class="hidden flex items-center gap-2">
                             <button onclick="bulkDelete()"
                                 class="px-3 py-1.5 bg-red-500/10 text-red-500 border border-red-500/20 rounded-lg text-xs font-bold hover:bg-red-500 hover:text-white transition-all">
@@ -1010,6 +1011,7 @@
     <script>
         const ADMIN_USER = 'admin';
         const ADMIN_PASSWORD = 'interia2024';
+        const API_BASE = window.location.port === '3000' || window.location.port === '' ? '' : 'http://localhost:3000';
         let projects = [];
         let currentFilter = 'all';
         let deleteTargetId = null;
@@ -1188,7 +1190,7 @@
             try {
                 if (editId) {
                     // Update existing project
-                    const response = await fetch(`/api/projects/${editId}`, {
+                    const response = await fetch(`${API_BASE}/api/projects/${editId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(projectData)
@@ -1208,7 +1210,7 @@
                         newProject.completedAt = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
                     }
 
-                    const response = await fetch('/api/projects', {
+                    const response = await fetch(`${API_BASE}/api/projects`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(newProject)
@@ -1303,7 +1305,7 @@
         async function confirmDelete() {
             if (deleteTargetId) {
                 try {
-                    const response = await fetch(`/api/projects/${deleteTargetId}`, {
+                    const response = await fetch(`${API_BASE}/api/projects/${deleteTargetId}`, {
                         method: 'DELETE'
                     });
 
@@ -1327,7 +1329,7 @@
                 }
             } else if (bulkDeleteTargets) {
                 try {
-                    const response = await fetch('/api/projects/bulk', {
+                    const response = await fetch(`${API_BASE}/api/projects/bulk`, {
                         method: 'DELETE',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ ids: bulkDeleteTargets })
@@ -1364,7 +1366,7 @@
             }
 
             try {
-                const response = await fetch(`/api/projects/${id}`, {
+                const response = await fetch(`${API_BASE}/api/projects/${id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updatedData)
@@ -1394,13 +1396,35 @@
             const container = document.getElementById('projects-container');
             const emptyState = document.getElementById('empty-state');
 
+            // Check if opened via file:// protocol
+            if (window.location.protocol === 'file:') {
+                container.innerHTML = `
+                    <div class="p-12 text-center bg-red-900/10 border border-red-500/30 rounded-2xl max-w-2xl mx-auto">
+                        <i data-lucide="alert-circle" class="w-12 h-12 text-red-500 mx-auto mb-4"></i>
+                        <h2 class="text-xl font-bold mb-4">Direct File Access Detected</h2>
+                        <p class="text-gray-400 mb-6 font-light">
+                            The Admin Portal requires the backend server to communicate with MongoDB. 
+                            Opening this file directly from your folder will not work.
+                        </p>
+                        <div class="bg-black/40 p-4 rounded-lg text-left font-mono text-sm text-gold-400 mb-6">
+                            1. Open Terminal<br>
+                            2. Run: <span class="text-white">npm start</span><br>
+                            3. Go to: <span class="text-white">http://localhost:3000/admin.html</span>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
             // Fetch from API
             try {
-                const response = await fetch('/api/projects');
+                const response = await fetch(`${API_BASE}/api/projects`);
                 if (!response.ok) throw new Error('Fetch failed');
                 projects = await response.json();
             } catch (err) {
                 console.error("API error, fallback to memory:", err);
+                showNotification('Could not connect to server. Please ensure "npm start" is running.');
             }
 
             updateStats();

@@ -405,6 +405,15 @@
         @media (max-width: 640px) {
             .portfolio-list {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .premium-card-image {
+                height: 200px !important;
+            }
+
+            .project-card-premium {
+                height: auto !important;
             }
         }
 
@@ -572,13 +581,13 @@
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="#" class="flex items-center gap-2 z-50 relative">
-                <img src="logo.png" alt="Excellence Logo" class="h-12 w-auto">
+                <img src="logo.png" alt="Excellence Logo" class="h-12 w-12 rounded-full object-cover">
                 <span class="text-xl font-serif font-bold tracking-wider hidden sm:inline-block">EXCELLENCE</span>
             </a>
 
             <div class="hidden md:flex items-center space-x-8">
                 <a href="#home" class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Home</a>
-                <a href="#about"
+                <a href="about.html"
                     class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">About</a>
                 <a href="#services"
                     class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Services</a>
@@ -620,7 +629,7 @@
             class="fixed inset-0 bg-dark-900/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden">
             <a href="#home"
                 class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Home</a>
-            <a href="#about"
+            <a href="about.html"
                 class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">About</a>
             <a href="#services"
                 class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Services</a>
@@ -642,9 +651,11 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
-        style="background-image: url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=1974&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed;">
-        <div class="absolute inset-0 bg-black/70 z-0"></div>
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 z-0 animate-ken-burns"
+            style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000&auto=format&fit=crop'); background-size: cover; background-position: center; background-attachment: fixed;">
+        </div>
+        <div class="absolute inset-0 bg-black/60 z-0"></div>
         <canvas id="hero-canvas" class="absolute inset-0 w-full h-full z-0 opacity-40"></canvas>
         <div
             class="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-dark-900 z-0 pointer-events-none">
@@ -656,7 +667,7 @@
                     Interior</span>
             </div>
 
-            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+            <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-bold mb-8 leading-tight">
                 <span id="typewriter" class="typing-cursor"></span>
             </h1>
 
@@ -691,14 +702,11 @@
     <section id="about" class="py-24 bg-dark-900 relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="relative reveal order-2 md:order-1">
-                    <div class="relative z-10">
-                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80"
-                            alt="Interior Design Process"
-                            class="w-full rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
-                    </div>
-                    <div class="absolute -bottom-6 -right-6 w-full h-full border-2 border-gold-400/30 rounded-lg z-0">
-                    </div>
+                <div class="relative reveal order-2 md:order-1 flex flex-col items-center">
+                    <img src="owner.jpg" alt="Excellence Real Estate Founder"
+                        class="w-full max-w-md transition-all duration-700">
+                    <h3 class="mt-6 font-serif text-2xl font-bold text-gold-400">Rashid K. Parkar</h3>
+                    <p class="text-gray-500 uppercase tracking-widest text-xs mt-1">Founder & Architect</p>
                 </div>
 
                 <div class="reveal order-1 md:order-2">
@@ -708,17 +716,24 @@
                         Creating Spaces That <span class="italic text-gold-400">Inspire</span> Living
                     </h2>
                     <p class="text-gray-400 mb-6 leading-relaxed">
-                        At Interia, we believe that great design is more than just aesthetics—it's about creating
-                        environments that enhance your daily life. Our team of passionate designers brings together
-                        creativity, functionality, and luxury.
+                        At Excellence Real Estate, we believe that real estate is not just about property — it’s about
+                        trust, clarity, and long-term relationships. Our team of professionals brings together market
+                        knowledge, transparency, and dedication.
                     </p>
                     <p class="text-gray-400 mb-8 leading-relaxed">
-                        With over 15 years of experience in high-end residential and commercial design, we've mastered
-                        the art of balancing timeless elegance with modern innovation.
+                        Whether you're looking to buy, sell, or rent, we deal directly with owners and serious clients
+                        to ensure a smooth, secure, and professional experience from start to finish.
                     </p>
 
+                    <div class="mb-10">
+                        <a href="about.html"
+                            class="inline-flex items-center gap-2 px-8 py-3 bg-gold-400/10 border border-gold-400/30 text-gold-400 hover:bg-gold-400 hover:text-dark-900 transition-all duration-300 rounded-sm font-medium tracking-widest text-sm uppercase">
+                            Read More <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
                     <div class="flex items-center gap-4 p-4 bg-dark-800/50 rounded-xl border border-white/5">
-                        <img src="logo.png" alt="Founder"
+                        <img src="logo.png" alt="Excellence Logo"
                             class="w-16 h-16 rounded-full object-contain bg-white/5 border-2 border-gold-400 p-1">
                         <div>
                             <div class="font-serif font-bold text-lg">homesbyexcellence</div>
@@ -740,75 +755,108 @@
                 <span class="text-gold-400 text-sm uppercase tracking-[0.3em] font-medium mb-4 block">Our
                     Services</span>
                 <h2 class="font-serif text-4xl md:text-5xl font-bold mb-4">What We Offer</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">Comprehensive interior design solutions tailored to transform
-                    your vision into reality.</p>
+                <p class="text-gray-400 max-w-2xl mx-auto">Expert real estate guidance tailored to your needs, ensuring
+                    transparency and value in every transaction.</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid md:grid-cols-3 gap-8 mb-24">
+                <!-- 1. Property Sales -->
                 <div class="service-card p-8 rounded-2xl reveal cursor-pointer group">
                     <div
                         class="service-icon-wrapper w-20 h-20 rounded-2xl bg-gradient-to-br from-gold-400/20 to-gold-400/5 flex items-center justify-center mb-6 relative">
                         <div class="service-icon-glow rounded-2xl"></div>
                         <i data-lucide="home" class="w-10 h-10 text-gold-400 relative z-10 animate-float"></i>
                     </div>
-                    <h3 class="font-serif text-2xl font-bold mb-4 group-hover:text-gold-400 transition-colors">
-                        Residential Design</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">Transform your home into a sanctuary of comfort and
-                        style. From apartments to villas, we create living spaces that reflect your personality.</p>
+                    <h3 class="font-serif text-2xl font-bold mb-2 group-hover:text-gold-400 transition-colors">Property
+                        Sales</h3>
+                    <p class="text-gold-400 text-sm italic mb-4">Looking to buy or sell?</p>
+                    <p class="text-gray-400 mb-4 text-sm">We assist in:</p>
                     <ul class="space-y-2 mb-6">
                         <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
-                                class="w-4 h-4 text-gold-400"></i>Space Planning</li>
+                                class="w-4 h-4 text-gold-400"></i>1RK, 1BHK, 2BHK, 3BHK flats</li>
                         <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
-                                class="w-4 h-4 text-gold-400"></i>Custom Furniture</li>
+                                class="w-4 h-4 text-gold-400"></i>Resale properties</li>
                         <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
-                                class="w-4 h-4 text-gold-400"></i>Lighting Design</li>
+                                class="w-4 h-4 text-gold-400"></i>Investment opportunities</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Negotiation & structuring</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Doc coordination</li>
                     </ul>
+                    <p class="text-gray-500 text-xs italic border-t border-white/5 pt-4">From site visit to
+                        registration, we guide you at every step.</p>
                 </div>
 
+                <!-- 2. Rental Services -->
                 <div class="service-card p-8 rounded-2xl reveal cursor-pointer group" style="transition-delay: 0.1s;">
                     <div
                         class="service-icon-wrapper w-20 h-20 rounded-2xl bg-gradient-to-br from-gold-400/20 to-gold-400/5 flex items-center justify-center mb-6 relative">
                         <div class="service-icon-glow rounded-2xl"></div>
-                        <i data-lucide="building-2" class="w-10 h-10 text-gold-400 relative z-10 animate-float"
+                        <i data-lucide="key" class="w-10 h-10 text-gold-400 relative z-10 animate-float"
                             style="animation-delay: 0.5s;"></i>
                     </div>
-                    <h3 class="font-serif text-2xl font-bold mb-4 group-hover:text-gold-400 transition-colors">
-                        Commercial Spaces</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">Elevate your business environment with designs that
-                        inspire productivity and impress clients. Offices, hotels, and retail spaces.</p>
-                    <ul class="space-y-2 mb-6">
-                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
-                                class="w-4 h-4 text-gold-400"></i>Brand Integration</li>
-                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
-                                class="w-4 h-4 text-gold-400"></i>Space Optimization</li>
-                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
-                                class="w-4 h-4 text-gold-400"></i>Ergonomic Design</li>
-                    </ul>
+                    <h3 class="font-serif text-2xl font-bold mb-2 group-hover:text-gold-400 transition-colors">Rental
+                        Services</h3>
+                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">Options across prime locations near stations
+                        and commercial hubs.</p>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-gold-400 text-xs uppercase tracking-wider mb-2">Specialized in:</p>
+                            <ul class="space-y-2">
+                                <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                        class="w-4 h-4 text-gold-400"></i>Heavy deposit model</li>
+                                <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                        class="w-4 h-4 text-gold-400"></i>Professional tenants</li>
+                                <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                        class="w-4 h-4 text-gold-400"></i>Family rentals</li>
+                            </ul>
+                        </div>
+                        <div
+                            class="bg-gold-400/5 p-3 rounded-lg border border-gold-400/10 text-xs text-gray-400 space-y-1">
+                            <p class="flex items-center gap-2"><i data-lucide="check-circle"
+                                    class="w-3 h-3 text-gold-400"></i> Verified tenants</p>
+                            <p class="flex items-center gap-2"><i data-lucide="check-circle"
+                                    class="w-3 h-3 text-gold-400"></i> Clear terms</p>
+                            <p class="flex items-center gap-2"><i data-lucide="check-circle"
+                                    class="w-3 h-3 text-gold-400"></i> Agreement support</p>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- 3. Property Consultation -->
                 <div class="service-card p-8 rounded-2xl reveal cursor-pointer group" style="transition-delay: 0.2s;">
                     <div
                         class="service-icon-wrapper w-20 h-20 rounded-2xl bg-gradient-to-br from-gold-400/20 to-gold-400/5 flex items-center justify-center mb-6 relative">
                         <div class="service-icon-glow rounded-2xl"></div>
-                        <i data-lucide="palette" class="w-10 h-10 text-gold-400 relative z-10 animate-float"
+                        <i data-lucide="search" class="w-10 h-10 text-gold-400 relative z-10 animate-float"
                             style="animation-delay: 1s;"></i>
                     </div>
-                    <h3 class="font-serif text-2xl font-bold mb-4 group-hover:text-gold-400 transition-colors">Design
+                    <h3 class="font-serif text-2xl font-bold mb-2 group-hover:text-gold-400 transition-colors">Property
                         Consultation</h3>
-                    <p class="text-gray-400 mb-6 leading-relaxed">Expert guidance for your DIY projects or renovations.
-                        Get professional advice on color schemes, furniture selection, and space planning.</p>
+                    <p class="text-gold-400 text-sm italic mb-4">Not sure what to buy?</p>
                     <ul class="space-y-2 mb-6">
                         <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
-                                class="w-4 h-4 text-gold-400"></i>Color Consultation</li>
+                                class="w-4 h-4 text-gold-400"></i>Analyze market value</li>
                         <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
-                                class="w-4 h-4 text-gold-400"></i>Shopping Assistance</li>
+                                class="w-4 h-4 text-gold-400"></i>Compare ROI</li>
                         <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
-                                class="w-4 h-4 text-gold-400"></i>Renovation Planning</li>
+                                class="w-4 h-4 text-gold-400"></i>Understand potential</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-500"><i data-lucide="check"
+                                class="w-4 h-4 text-gold-400"></i>Avoid risky deals</li>
                     </ul>
+                    <p class="text-gray-500 text-xs italic border-t border-white/5 pt-4">Our goal is to protect your
+                        investment and maximize value.</p>
+                </div>
+                <div class="flex justify-center mt-16 reveal">
+                    <a href="why-choose-us.html"
+                        class="inline-flex items-center gap-3 text-white hover:text-gold-400 font-sans font-bold text-lg uppercase tracking-[0.2em] transition-all duration-300 group">
+                        Why Choose Excellence?
+                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
                 </div>
             </div>
-        </div>
     </section>
+
 
     <!-- Portfolio Section - Shows Same Projects as Projects Page -->
     <section id="portfolio" class="py-24 bg-dark-900">
@@ -963,7 +1011,7 @@
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div class="md:col-span-2">
                     <a href="#" class="flex items-center gap-2 mb-6">
-                        <img src="logo.png" alt="Excellence Logo" class="h-12 w-auto">
+                        <img src="logo.png" alt="Excellence Logo" class="h-12 w-12 rounded-full object-cover">
                         <span class="text-3xl font-serif font-bold tracking-wider">EXCELLENCE</span>
                     </a>
                     <p class="text-gray-400 mb-6 max-w-md">
@@ -976,13 +1024,9 @@
                             class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-gold-400 hover:text-dark-900 transition-all">
                             <i data-lucide="instagram" class="w-5 h-5"></i>
                         </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-gold-400 hover:text-dark-900 transition-all">
-                            <i data-lucide="linkedin" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#"
-                            class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-gold-400 hover:text-dark-900 transition-all">
-                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        <a href="https://wa.me/919867866488" target="_blank"
+                            class="w-10 h-10 bg-dark-800 rounded-full flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-all">
+                            <i data-lucide="phone" class="w-5 h-5"></i>
                         </a>
                     </div>
                 </div>
@@ -1035,7 +1079,7 @@
     <script>
         // Initialize
         let currentTestimonial = 0;
-        const totalTestimonials = 3;
+        let totalTestimonials = 0;
         let testimonialInterval;
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -1048,7 +1092,13 @@
             initCanvas();
             initObserver();
             loadPortfolioProjects();
-            startTestimonialAutoPlay();
+
+            // Re-calculate testimonials count
+            totalTestimonials = document.querySelectorAll('.testimonial-slide').length;
+            if (totalTestimonials > 0) {
+                updateTestimonials();
+                startTestimonialAutoPlay();
+            }
         });
 
 
@@ -1169,6 +1219,8 @@
             'https://images.unsplash.com/photo-1615875389345-0d6766440263?w=800&q=80'
         ];
 
+        // Initialize Testimonial State (Moved to global script block)
+
         function getRandomImage(id, seedStr = "") {
             const base64Fallback = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%231a1a1a'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='serif' font-size='32' fill='%23D4AF37'%3EExcellence Design Studio%3C/text%3E%3C/svg%3E";
 
@@ -1189,6 +1241,24 @@
         // Load Portfolio Projects from MongoDB API
         async function loadPortfolioProjects() {
             const grid = document.getElementById('portfolio-grid');
+            const API_BASE = window.location.port === '3000' || window.location.port === '' ? '' : 'http://localhost:3000';
+
+            // Check if opened via file:// protocol
+            if (window.location.protocol === 'file:') {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 px-6">
+                        <div class="max-w-md mx-auto p-8 bg-red-900/10 border border-red-500/30 rounded-2xl">
+                            <i data-lucide="alert-circle" class="w-10 h-10 text-red-500 mx-auto mb-4"></i>
+                            <h3 class="text-lg font-bold mb-2">Server Required</h3>
+                            <p class="text-gray-400 text-xs mb-4">
+                                You are opening this file directly. Please run <span class="text-white font-bold">npm start</span> and visit <span class="text-gold-400 font-bold">http://localhost:3000</span> to see live projects.
+                            </p>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
 
             try {
                 const response = await fetch('/api/projects');
@@ -1209,7 +1279,7 @@
                     return;
                 }
 
-                grid.className = "portfolio-grid reveal active";
+                grid.className = "portfolio-list reveal active";
                 grid.innerHTML = completedProjects.map(project => {
                     // Image Handling with improved robustness
                     let imageUrl = project.thumbnail;
@@ -1276,28 +1346,40 @@
                 lucide.createIcons();
             } catch (err) {
                 console.error("Error loading index projects:", err);
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500">Discovering excellence... Please check back later.</div>`;
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 px-6">
+                        <div class="max-w-md mx-auto p-8 bg-red-900/10 border border-red-500/30 rounded-2xl">
+                            <i data-lucide="wifi-off" class="w-10 h-10 text-red-500 mx-auto mb-4"></i>
+                            <h3 class="text-lg font-bold mb-2">Connection Issues</h3>
+                            <p class="text-gray-400 text-xs mb-4">
+                                Unable to fetch projects. Please ensure the server is running at <span class="text-white font-bold text-xs uppercase tracking-widest">http://localhost:3000</span>.
+                            </p>
+                            <button onclick="loadPortfolioProjects()" class="text-xs text-gold-400 hover:text-white transition-colors uppercase tracking-widest font-bold">Retry Now</button>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof initHeroCanvas === 'function') initHeroCanvas();
-            initObserver();
-            loadPortfolioProjects();
+            // initObserver(); // Already initialized in first script block
+            // loadPortfolioProjects(); // Already initialized in first script block
 
             // Hero Typewriter
             const typewriter = document.getElementById('typewriter');
             if (typewriter) {
-                const text = "Inspired Interior Design.";
+                const text = "Find the Right Property. Close the Right Deal.";
                 let i = 0;
                 function type() {
                     if (i < text.length) {
                         typewriter.textContent += text.charAt(i);
                         i++;
-                        setTimeout(type, 100);
+                        setTimeout(type, 80);
                     }
                 }
-                setTimeout(type, 1500);
+                setTimeout(type, 800);
             }
         });
 

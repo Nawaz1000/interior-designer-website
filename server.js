@@ -13,95 +13,99 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static(__dirname));
 
 const uri = process.env.MONGODB_URI || "mongodb+srv://sayednawaz2006_db_user:78xBA3bzR9xzKcfX@cluster0.chvkyar.mongodb.net/interia_studio?retryWrites=true&w=majority";
-const client = new MongoClient(uri);
+const client = new MongoClient(uri, {
+    maxPoolSize: 10,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+});
 
-app.get('/api/projects', async (req, res) => {
+let db;
+
+async function connectDB() {
     try {
         await client.connect();
-        const database = client.db("interia_studio");
-        const collection = database.collection("projects");
+        db = client.db("interia_studio");
+        console.log("Successfully connected to MongoDB Atlas");
+    } catch (err) {
+        console.error("Critical: Could not connect to MongoDB Atlas", err);
+        process.exit(1);
+    }
+}
+
+// Routes
+app.get('/api/projects', async (req, res) => {
+    try {
+        const collection = db.collection("projects");
         const projects = await collection.find({}).toArray();
         res.json(projects);
     } catch (err) {
-        console.error(err);
+        console.error("GET /api/projects error:", err);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
 app.post('/api/projects', async (req, res) => {
-    console.log("Create project request received:", req.body.clientName, req.body.code);
+    console.log("Create project request received:", req.body.clientName);
     try {
-        await client.connect();
-        const database = client.db("interia_studio");
-        const collection = database.collection("projects");
+        const collection = db.collection("projects");
         const result = await collection.insertOne(req.body);
         console.log(`Project created successfully with _id: ${result.insertedId}`);
         res.status(201).json({ ...req.body, _id: result.insertedId });
     } catch (err) {
-        console.error("Project creation error:", err);
+        console.error("POST /api/projects error:", err);
         res.status(500).json({ error: "Failed to create project", details: err.message });
     }
 });
 
 app.put('/api/projects/:id', async (req, res) => {
     try {
-        await client.connect();
-        const database = client.db("interia_studio");
-        const collection = database.collection("projects");
+        const collection = db.collection("projects");
         const id = req.params.id;
-        // Handle both integer IDs (from frontend) and MongoDB ObjectIDs if necessary
-        // For now, let's assume we match on the 'id' field provided by the frontend
         const result = await collection.updateOne(
-            { $or: [{ id: parseInt(id) }, { id: id }] },
+            { $or: [{ id: parseInt(id) }, { id: id }, { id: String(id) }] },
             { $set: req.body }
         );
         res.json({ message: "Project updated", modifiedCount: result.modifiedCount });
     } catch (err) {
-        console.error(err);
+        console.error("PUT /api/projects error:", err);
         res.status(500).json({ error: "Failed to update project" });
     }
 });
 
 app.delete('/api/projects/bulk', async (req, res) => {
-    console.log("Bulk delete request received for IDs:", req.body.ids);
     try {
-        await client.connect();
-        const database = client.db("interia_studio");
-        const collection = database.collection("projects");
+        const collection = db.collection("projects");
         const { ids } = req.body;
-
-        // Convert IDs to numbers where possible to match both types
         const numericIds = ids.map(id => isNaN(id) ? id : parseInt(id));
         const combinedIds = [...new Set([...ids, ...numericIds])];
-
         const result = await collection.deleteMany({ id: { $in: combinedIds } });
-        console.log(`Bulk delete successful. Deleted count: ${result.deletedCount}`);
         res.json({ message: "Projects deleted", deletedCount: result.deletedCount });
     } catch (err) {
-        console.error("Bulk delete error:", err);
-        res.status(500).json({ error: "Failed to delete projects", details: err.message });
+        console.error("DELETE /api/projects/bulk error:", err);
+        res.status(500).json({ error: "Failed to delete projects" });
     }
 });
 
 app.delete('/api/projects/:id', async (req, res) => {
     const id = req.params.id;
-    console.log(`Single delete request received for ID: ${id}`);
     try {
-        await client.connect();
-        const database = client.db("interia_studio");
-        const collection = database.collection("projects");
-
+        const collection = db.collection("projects");
         const query = { $or: [{ id: parseInt(id) }, { id: id }, { id: String(id) }] };
         const result = await collection.deleteOne(query);
-
-        console.log(`Delete attempt for ID ${id}. Deleted count: ${result.deletedCount}`);
         res.json({ message: "Project deleted", deletedCount: result.deletedCount });
     } catch (err) {
-        console.error(`Delete error for ID ${id}:`, err);
-        res.status(500).json({ error: "Failed to delete project", details: err.message });
+        console.error(`DELETE /api/projects/${id} error:`, err);
+        res.status(500).json({ error: "Failed to delete project" });
     }
 });
 
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
-});
+// Start server
+async function startServer() {
+    await connectDB();
+    app.listen(port, () => {
+        console.log(`Server running at http://localhost:${port}`);
+        console.log(`To view projects, open: http://localhost:${port}/index.html`);
+    });
+}
+
+startServer();

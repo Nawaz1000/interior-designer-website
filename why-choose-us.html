@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why Choose Us - Excellence Real Estate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            400: '#D4AF37',
+                            500: '#C5A028',
+                            600: '#B8941F',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#141414',
+                            700: '#1a1a1a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            font-family: 'Playfair Display', serif;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+            overflow-x: hidden;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-gold-400 selection:text-dark-900">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 nav-blur">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 z-50 relative">
+                <img src="logo.png" alt="Excellence Logo" class="h-12 w-12 rounded-full object-cover">
+                <span class="text-xl font-serif font-bold tracking-wider hidden sm:inline-block">EXCELLENCE</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html#home"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Home</a>
+                <a href="about.html"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">About</a>
+                <a href="index.html#services"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Services</a>
+                <a href="projects.html"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Projects</a>
+                <a href="index.html#portfolio"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Portfolio</a>
+                <a href="index.html#testimonials"
+                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Reviews</a>
+                <a href="index.html#contact"
+                    class="px-6 py-2 border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-dark-900 transition-all duration-300 text-sm uppercase tracking-widest rounded-sm">Contact</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white z-50">
+                <i data-lucide="menu" id="menu-icon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-dark-900 z-40 transform translate-x-full transition-transform duration-500 md:hidden flex flex-col justify-center items-center space-y-8">
+        <a href="index.html#home" class="text-2xl font-serif hover:text-gold-400 mobile-link">Home</a>
+        <a href="about.html" class="text-2xl font-serif hover:text-gold-400 mobile-link">About</a>
+        <a href="index.html#services" class="text-2xl font-serif hover:text-gold-400 mobile-link">Services</a>
+        <a href="projects.html" class="text-2xl font-serif hover:text-gold-400 mobile-link">Projects</a>
+        <a href="index.html#portfolio" class="text-2xl font-serif hover:text-gold-400 mobile-link">Portfolio</a>
+        <a href="index.html#contact" class="text-2xl font-serif hover:text-gold-400 mobile-link">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pt-40 pb-20 bg-dark-900 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20 reveal active">
+                <span class="text-gold-400 text-sm uppercase tracking-[0.3em] font-medium mb-4 block">Our Values</span>
+                <h1 class="font-serif text-5xl md:text-7xl font-bold mb-8">Why Choose <span
+                        class="gold-gradient-text">Excellence</span>?</h1>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+                    Built on a foundation of integrity and professional ethics, we ensure every transaction is handled
+                    with the highest standard of responsibility.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+                <!-- Highlighted Card: Islamic Ethical Values -->
+                <div
+                    class="md:col-span-2 md:row-span-2 bg-gradient-to-br from-gold-400/20 to-transparent border border-gold-400/30 rounded-3xl p-10 reveal active relative overflow-hidden group">
+                    <div
+                        class="absolute -top-10 -right-10 opacity-10 transition-transform duration-700 group-hover:scale-110 group-hover:-rotate-12">
+                        <i data-lucide="scale" class="w-64 h-64 text-gold-400"></i>
+                    </div>
+                    <div class="relative z-10 h-full flex flex-col justify-between">
+                        <div>
+                            <div class="w-16 h-16 rounded-2xl bg-gold-400/20 flex items-center justify-center mb-6">
+                                <i data-lucide="scale" class="w-8 h-8 text-gold-400"></i>
+                            </div>
+                            <h3 class="font-serif text-3xl md:text-4xl font-bold mb-6 text-white text-glow">Islamic
+                                Ethical Business Values</h3>
+                            <p class="text-gray-300 text-lg leading-relaxed max-w-xl">
+                                Our business dealings are rooted in fairness, honesty, and ethical responsibility. We
+                                believe in building wealth and securing property with a conscience, ensuring every party
+                                in a transaction is treated with respect and equity.
+                            </p>
+                            <p class="text-gray-400 mt-6 leading-relaxed">
+                                We avoid any form of exploitation, hidden charges, or misleading information. Our goal
+                                is to create long-term value that benefits both the buyer and the seller, following the
+                                principles of transparency and mutual consent.
+                            </p>
+                        </div>
+                        <div class="mt-12 flex items-center gap-4 text-gold-400 font-serif italic text-xl">
+                            <span class="h-px w-12 bg-gold-400/30"></span>
+                            Integrity over Profit
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bento Card: Genuine Listings -->
+                <div
+                    class="bg-dark-800/50 border border-white/5 rounded-3xl p-8 reveal active hover:border-gold-400/30 transition-all group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-gold-400/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="file-check" class="w-6 h-6 text-gold-400"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-bold mb-3 text-white">Genuine Listings</h4>
+                    <p class="text-gray-500 text-sm">Only verified properties reach you. We prioritize quality listings
+                        over quantity to save your time and ensure you get only the best options in the market.</p>
+                </div>
+
+                <!-- Bento Card: Direct Coordination -->
+                <div
+                    class="bg-dark-800/50 border border-white/5 rounded-3xl p-8 reveal active hover:border-gold-400/30 transition-all group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-gold-400/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="users" class="w-6 h-6 text-gold-400"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-bold mb-3 text-white">Direct Coordination</h4>
+                    <p class="text-gray-500 text-sm">Direct owner coordination ensures transparent communication without
+                        middle-men confusion. You get clear facts and direct answers.</p>
+                </div>
+
+                <!-- Bento Card: Professional Negotiation -->
+                <div
+                    class="bg-dark-800/50 border border-white/5 rounded-3xl p-8 reveal active hover:border-gold-400/30 transition-all group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-gold-400/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="gavel" class="w-6 h-6 text-gold-400"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-bold mb-3 text-white">Pro Negotiation</h4>
+                    <p class="text-gray-500 text-sm">Our architectural background helps us negotiate the best value
+                        based on real construction quality and market potential.</p>
+                </div>
+
+                <!-- Bento Card: Fast Response -->
+                <div
+                    class="bg-dark-800/50 border border-white/5 rounded-3xl p-8 reveal active hover:border-gold-400/30 transition-all group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-gold-400/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="zap" class="w-6 h-6 text-gold-400"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-bold mb-3 text-white">Fast Response</h4>
+                    <p class="text-gray-500 text-sm">In a fast-paced market, we ensure quick turnaround on all queries
+                        and seamless deal closures to secure your preferred property.</p>
+                </div>
+
+                <!-- Bento Card: Transparent Policy -->
+                <div
+                    class="bg-dark-800/50 border border-white/5 rounded-3xl p-8 reveal active hover:border-gold-400/30 transition-all group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-gold-400/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="eye" class="w-6 h-6 text-gold-400"></i>
+                    </div>
+                    <h4 class="font-serif text-xl font-bold mb-3 text-white">Transparent Policy</h4>
+                    <p class="text-gray-500 text-sm">A clear brokerage and service policy with absolutely no hidden
+                        charges or surprises. We believe in trust-based partnerships.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 pt-16 pb-8 border-t border-dark-700">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="border-t border-dark-700 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">&copy; 2026 Excellence Real Estate & Interior. All rights reserved.</p>
+                <div class="flex gap-6 text-sm text-gray-500">
+                    <a href="#" class="hover:text-gold-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-gold-400 transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('loaded');
+            lucide.createIcons();
+
+            // Intersection Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+            // Navigation
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('py-2');
+                    navbar.classList.remove('py-4');
+                } else {
+                    navbar.classList.add('py-4');
+                    navbar.classList.remove('py-2');
+                }
+            });
+
+            // Mobile Menu
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            let isMenuOpen = false;
+
+            mobileBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    menuIcon.setAttribute('data-lucide', 'x');
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    menuIcon.setAttribute('data-lucide', 'menu');
+                }
+                lucide.createIcons();
+            });
+
+            // Page Transition Click Interceptor
+            document.addEventListener('click', (e) => {
+                const link = e.target.closest('a');
+                if (link && link.href && link.href.startsWith(window.location.origin) && !link.hash && link.target !== '_blank') {
+                    e.preventDefault();
+                    document.body.classList.remove('loaded');
+                    setTimeout(() => {
+                        window.location.href = link.href;
+                    }, 400);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

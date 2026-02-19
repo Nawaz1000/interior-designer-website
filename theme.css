@@ -1,197 +1,131 @@
-/* Pure White Theme Overrides */
+/* Luxury Premium Theme Enhancements */
+:root {
+    --gold-primary: #D4AF37;
+    --gold-light: #F4E5C2;
+    --gold-dark: #B8941F;
+    --luxury-indigo: #1e1b4b;
+    --luxury-slate: #0f172a;
+    --luxury-white: #ffffff;
+    --luxury-black: #050505;
+}
+
+@keyframes ken-burns {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+.animate-ken-burns {
+    animation: ken-burns 20s ease-in-out infinite alternate;
+}
+
+/* Pure White Theme Overrides - Refined for Luxury */
 body.white-theme {
-    background-color: #ffffff !important;
-    color: #1a1a1a !important;
-    /* Nearly Black */
+    background-color: var(--luxury-white) !important;
+    color: var(--luxury-slate) !important;
 }
 
-/* Navbar */
+/* Navbar Enhancements */
 body.white-theme nav {
-    background: rgba(255, 255, 255, 0.95) !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-}
-
-body.white-theme .nav-blur {
-    background: rgba(255, 255, 255, 0.9) !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    border-bottom: 1px solid rgba(30, 27, 75, 0.05) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03) !important;
 }
 
 body.white-theme nav a {
-    color: #4b5563 !important;
-    /* Gray-600 */
+    color: var(--luxury-slate) !important;
     font-weight: 500;
+    letter-spacing: 0.1em;
 }
 
 body.white-theme nav a:hover {
-    color: #b45309 !important;
-    /* Dark Gold/Amber-700 */
+    color: var(--gold-primary) !important;
 }
 
-body.white-theme #mobile-menu {
-    background: rgba(255, 255, 255, 0.98) !important;
-}
-
-body.white-theme #mobile-menu a {
-    color: #1a1a1a !important;
-}
-
-body.white-theme #mobile-menu-btn {
-    color: #1a1a1a !important;
-}
-
-/* HERO SECTION EXCEPTION - CRITICAL FIX 
-   The hero section has a dark background image. The text MUST remain WHITE.
-*/
+/* Hero Section Text Protection */
 body.white-theme #home h1,
 body.white-theme #home h2,
 body.white-theme #home p,
 body.white-theme #home span:not(.text-gold-400) {
     color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Headings elsewhere (not in hero) */
-body.white-theme section:not(#home) h1,
-body.white-theme section:not(#home) h2,
-body.white-theme section:not(#home) h3,
-body.white-theme section:not(#home) h4 {
-    color: #1a1a1a !important;
+/* Headings elsewhere */
+body.white-theme section:not(#home) h2 {
+    color: var(--luxury-indigo) !important;
+    position: relative;
+    padding-bottom: 1rem;
 }
 
-body.white-theme section:not(#home) p {
-    color: #4b5563 !important;
-    /* Gray-600 */
+body.white-theme section:not(#home) h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--gold-primary);
 }
 
-/* Service Cards */
-body.white-theme .service-card {
-    background: #ffffff !important;
-    border: 1px solid rgba(0, 0, 0, 0.05) !important;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
-}
-
-body.white-theme .service-card h3 {
-    color: #1a1a1a !important;
-}
-
-body.white-theme .service-card:hover {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-    border-color: #D4AF37 !important;
-}
-
-/* Project Cards */
-body.white-theme .project-card-horizontal,
-body.white-theme .portfolio-item,
-body.white-theme .project-card-index,
+/* Service & Project Cards - Premium Styling */
+body.white-theme .service-card,
 body.white-theme .project-card-premium {
-    background: #ffffff !important;
-    border: 1px solid rgba(0, 0, 0, 0.05) !important;
+    background: var(--luxury-white) !important;
+    border: 1px solid rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-body.white-theme .card-title,
-body.white-theme .premium-card-title,
-body.white-theme .portfolio-title,
-body.white-theme .card-title-index {
-    color: #1a1a1a !important;
+body.white-theme .service-card:hover,
+body.white-theme .project-card-premium:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 20px 50px -12px rgba(212, 175, 55, 0.15) !important;
+    border-color: rgba(212, 175, 55, 0.3) !important;
 }
 
-body.white-theme .card-description,
-body.white-theme .premium-card-meta,
-body.white-theme .portfolio-description {
-    color: #6b7280 !important;
-    /* Gray-500 */
-}
-
-body.white-theme .price-value {
-    color: #1a1a1a !important;
-}
-
-/* Inputs */
-body.white-theme input,
-body.white-theme select,
-body.white-theme textarea {
-    background: #ffffff !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
-    color: #1a1a1a !important;
-}
-
-body.white-theme .filter-sidebar {
-    border-right: 1px solid rgba(0, 0, 0, 0.05) !important;
-}
-
-body.white-theme .filter-section {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
-}
-
-body.white-theme .filter-label,
-body.white-theme .filter-section-title {
-    color: #1a1a1a !important;
-}
-
-/* Modal */
-body.white-theme .project-modal-content {
-    background: #ffffff !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
-}
-
-body.white-theme .modal-info-section {
-    background: #ffffff !important;
-    color: #1a1a1a !important;
-}
-
-body.white-theme .modal-media-section {
-    background: #f3f4f6 !important;
-    /* Gray-100 */
-}
-
-/* Footer */
-body.white-theme footer {
-    background: #f3f4f6 !important;
-    /* Gray-100 */
-    border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
-}
-
-body.white-theme footer .text-gray-400 {
-    color: #6b7280 !important;
-}
-
-body.white-theme footer .text-white {
-    color: #1a1a1a !important;
-}
-
-/* Mobile Specifics */
-body.white-theme .filter-tab {
-    color: #6b7280 !important;
-    border-color: rgba(0, 0, 0, 0.1) !important;
-    background: white !important;
-}
-
-body.white-theme .filter-tab.active {
-    background: #D4AF37 !important;
-    color: #ffffff !important;
-    border-color: #D4AF37 !important;
-}
-
-/* Background Gradients/Images Override */
-body.white-theme .bg-dark-900 {
-    background-color: #ffffff !important;
-}
-
-body.white-theme .bg-dark-800 {
-    background-color: #f8f9fa !important;
-}
-
-/* Gold Text Adjustment */
+/* Metallic Gold Text */
 body.white-theme .text-gold-400 {
-    color: #b45309 !important;
-    /* Darker Gold/Amber-700 */
+    background: linear-gradient(135deg, #B8941F 0%, #D4AF37 50%, #B8941F 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
 }
 
-/* Buttons */
+/* Premium Buttons */
 body.white-theme .premium-cta-button {
-    background-color: #1a1a1a !important;
-    color: white !important;
+    background: linear-gradient(135deg, var(--luxury-indigo) 0%, var(--luxury-slate) 100%) !important;
+    border: none !important;
+    box-shadow: 0 10px 20px -5px rgba(30, 27, 75, 0.3) !important;
 }
 
 body.white-theme .premium-cta-button:hover {
-    background-color: #000000 !important;
+    box-shadow: 0 15px 30px -5px rgba(30, 27, 75, 0.4) !important;
+    transform: translateY(-2px);
+}
+
+/* Footer Refinement */
+body.white-theme footer {
+    background: var(--luxury-slate) !important;
+    color: #94a3b8 !important;
+}
+
+body.white-theme footer .text-white {
+    color: var(--luxury-white) !important;
+}
+
+/* Dark Theme Subtle Refinements */
+body:not(.white-theme) {
+    background-color: var(--luxury-black);
+}
+
+body:not(.white-theme) .service-card,
+body:not(.white-theme) .project-card-premium {
+    background: #0d1117 !important;
+    border: 1px solid rgba(255, 255, 255, 0.03) !important;
 }

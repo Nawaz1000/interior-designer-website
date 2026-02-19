@@ -765,19 +765,27 @@
 
         @media (max-width: 768px) {
             .project-modal-content {
+                display: flex;
                 flex-direction: column;
-                height: 100vh;
-                border-radius: 0;
+                height: 95vh;
+                margin: 2.5vh auto;
+                border-radius: 12px;
+                overflow: hidden;
+                width: 95%;
             }
 
             .modal-media-section {
-                flex: 1;
+                height: 40vh;
+                min-height: 40vh;
+                flex: none;
             }
 
             .modal-info-section {
-                flex: 0;
-                max-height: 40vh;
-                padding: 20px;
+                flex: 1;
+                overflow-y: auto;
+                padding: 1.5rem !important;
+                background: #0b0b0b;
+                -webkit-overflow-scrolling: touch;
             }
         }
 
@@ -902,7 +910,7 @@
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 header">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="index.html" class="flex items-center gap-2 z-50 relative">
-                <img src="logo.png" alt="Excellence Logo" class="h-10 w-auto">
+                <img src="logo.png" alt="Excellence Logo" class="h-10 w-10 rounded-full object-cover">
                 <span class="text-lg font-serif font-bold tracking-wider hidden sm:inline-block">EXCELLENCE</span>
             </a>
 
@@ -973,20 +981,6 @@
 
     <!-- Main Content -->
     <main class="min-w-0">
-        <!-- Loading State -->
-        <div id="loading-state" class="py-20 text-center">
-            <div class="loading-spinner"></div>
-        </div>
-
-        <!-- Empty State -->
-        <div id="empty-state" class="empty-state hidden">
-            <div class="empty-icon">
-                <i data-lucide="image-off" class="w-10 h-10 text-gray-600"></i>
-            </div>
-            <h2 class="text-xl font-bold mb-2">No projects yet</h2>
-            <p class="text-gray-500">Check back soon for our latest work!</p>
-        </div>
-
         <div class="page-layout">
             <aside class="filter-sidebar">
                 <div class="filter-header">
@@ -1070,6 +1064,20 @@
             </aside>
 
             <section class="flex-1">
+                <!-- Loading State inside layout -->
+                <div id="loading-state" class="py-20 text-center">
+                    <div class="loading-spinner"></div>
+                </div>
+
+                <!-- Empty State inside layout -->
+                <div id="empty-state" class="empty-state hidden">
+                    <div class="empty-icon mx-auto">
+                        <i data-lucide="image-off" class="w-10 h-10 text-gray-600"></i>
+                    </div>
+                    <h2 class="text-xl font-bold mb-2">No projects yet</h2>
+                    <p class="text-gray-500">Check back soon for our latest work!</p>
+                </div>
+
                 <!-- Projects Grid -->
                 <div id="projects-grid" class="reels-grid hidden"></div>
             </section>
@@ -1082,7 +1090,7 @@
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div class="md:col-span-2">
                     <a href="index.html" class="flex items-center gap-2 mb-6">
-                        <img src="logo.png" alt="Excellence Logo" class="h-12 w-auto">
+                        <img src="logo.png" alt="Excellence Logo" class="h-12 w-12 rounded-full object-cover">
                         <span class="text-3xl font-serif font-bold tracking-wider uppercase">Excellence</span>
                     </a>
                     <p class="text-gray-400 mb-6 max-w-md">
@@ -1226,9 +1234,33 @@
         async function loadProjects() {
             const loadingState = document.getElementById('loading-state');
             const projectsGrid = document.getElementById('projects-grid');
+            const API_BASE = window.location.port === '3000' || window.location.port === '' ? '' : 'http://localhost:3000';
+
+            // Check if opened via file:// protocol
+            if (window.location.protocol === 'file:') {
+                loadingState.innerHTML = `
+                    <div class="max-w-md mx-auto p-8 bg-red-900/20 border border-red-500/50 rounded-2xl text-center reveal active">
+                        <i data-lucide="alert-circle" class="w-12 h-12 text-red-500 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Direct File Access Detected</h3>
+                        <p class="text-gray-400 mb-6 text-sm">
+                            The website needs a server to fetch projects from MongoDB. It looks like you're opening the file directly.
+                        </p>
+                        <div class="bg-black/40 p-4 rounded-lg text-left font-mono text-xs mb-6 text-gold-400">
+                            1. Open your terminal<br>
+                            2. Run: <span class="text-white">npm start</span><br>
+                            3. Go to: <span class="text-white">http://localhost:3000/projects.html</span>
+                        </div>
+                        <button onclick="window.location.reload()" class="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors text-sm font-bold uppercase tracking-wider">
+                            I started the server
+                        </button>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
 
             try {
-                const response = await fetch('/api/projects');
+                const response = await fetch(`${API_BASE}/api/projects`);
                 if (!response.ok) throw new Error('Failed to fetch projects');
                 allProjects = await response.json();
 
@@ -1243,13 +1275,19 @@
                 renderProjects();
             } catch (err) {
                 console.error("Error loading projects:", err);
-                // Fallback to empty state or static data if server is down
                 loadingState.innerHTML = `
-                    <div class="text-center">
-                        <p class="text-red-400 mb-4">Offline: Unable to connect to MongoDB server.</p>
-                        <button onclick="loadProjects()" class="px-4 py-2 bg-indigo-600 rounded text-sm">Retry Connection</button>
+                    <div class="max-w-md mx-auto p-8 bg-red-900/20 border border-red-500/50 rounded-2xl text-center reveal active">
+                        <i data-lucide="wifi-off" class="w-12 h-12 text-red-500 mx-auto mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Connection Failed</h3>
+                        <p class="text-gray-400 mb-6 text-sm">
+                            Unable to connect to the backend server. Please ensure <span class="text-white font-bold">npm start</span> is running in your terminal.
+                        </p>
+                        <button onclick="loadProjects()" class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm font-bold uppercase tracking-wider">
+                            Retry Connection
+                        </button>
                     </div>
                 `;
+                lucide.createIcons();
             }
         }
 
