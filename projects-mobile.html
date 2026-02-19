@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects (Mobile) | Interia Design Studio</title>
+    <title>Projects (Mobile) | Excellence Design Studio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="icon" type="image/png" href="logo.png">
@@ -35,9 +35,9 @@
                     },
                     colors: {
                         gold: {
-                            400: '#D4AF37',
-                            500: '#C5A028',
-                            600: '#B8941F',
+                            400: '#BDA55D',
+                            500: '#AF923B',
+                            600: '#8E7341',
                         },
                         dark: {
                             900: '#0a0a0a',
@@ -71,7 +71,7 @@
         }
 
         .gold-gradient-text {
-            background: linear-gradient(135deg, #D4AF37 0%, #F4E5C2 50%, #D4AF37 100%);
+            background: linear-gradient(135deg, #BDA55D 0%, #EAD8B1 50%, #BDA55D 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -115,12 +115,12 @@
         }
 
         .filter-sidebar::-webkit-scrollbar-thumb {
-            background: rgba(212, 175, 55, 0.2);
+            background: rgba(189, 165, 93, 0.2);
             border-radius: 10px;
         }
 
         .filter-sidebar::-webkit-scrollbar-thumb:hover {
-            background: rgba(212, 175, 55, 0.5);
+            background: rgba(189, 165, 93, 0.5);
         }
 
         .filter-section {
@@ -202,7 +202,50 @@
         }
 
         .filter-input:focus {
-            border-color: #D4AF37;
+            border-color: #BDA55D;
+        }
+
+        .drawer-link {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 24px;
+            color: #d1d5db;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .drawer-link:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+            color: #BDA55D;
+        }
+
+        .drawer-icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .drawer-text {
+            flex: 1;
+        }
+
+        .drawer-text-secondary {
+            flex: 1;
+            font-size: 0.9rem;
+            color: #9ca3af;
+        }
+
+        #mobile-menu-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         /* Range Slider */
@@ -218,7 +261,7 @@
 
         .range-value {
             font-size: 0.75rem;
-            color: #D4AF37;
+            color: #BDA55D;
             font-weight: 600;
         }
 
@@ -237,10 +280,10 @@
             appearance: none;
             width: 16px;
             height: 16px;
-            background: #D4AF37;
+            background: #BDA55D;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 10px rgba(189, 165, 93, 0.3);
         }
 
         /* Instagram Reels Style Grid */
@@ -260,13 +303,13 @@
             background: #1a1a1a;
             border-radius: 1rem;
             /* Softened Curved shape */
-            border: 1px solid rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(189, 165, 93, 0.1);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .reel-item:hover {
-            border-color: #D4AF37;
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            border-color: #BDA55D;
+            box-shadow: 0 0 25px rgba(189, 165, 93, 0.4);
             transform: scale(1.02);
             z-index: 10;
         }
@@ -301,7 +344,7 @@
         .status-sold {
             background: rgba(185, 28, 28, 0.9);
             color: white;
-            border-color: rgba(212, 175, 55, 0.3);
+            border-color: rgba(189, 165, 93, 0.3);
         }
 
         .reel-media {
@@ -364,7 +407,7 @@
 
         .reel-type {
             font-size: 0.75rem;
-            color: #D4AF37;
+            color: #BDA55D;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -457,8 +500,8 @@
         }
 
         .project-card-horizontal:hover {
-            border-color: #D4AF37;
-            box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.2);
+            border-color: #BDA55D;
+            box-shadow: 0 10px 30px -10px rgba(189, 165, 93, 0.2);
             transform: translateY(-2px);
         }
 
@@ -497,7 +540,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             line-height: 1.2;
-            color: #D4AF37;
+            color: #BDA55D;
             margin-bottom: 6px;
             font-family: 'Playfair Display', serif;
             letter-spacing: -0.01em;
@@ -599,7 +642,7 @@
         .star-rating {
             display: flex;
             gap: 2px;
-            color: #D4AF37;
+            color: #BDA55D;
         }
 
         .rating-badge {
@@ -730,7 +773,7 @@
         }
 
         .media-nav-btn.active {
-            background: #D4AF37;
+            background: #BDA55D;
             width: 24px;
             border-radius: 4px;
         }
@@ -817,9 +860,9 @@
         .loading-spinner {
             width: 40px;
             height: 40px;
-            border: 3px solid rgba(212, 175, 55, 0.3);
+            border: 3px solid rgba(189, 165, 93, 0.3);
             border-radius: 50%;
-            border-top-color: #D4AF37;
+            border-top-color: #BDA55D;
             animation: spin 1s ease-in-out infinite;
         }
 
@@ -856,14 +899,14 @@
         }
 
         .filter-tab:hover {
-            border-color: #D4AF37;
-            color: #D4AF37;
+            border-color: #BDA55D;
+            color: #BDA55D;
         }
 
         .filter-tab.active {
-            background: #D4AF37;
+            background: #BDA55D;
             color: #0a0a0a;
-            border-color: #D4AF37;
+            border-color: #BDA55D;
         }
 
         /* Thumbnail Grid */
@@ -885,7 +928,7 @@
 
         .thumbnail:hover,
         .thumbnail.active {
-            border-color: #D4AF37;
+            border-color: #BDA55D;
         }
 
         .thumbnail img {
@@ -911,9 +954,32 @@
             /* Replaces space-y-8 */
         }
 
-        .card-image-wrapper {
-            height: 200px !important;
-            width: 100% !important;
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .empty-state {
+            padding: 60px 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 24px;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            margin: 40px 20px;
+        }
+
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(189, 165, 93, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: #BDA55D;
         }
 
         /* Tablet Optimization (768px - 1100px) */
@@ -935,11 +1001,11 @@
 <body>
     <!-- Header -->
     <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 header">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="flex items-center gap-2 z-50 relative">
+    <nav class="fixed top-0 left-0 right-0 z-[100] nav-blur px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
                 <img src="logo.png" alt="Excellence Logo" class="h-10 w-10 rounded-full object-cover">
-                <span class="text-lg font-serif font-bold tracking-wider hidden sm:inline-block">EXCELLENCE</span>
+                <span class="text-lg font-black tracking-tighter text-white">EXCELLENCE</span>
             </a>
 
             <div class="hidden md:flex items-center space-x-8">
@@ -975,36 +1041,14 @@
                 <i data-lucide="sun" class="w-5 h-5 theme-toggle-icon"></i>
             </button>
 
-            <button id="mobile-menu-btn" class="md:hidden text-white z-50 relative">
-                <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
+            <button id="mobile-menu-btn" class="md:hidden text-white z-[60] relative p-1">
+                <i data-lucide="menu" class="w-7 h-7" id="menu-icon"></i>
             </button>
         </div>
 
-        <div id="mobile-menu"
-            class="fixed inset-0 bg-dark-900/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden">
-            <a href="index.html#home"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Home</a>
-            <a href="index.html#about"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">About</a>
-            <a href="index.html#services"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Services</a>
-            <a href="#"
-                class="text-2xl font-serif uppercase tracking-widest text-gold-400 transition-colors mobile-link">Projects</a>
-            <a href="index.html#portfolio"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Portfolio</a>
-            <a href="index.html#testimonials"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Reviews</a>
-            <a href="admin.html"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Admin</a>
-            <a href="https://wa.me/919867866488" target="_blank"
-                class="text-2xl font-serif uppercase tracking-widest text-[#25D366] mobile-link flex items-center gap-2">
-                <i data-lucide="phone" class="w-6 h-6"></i> WhatsApp</a>
-            <a href="https://www.instagram.com/homesbyexcellence" target="_blank"
-                class="text-2xl font-serif uppercase tracking-widest text-gold-400 mobile-link flex items-center gap-2">
-                <i data-lucide="instagram" class="w-6 h-6"></i> Instagram</a>
+        </div>
         </div>
     </nav>
-
     </header>
 
     <!-- Main Content -->
@@ -1054,7 +1098,7 @@
                 <div class="md:col-span-2">
                     <a href="index.html" class="flex items-center gap-2 mb-6">
                         <img src="logo.png" alt="Excellence Logo" class="h-12 w-12 rounded-full object-cover">
-                        <span class="text-3xl font-serif font-bold tracking-wider uppercase">Excellence</span>
+                        <span class="text-xl font-black tracking-tighter text-white">EXCELLENCE</span>
                     </a>
                     <p class="text-gray-400 mb-6 max-w-md">
                         Creating extraordinary interiors that inspire and delight. We bring your vision to life with
@@ -1188,11 +1232,129 @@
         </div>
     </div>
 
+    <!-- Reference-Style Drawer Mobile Menu -->
+    <div id="mobile-menu-overlay"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[99] opacity-0 pointer-events-none transition-opacity duration-300 md:hidden">
+    </div>
+
+    <div id="mobile-menu"
+        class="fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-[#0a0a0a] border-l border-white/5 z-[100] transform translate-x-full transition-transform duration-500 ease-out flex flex-col md:hidden overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+
+        <!-- Gold Header -->
+        <div class="bg-gold-400 p-6 flex items-center justify-between rounded-bl-[40px] shadow-lg">
+            <div class="flex items-center gap-4">
+                <img src="owner.jpg" alt="Rashid K. Parkar"
+                    class="h-16 w-16 rounded-full object-cover border-2 border-white/30 shadow-xl">
+                <div>
+                    <h3 class="text-dark-900 font-bold text-lg leading-tight">Rashid K. Parkar</h3>
+                    <p class="text-dark-900/80 text-[10px] font-bold uppercase tracking-widest mt-1">Founder &
+                        Architect</p>
+                </div>
+            </div>
+            <a href="admin.html"
+                class="flex flex-col items-center gap-1 text-dark-900/70 hover:text-dark-900 transition-all hover:scale-110">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+                <span class="text-[9px] font-black uppercase tracking-tighter">Admin</span>
+            </a>
+        </div>
+
+        <!-- Scrollable Navigation Body -->
+        <div class="flex-1 overflow-y-auto py-6">
+            <nav class="space-y-2">
+                <a href="index.html#home" class="drawer-link group">
+                    <div class="drawer-icon-box bg-gold-400/10 group-hover:bg-gold-400/20">
+                        <i data-lucide="home" class="w-5 h-5 text-gold-400"></i>
+                    </div>
+                    <span class="drawer-text group-hover:text-gold-400">Home</span>
+                </a>
+                <a href="about.html" class="drawer-link group">
+                    <div class="drawer-icon-box bg-white/5 group-hover:bg-white/10">
+                        <i data-lucide="info" class="w-5 h-5 text-white/70"></i>
+                    </div>
+                    <span class="drawer-text group-hover:text-white">About Excellence</span>
+                </a>
+                <a href="index.html#services" class="drawer-link group">
+                    <div class="drawer-icon-box bg-white/5 group-hover:bg-white/10">
+                        <i data-lucide="layout" class="w-5 h-5 text-white/70"></i>
+                    </div>
+                    <span class="drawer-text group-hover:text-white">Our Services</span>
+                </a>
+                <a href="#" class="drawer-link group bg-white/5 active">
+                    <div class="drawer-icon-box bg-gold-400 group-hover:bg-gold-500 transition-colors">
+                        <i data-lucide="image" class="w-5 h-5 text-dark-900"></i>
+                    </div>
+                    <span class="drawer-text font-bold text-gold-400">Interior Projects</span>
+                </a>
+                <a href="index.html#portfolio" class="drawer-link group">
+                    <div class="drawer-icon-box bg-white/5 group-hover:bg-white/10">
+                        <i data-lucide="briefcase" class="w-5 h-5 text-white/70"></i>
+                    </div>
+                    <span class="drawer-text group-hover:text-white">Project Portfolio</span>
+                </a>
+                <a href="index.html#testimonials" class="drawer-link group">
+                    <div class="drawer-icon-box bg-white/5 group-hover:bg-white/10">
+                        <i data-lucide="star" class="w-5 h-5 text-white/70"></i>
+                    </div>
+                    <span class="drawer-text group-hover:text-white">Client Reviews</span>
+                </a>
+            </nav>
+
+            <!-- Divider -->
+            <div class="h-px bg-white/5 my-6 mx-6"></div>
+
+            <!-- Footer-style Links -->
+            <nav class="space-y-1">
+                <a href="https://wa.me/919867866488" target="_blank" class="drawer-link group !py-3">
+                    <span class="drawer-text-secondary group-hover:text-gold-400">WhatsApp Us</span>
+                    <i data-lucide="arrow-right"
+                        class="w-4 h-4 text-white/20 group-hover:text-gold-400 group-hover:translate-x-1 transition-all"></i>
+                </a>
+                <a href="index.html#contact" class="drawer-link group !py-3">
+                    <span class="drawer-text-secondary group-hover:text-gold-400">Contact Design Studio</span>
+                    <i data-lucide="arrow-right"
+                        class="w-4 h-4 text-white/20 group-hover:text-gold-400 group-hover:translate-x-1 transition-all"></i>
+                </a>
+            </nav>
+        </div>
+    </div>
+
     <script>
         let allProjects = [];
         let currentFilter = 'all';
         let currentProject = null;
         let currentMediaIndex = 0;
+
+        // Mobile Menu Setup
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        let isMenuOpen = false;
+
+        function toggleMenu() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenuOverlay.classList.add('active');
+                menuIcon.setAttribute('data-lucide', 'x');
+                menuIcon.classList.add('text-dark-900');
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.remove('active');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                menuIcon.classList.remove('text-dark-900');
+            }
+            lucide.createIcons();
+        }
+
+        mobileBtn.addEventListener('click', toggleMenu);
+        mobileMenuOverlay.addEventListener('click', toggleMenu);
+
+        document.querySelectorAll('.drawer-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) toggleMenu();
+            });
+        });
 
         async function loadProjects() {
             const loadingState = document.getElementById('loading-state');
@@ -1524,7 +1686,16 @@
 
             if (!hasMedia) {
                 imgEl.classList.remove('hidden');
-                imgEl.src = 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80';
+
+                // Use uploaded thumbnail if available, otherwise use a fallback
+                let finalUrl = currentProject.thumbnail || 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80';
+
+                // Add Cloudinary optimizations for crisp quality if it's a cloudinary URL
+                if (finalUrl.includes('cloudinary.com')) {
+                    finalUrl = finalUrl.replace('/upload/', '/upload/f_auto,q_auto,e_sharpen:50/');
+                }
+
+                imgEl.src = finalUrl;
                 videoEl.classList.add('hidden');
                 prevBtn.classList.add('hidden');
                 nextBtn.classList.add('hidden');
@@ -1679,27 +1850,38 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadProjects();
 
-            // Mobile Menu
+            // Mobile Menu Fix
             const mobileBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             const menuIcon = document.getElementById('menu-icon');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
             let isMenuOpen = false;
 
-            if (mobileBtn && mobileMenu) {
-                mobileBtn.onclick = () => {
-                    isMenuOpen = !isMenuOpen;
-                    mobileMenu.style.transform = isMenuOpen ? 'translateX(0)' : 'translateX(100%)';
-                    menuIcon.setAttribute('data-lucide', isMenuOpen ? 'x' : 'menu');
-                    lucide.createIcons();
-                };
+            function toggleMenu() {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    mobileMenuOverlay.classList.add('active');
+                    menuIcon.setAttribute('data-lucide', 'x');
+                    menuIcon.classList.add('text-dark-900');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    mobileMenuOverlay.classList.remove('active');
+                    menuIcon.setAttribute('data-lucide', 'menu');
+                    menuIcon.classList.remove('text-dark-900');
+                    document.body.style.overflow = '';
+                }
+                lucide.createIcons();
+            }
 
-                // Close menu when clicking links
-                document.querySelectorAll('.mobile-link').forEach(link => {
+            if (mobileBtn && mobileMenu) {
+                mobileBtn.onclick = toggleMenu;
+                if (mobileMenuOverlay) mobileMenuOverlay.onclick = toggleMenu;
+
+                document.querySelectorAll('.drawer-link').forEach(link => {
                     link.onclick = () => {
-                        isMenuOpen = false;
-                        mobileMenu.style.transform = 'translateX(100%)';
-                        menuIcon.setAttribute('data-lucide', 'menu');
-                        lucide.createIcons();
+                        if (isMenuOpen) toggleMenu();
                     };
                 });
             }
@@ -1725,6 +1907,7 @@
             }
         });
     </script>
+
 </body>
 
 </html>

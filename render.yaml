@@ -1,12 +1,19 @@
 services:
   - type: web
-    name: interia-website
+    name: excellence-interiors
     runtime: node
     plan: free
     buildCommand: npm install
     startCommand: node server.js
     envVars:
-      - key: PORT
-        value: 10000
       - key: MONGODB_URI
-        sync: false # User must provide this in the dashboard
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: NODE_ENV
+        value: production
+    autoDeploy: true

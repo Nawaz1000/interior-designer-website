@@ -65,7 +65,7 @@ async function seed() {
     try {
         console.log("Connecting to MongoDB...");
         await client.connect();
-        const database = client.db("interia_studio");
+        const database = client.db("excellence_studio");
         const collection = database.collection("projects");
 
         console.log("Clearing existing projects...");

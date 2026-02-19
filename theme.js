@@ -1,6 +1,6 @@
 
 // Theme Management
-const THEME_KEY = 'interia_theme';
+const THEME_KEY = 'excellence_theme';
 
 function initTheme() {
     const savedTheme = localStorage.getItem(THEME_KEY);

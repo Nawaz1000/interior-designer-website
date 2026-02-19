@@ -1,8 +1,8 @@
 /* Luxury Premium Theme Enhancements */
 :root {
-    --gold-primary: #D4AF37;
-    --gold-light: #F4E5C2;
-    --gold-dark: #B8941F;
+    --gold-primary: #BDA55D;
+    --gold-light: #EAD8B1;
+    --gold-dark: #8E7341;
     --luxury-indigo: #1e1b4b;
     --luxury-slate: #0f172a;
     --luxury-white: #ffffff;
@@ -85,14 +85,15 @@ body.white-theme .project-card-premium {
 body.white-theme .service-card:hover,
 body.white-theme .project-card-premium:hover {
     transform: translateY(-10px) !important;
-    box-shadow: 0 20px 50px -12px rgba(212, 175, 55, 0.15) !important;
-    border-color: rgba(212, 175, 55, 0.3) !important;
+    box-shadow: 0 20px 50px -12px rgba(189, 165, 93, 0.15) !important;
+    border-color: rgba(189, 165, 93, 0.3) !important;
 }
 
 /* Metallic Gold Text */
 body.white-theme .text-gold-400 {
-    background: linear-gradient(135deg, #B8941F 0%, #D4AF37 50%, #B8941F 100%);
+    background: linear-gradient(135deg, #8E7341 0%, #BDA55D 50%, #8E7341 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 600;
 }
@@ -128,4 +129,55 @@ body:not(.white-theme) .service-card,
 body:not(.white-theme) .project-card-premium {
     background: #0d1117 !important;
     border: 1px solid rgba(255, 255, 255, 0.03) !important;
+}
+/* Mobile Drawer Navigation Styles */
+.drawer-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 24px;
+    color: #d1d5db;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.drawer-link:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+    color: var(--gold-primary);
+}
+
+.drawer-icon-box {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    backdrop-filter: blur(10px);
+}
+
+.drawer-text {
+    flex: 1;
+    font-family: 'Inter', sans-serif;
+}
+
+.drawer-text-secondary {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #9ca3af;
+    font-family: 'Inter', sans-serif;
+}
+
+#mobile-menu-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-nav-active {
+    color: var(--gold-primary) !important;
+    background: rgba(189, 165, 93, 0.1);
 }

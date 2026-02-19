@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Interia</title>
+    <title>Admin Dashboard | Excellence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link
@@ -21,9 +21,9 @@
                     },
                     colors: {
                         gold: {
-                            400: '#D4AF37',
-                            500: '#C5A028',
-                            600: '#B8941F',
+                            400: '#BDA55D',
+                            500: '#AF923B',
+                            600: '#8E7341',
                         },
                         dark: {
                             900: '#0a0a0a',
@@ -48,7 +48,7 @@
         }
 
         .gold-gradient-text {
-            background: linear-gradient(135deg, #D4AF37 0%, #F4E5C2 50%, #D4AF37 100%);
+            background: linear-gradient(135deg, #BDA55D 0%, #EAD8B1 50%, #BDA55D 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -80,7 +80,7 @@
 
         .custom-select:hover,
         .custom-select:focus {
-            border-color: #D4AF37;
+            border-color: #BDA55D;
             outline: none;
         }
 
@@ -107,7 +107,7 @@
 
         .custom-input:hover,
         .custom-input:focus {
-            border-color: #D4AF37;
+            border-color: #BDA55D;
             outline: none;
         }
 
@@ -156,18 +156,18 @@
         }
 
         .password-toggle:hover {
-            color: #D4AF37;
+            color: #BDA55D;
         }
 
         .btn-gold {
-            background: linear-gradient(135deg, #D4AF37 0%, #C5A028 100%);
+            background: linear-gradient(135deg, #BDA55D 0%, #C5A028 100%);
             transition: all 0.2s ease;
             font-weight: 600;
         }
 
         .btn-gold:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 12px rgba(189, 165, 93, 0.3);
         }
 
         /* Multiple Media Upload */
@@ -193,13 +193,13 @@
         }
 
         .media-upload-item:hover {
-            border-color: #D4AF37;
+            border-color: #BDA55D;
             background: #fefdf9;
         }
 
         .media-upload-item.has-media {
             border-style: solid;
-            border-color: #D4AF37;
+            border-color: #BDA55D;
         }
 
         .media-upload-item img,
@@ -388,12 +388,12 @@
         }
 
         .calendar-day.selected {
-            background: #D4AF37;
+            background: #BDA55D;
             color: white;
         }
 
         .calendar-day.today {
-            color: #D4AF37;
+            color: #BDA55D;
             font-weight: 600;
         }
 
@@ -497,8 +497,8 @@
         }
 
         .status-pending {
-            background: rgba(212, 175, 55, 0.1);
-            color: #D4AF37;
+            background: rgba(189, 165, 93, 0.1);
+            color: #BDA55D;
         }
 
         .status-upcoming {
@@ -551,7 +551,7 @@
         }
 
         .tab-btn.active {
-            background: #D4AF37;
+            background: #BDA55D;
             color: #0a0a0a;
         }
 
@@ -609,7 +609,7 @@
         }
 
         .toggle-switch input:checked+.toggle-slider {
-            background: #D4AF37;
+            background: #BDA55D;
         }
 
         .toggle-switch input:checked+.toggle-slider:before {
@@ -683,7 +683,7 @@
     <div id="login-screen" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
         <div class="bg-dark-800 p-8 rounded-2xl w-full max-w-md shadow-2xl border border-white/10 animate-slide-in">
             <div class="text-center mb-8">
-                <h1 class="text-3xl font-serif font-bold text-white mb-1">INTERIA</h1>
+                <span class="text-xl font-black tracking-tighter text-white">EXCELLENCE</span>
                 <p class="text-gray-400 text-sm uppercase tracking-wider">Admin Portal</p>
             </div>
 
@@ -746,8 +746,9 @@
             <div class="max-w-6xl mx-auto px-4 py-4">
                 <div class="flex justify-between items-center">
                     <div class="flex items-center gap-4">
-                        <a href="index.html" target="_blank" class="text-xl font-serif font-bold gold-gradient-text">
-                            INTERIA<span class="text-gold-400">.</span>
+                        <a href="index.html" target="_blank"
+                            class="text-xl font-serif font-bold gold-gradient-text uppercase">
+                            EXCELLENCE<span class="text-gold-400">.</span>
                         </a>
                         <span
                             class="hidden md:flex px-2 py-1 bg-gold-400/10 border border-gold-400/30 text-gold-400 text-xs rounded items-center gap-1.5">
@@ -762,11 +763,7 @@
                             <i data-lucide="layout-grid" class="w-4 h-4"></i>
                             <span class="hidden sm:inline">Projects</span>
                         </a>
-                        <button onclick="exportData()"
-                            class="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-400 hover:text-white transition-all rounded-lg hover:bg-white/5">
-                            <i data-lucide="download" class="w-4 h-4"></i>
-                            <span class="hidden sm:inline">Export</span>
-                        </button>
+
                         <button onclick="logout()"
                             class="flex items-center gap-1.5 px-3 py-2 text-sm text-red-400 hover:text-red-300 transition-all rounded-lg hover:bg-red-400/10">
                             <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -938,8 +935,21 @@
                         <!-- Column 3: Media Upload -->
                         <div class="space-y-4">
                             <div>
+                                <label class="input-label">Thumbnail Image (Upload)</label>
+                                <div class="input-with-icon">
+                                    <i data-lucide="image" class="input-icon w-4 h-4"></i>
+                                    <input type="file" name="thumbnail" id="thumbnail-upload" accept="image/*"
+                                        class="custom-input file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gold-500/10 file:text-gold-400 hover:file:bg-gold-500/20"
+                                        onchange="previewThumbnail(this)">
+                                </div>
+                                <div id="thumbnail-preview"
+                                    class="mt-2 hidden h-32 w-full rounded-lg border border-white/10 overflow-hidden bg-black/20">
+                                    <img src="" alt="Thumbnail preview" class="h-full w-full object-cover">
+                                </div>
+                            </div>
+                            <div>
                                 <label class="input-label">Project Description</label>
-                                <textarea name="details" rows="8" class="custom-input resize-none"
+                                <textarea name="details" rows="5" class="custom-input resize-none"
                                     placeholder="Brief description..."></textarea>
                             </div>
                         </div>
@@ -1010,13 +1020,56 @@
 
     <script>
         const ADMIN_USER = 'admin';
-        const ADMIN_PASSWORD = 'interia2024';
+        const ADMIN_PASSWORD = 'excellence2024';
         const API_BASE = window.location.port === '3000' || window.location.port === '' ? '' : 'http://localhost:3000';
         let projects = [];
         let currentFilter = 'all';
         let deleteTargetId = null;
         let bulkDeleteTargets = null;
         let projectMedia = []; // Array to store multiple media files
+
+        // Thumbnail Direct Upload Function
+        async function uploadThumbnail(file) {
+            const CLOUD_NAME = 'dv1ahqkjo'; // Updated from your dashboard screenshot
+            const UPLOAD_PRESET = 'excellence_unsigned'; // This needs to be created by user
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', UPLOAD_PRESET);
+
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.error ? error.error.message : 'Upload failed');
+            }
+
+            const data = await response.json();
+            return data.secure_url;
+        }
+
+        // Thumbnail Preview Utility
+        let selectedThumbnailFile = null;
+        function previewThumbnail(input) {
+            const preview = document.getElementById('thumbnail-preview');
+            const img = preview.querySelector('img');
+
+            if (input.files && input.files[0]) {
+                selectedThumbnailFile = input.files[0];
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    img.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                selectedThumbnailFile = null;
+                preview.classList.add('hidden');
+            }
+        }
 
         // Calendar State
         let calendarPopupDate = new Date();
@@ -1168,37 +1221,61 @@
             e.preventDefault();
             const form = e.target;
             const formData = new FormData(form);
-
             const editId = document.getElementById('edit-id').value;
 
-            const projectData = {
-                clientName: formData.get('clientName'),
-                projectType: formData.get('projectType'),
-                location: formData.get('location'),
-                instagramUrl: formData.get('instagramUrl') || '',
-                projectSize: formData.get('projectSize') || '',
-                budget: formData.get('budget') || 'Quote on request',
-                showBudget: document.getElementById('show-budget-toggle').checked,
-                status: formData.get('status'),
-                thumbnail: formData.get('thumbnail') || '',
-                startDate: document.getElementById('start-date-input').value || null,
-                endDate: document.getElementById('end-date-input').value || null,
-                details: formData.get('details') || '',
-                media: projectMedia,
-            };
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-btn-text');
+            const originalText = submitText.textContent;
 
             try {
+                submitBtn.disabled = true;
+                submitText.textContent = 'Uploading Image...';
+
+                let thumbnailUrl = null;
+
+                // 1. Upload to Cloudinary if a new file is selected
+                if (selectedThumbnailFile) {
+                    try {
+                        thumbnailUrl = await uploadThumbnail(selectedThumbnailFile);
+                    } catch (uploadErr) {
+                        throw new Error(`Cloudinary Error: ${uploadErr.message}. Make sure you created the 'excellence_unsigned' preset.`);
+                    }
+                }
+
+                // 2. Prepare JSON data for server
+                const projectData = {
+                    clientName: formData.get('clientName'),
+                    projectType: formData.get('projectType'),
+                    location: formData.get('location'),
+                    instagramUrl: formData.get('instagramUrl') || '',
+                    projectSize: formData.get('projectSize') || '',
+                    budget: formData.get('budget') || 'Quote on request',
+                    showBudget: document.getElementById('show-budget-toggle').checked,
+                    status: formData.get('status'),
+                    startDate: document.getElementById('start-date-input').value || null,
+                    endDate: document.getElementById('end-date-input').value || null,
+                    details: formData.get('details') || '',
+                    media: projectMedia,
+                };
+
+                // Add or keep existing thumbnail URL
+                if (thumbnailUrl) {
+                    projectData.thumbnail = thumbnailUrl;
+                } else if (!editId) {
+                    projectData.thumbnail = ''; // Empty for new project if no file selected
+                }
+                // Note: For editing, if no new file is selected, we don't overwrite the existing thumbnail
+
+                submitText.textContent = 'Saving Project...';
+
+                let response;
                 if (editId) {
-                    // Update existing project
-                    const response = await fetch(`${API_BASE}/api/projects/${editId}`, {
+                    response = await fetch(`${API_BASE}/api/projects/${editId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(projectData)
                     });
-                    if (!response.ok) throw new Error('Update failed');
-                    showNotification('Project updated successfully!');
                 } else {
-                    // Create new project
                     const newProject = {
                         id: Date.now(),
                         code: generateProjectCode(),
@@ -1210,27 +1287,33 @@
                         newProject.completedAt = new Date().toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
                     }
 
-                    const response = await fetch(`${API_BASE}/api/projects`, {
+                    response = await fetch(`${API_BASE}/api/projects`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(newProject)
                     });
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.details || 'Creation failed');
-                    }
-                    showNotification(newProject.status === 'completed' ? 'Project created and published!' : 'Project created successfully!');
                 }
 
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.details || 'Server Error');
+                }
+
+                showNotification(editId ? 'Project updated successfully!' : 'Project created successfully!');
                 resetForm();
+                selectedThumbnailFile = null;
+                document.getElementById('thumbnail-preview').classList.add('hidden');
                 loadProjects(currentFilter);
             } catch (err) {
                 console.error('Add/Update Error:', err);
-                let errorMsg = err.message || 'Error syncing with database';
-                if (errorMsg.includes('JSON')) {
-                    errorMsg = 'Server response error. Please check if server is running.';
+                let message = err.message;
+                if (message.includes('Unexpected token') || message.includes('JSON')) {
+                    message = 'Server error. Ensure "npm start" is running.';
                 }
-                showNotification(errorMsg + ' (Check console for details)', 'error');
+                showNotification(message, 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitText.textContent = originalText;
             }
         }
 
@@ -1252,6 +1335,9 @@
             document.getElementById('start-date-input').value = '';
             document.getElementById('end-date-input').value = '';
             document.getElementById('show-budget-toggle').checked = false;
+            document.getElementById('thumbnail-preview').classList.add('hidden');
+            document.getElementById('thumbnail-preview').querySelector('img').src = '';
+            selectedThumbnailFile = null;
             lucide.createIcons();
         }
 
@@ -1280,6 +1366,16 @@
             form.elements['details'].value = project.details || '';
 
             projectMedia = project.media || [];
+
+            // Populate Thumbnail Preview
+            if (project.thumbnail) {
+                const preview = document.getElementById('thumbnail-preview');
+                const img = preview.querySelector('img');
+                img.src = project.thumbnail;
+                preview.classList.remove('hidden');
+            } else {
+                document.getElementById('thumbnail-preview').classList.add('hidden');
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             lucide.createIcons();
@@ -1469,6 +1565,11 @@
                     <div class="flex items-center gap-4" onclick="event.stopPropagation()">
                         <input type="checkbox" class="project-checkbox w-4 h-4 rounded border-white/10 bg-dark-900 text-gold-400 focus:ring-gold-400" value="${project.id}" onchange="updateBulkActions()">
                         <div class="project-code-badge">${project.code}</div>
+                        ${project.thumbnail ? `
+                            <div class="w-10 h-10 rounded border border-white/10 overflow-hidden bg-black/20 shrink-0">
+                                <img src="${project.thumbnail}" alt="" class="w-full h-full object-cover">
+                            </div>
+                        ` : ''}
                     </div>
                     <div class="project-list-content">
                         <div class="project-list-title">${project.clientName}</div>
