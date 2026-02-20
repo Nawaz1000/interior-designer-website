@@ -1347,7 +1347,7 @@
         // Load Portfolio Projects from MongoDB API
         async function loadPortfolioProjects() {
             const grid = document.getElementById('portfolio-grid');
-            const API_BASE = window.location.port === '3000' || window.location.port === '' ? '' : 'http://localhost:3000';
+            const API_BASE = window.location.port === '4000' || window.location.port === '' ? '' : 'http://localhost:4000';
 
             // Check if opened via file:// protocol
             if (window.location.protocol === 'file:') {
@@ -1357,7 +1357,7 @@
                             <i data-lucide="alert-circle" class="w-10 h-10 text-red-500 mx-auto mb-4"></i>
                             <h3 class="text-lg font-bold mb-2">Server Required</h3>
                             <p class="text-gray-400 text-xs mb-4">
-                                You are opening this file directly. Please run <span class="text-white font-bold">npm start</span> and visit <span class="text-gold-400 font-bold">http://localhost:3000</span> to see live projects.
+                                You are opening this file directly. Please run <span class="text-white font-bold">npm start</span> and visit <span class="text-gold-400 font-bold">http://localhost:4000</span> to see live projects.
                             </p>
                         </div>
                     </div>
@@ -1458,7 +1458,7 @@
                             <i data-lucide="wifi-off" class="w-10 h-10 text-red-500 mx-auto mb-4"></i>
                             <h3 class="text-lg font-bold mb-2">Connection Issues</h3>
                             <p class="text-gray-400 text-xs mb-4">
-                                Unable to fetch projects. Please ensure the server is running at <span class="text-white font-bold text-xs uppercase tracking-widest">http://localhost:3000</span>.
+                                Unable to fetch projects. Please ensure the server is running at <span class="text-white font-bold text-xs uppercase tracking-widest">http://localhost:4000</span>.
                             </p>
                             <button onclick="loadPortfolioProjects()" class="text-xs text-gold-400 hover:text-white transition-colors uppercase tracking-widest font-bold">Retry Now</button>
                         </div>

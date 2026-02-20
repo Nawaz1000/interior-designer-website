@@ -32,7 +32,7 @@ Alternatively, you can use the `render.yaml` Blueprint specification if you pref
     docker-compose up --build -d
     ```
 3.  **Verify**:
-    Open your browser and navigate to `http://localhost:3000` (or `http://localhost:8083` if you changed the port).
+    Open your browser and navigate to `http://localhost:4000` (or `http://localhost:8083` if you changed the port).
 
 4.  **Stop**:
     ```bash

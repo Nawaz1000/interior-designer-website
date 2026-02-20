@@ -1068,10 +1068,25 @@
 
         <div class="page-layout !block !p-5 !pt-20">
             <!-- Mobile Filters (Horizontal Scroll) -->
-            <div class="filter-tabs mb-6">
+            <div class="filter-tabs mb-2">
                 <button class="filter-tab active" onclick="filterProjects('all')">All</button>
                 <button class="filter-tab" onclick="filterProjects('Residential')">Residential</button>
                 <button class="filter-tab" onclick="filterProjects('Commercial')">Commercial</button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="px-4 mb-6">
+                <div class="relative">
+                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
+                    <input type="text" id="search-name" placeholder="Search by project name..."
+                        class="w-full bg-dark-800 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-sm focus:border-gold-400 outline-none transition-all"
+                        oninput="handleFiltersChange()">
+                </div>
+                <!-- Hidden inputs for compatibility with existing JS logic -->
+                <input type="hidden" id="search-location" value="">
+                <select id="size-filter" class="hidden">
+                    <option value="all">All Sizes</option>
+                </select>
             </div>
 
 
@@ -1353,7 +1368,7 @@
         async function loadProjects() {
             const loadingState = document.getElementById('loading-state');
             const projectsGrid = document.getElementById('projects-grid');
-            const API_BASE = window.location.port === '3000' || window.location.port === '' ? '' : 'http://localhost:3000';
+            const API_BASE = window.location.port === '4000' || window.location.port === '' ? '' : 'http://localhost:4000';
 
             // Check if opened via file:// protocol
             if (window.location.protocol === 'file:') {
@@ -1367,7 +1382,7 @@
                         <div class="bg-black/40 p-4 rounded-lg text-left font-mono text-xs mb-6 text-gold-400">
                             1. Open Terminal<br>
                             2. Run: <span class="text-white">npm start</span><br>
-                            3. Use: <span class="text-white">http://localhost:3000/projects.html</span>
+                            3. Use: <span class="text-white">http://localhost:4000/projects-mobile.html</span>
                         </div>
                     </div>
                 `;
@@ -1376,7 +1391,7 @@
             }
 
             try {
-                const response = await fetch(`${API_BASE}/api/projects`);
+                const response = await fetch('/api/projects');
                 if (!response.ok) throw new Error('Failed to fetch projects');
                 allProjects = await response.json();
 
@@ -1501,15 +1516,24 @@
         }
 
         function resetAllFilters() {
-            document.getElementById('search-name').value = '';
-            document.getElementById('search-location').value = '';
-            document.getElementById('size-filter').value = 'all';
+            const searchName = document.getElementById('search-name');
+            const searchLoc = document.getElementById('search-location');
+            const sizeFilter = document.getElementById('size-filter');
+
+            if (searchName) searchName.value = '';
+            if (searchLoc) searchLoc.value = '';
+            if (sizeFilter) sizeFilter.value = 'all';
+
             filterProjects('all');
         }
 
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
-            const searchName = document.getElementById('search-name').value.toLowerCase();
+            if (!grid) return;
+
+            const searchNameInput = document.getElementById('search-name');
+            const searchName = searchNameInput ? searchNameInput.value.toLowerCase() : '';
+
             // Mobile simplified: No location/size filter for now
             const searchLoc = '';
             const sizeFilter = 'all';
