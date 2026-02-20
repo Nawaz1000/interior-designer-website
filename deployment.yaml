@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: excellence-website
-          image: nawazs786/real-state-website:latest
+          image: nawazs786/real-state-website-project:latest
           imagePullPolicy: IfNotPresent # Useful for local testing with Minikube/Docker Desktop
           ports:
             - containerPort: 3000
