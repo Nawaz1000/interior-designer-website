@@ -76,17 +76,20 @@ body.white-theme section:not(#home) h2::after {
 /* Service & Project Cards - Premium Styling */
 body.white-theme .service-card,
 body.white-theme .project-card-premium {
-    background: var(--luxury-white) !important;
-    border: 1px solid rgba(0, 0, 0, 0.04) !important;
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05) !important;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(189, 165, 93, 0.15) !important;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.03) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
 }
 
 body.white-theme .service-card:hover,
 body.white-theme .project-card-premium:hover {
-    transform: translateY(-10px) !important;
-    box-shadow: 0 20px 50px -12px rgba(189, 165, 93, 0.15) !important;
-    border-color: rgba(189, 165, 93, 0.3) !important;
+    transform: translateY(-8px) scale(1.01) !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 20px 40px -12px rgba(189, 165, 93, 0.2) !important;
+    border-color: rgba(189, 165, 93, 0.4) !important;
 }
 
 /* Metallic Gold Text */
@@ -127,9 +130,22 @@ body:not(.white-theme) {
 
 body:not(.white-theme) .service-card,
 body:not(.white-theme) .project-card-premium {
-    background: #0d1117 !important;
-    border: 1px solid rgba(255, 255, 255, 0.03) !important;
+    background: rgba(13, 17, 23, 0.6) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3) !important;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
 }
+
+body:not(.white-theme) .service-card:hover,
+body:not(.white-theme) .project-card-premium:hover {
+    background: rgba(13, 17, 23, 0.9) !important;
+    border-color: rgba(189, 165, 93, 0.3) !important;
+    box-shadow: 0 20px 50px -12px rgba(189, 165, 93, 0.1) !important;
+    transform: translateY(-8px) scale(1.01) !important;
+}
+
 /* Mobile Drawer Navigation Styles */
 .drawer-link {
     display: flex;
@@ -180,4 +196,19 @@ body:not(.white-theme) .project-card-premium {
 .mobile-nav-active {
     color: var(--gold-primary) !important;
     background: rgba(189, 165, 93, 0.1);
+}
+
+/* Text Contrast Improvements */
+.text-gray-500 {
+    color: #9ca3af !important;
+    /* Lightened from default gray-500 */
+}
+
+.text-gray-400 {
+    color: #d1d5db !important;
+    /* Lightened from default gray-400 */
+}
+
+.text-gray-300 {
+    color: #e5e7eb !important;
 }

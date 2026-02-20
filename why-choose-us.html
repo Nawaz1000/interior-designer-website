@@ -9,7 +9,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="theme.css">
-    <script src="theme.js"></script>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -110,6 +110,24 @@
             opacity: 1 !important;
             pointer-events: auto !important;
         }
+
+        @media (max-width: 1150px) {
+            .md\:grid-cols-3 {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+
+            /* Adjust span for the first item if needed, but grid-flow might handle it. 
+                The first item has md:col-span-2. 
+                If we change to 2 cols, col-span-2 takes full width. 
+                That's actually fine/good.
+             */
+        }
+
+        @media (max-width: 640px) {
+            .md\:grid-cols-3 {
+                grid-template-columns: 1fr !important;
+            }
+        }
     </style>
 </head>
 
@@ -119,29 +137,44 @@
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 nav-blur">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="/" class="flex items-center gap-2 z-50 relative">
-                <img src="logo.png" alt="Excellence Logo" class="h-12 w-12 rounded-full object-cover">
+                <img src="/logo.png" alt="Excellence Logo" class="h-12 w-12 rounded-full object-cover">
                 <span class="text-xl font-serif font-bold tracking-wider hidden sm:inline-block">EXCELLENCE</span>
             </a>
 
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="index.html#home"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Home</a>
-                <a href="/about"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">About</a>
-                <a href="index.html#services"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Services</a>
-                <a href="/projects"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Projects</a>
-                <a href="index.html#portfolio"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Portfolio</a>
-                <a href="index.html#testimonials"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Reviews</a>
-                <a href="index.html#contact"
+            <div class="hidden lg:flex items-center gap-8">
+                <div class="flex items-center gap-8 mr-8">
+                    <a href="/#home"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Home</a>
+                    <a href="/about"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">About</a>
+                    <a href="/#services"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Services</a>
+                    <a href="/projects"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Projects</a>
+                    <a href="/#portfolio"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Portfolio</a>
+                    <a href="/#testimonials"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Reviews</a>
+                </div>
+                <a href="/#contact"
                     class="px-6 py-2 border border-gold-400 text-gold-400 hover:bg-gold-400 hover:text-dark-900 transition-all duration-300 text-sm uppercase tracking-widest rounded-sm">Contact</a>
+                <div class="flex items-center gap-4 ml-4 pl-4 border-l border-white/10">
+                    <a href="https://wa.me/919867866488" target="_blank"
+                        class="text-gray-400 hover:text-[#25D366] transition-colors" title="WhatsApp Us">
+                        <i data-lucide="phone" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://www.instagram.com/homesbyexcellence" target="_blank"
+                        class="text-gray-400 hover:text-gold-400 transition-colors" title="Instagram">
+                        <i data-lucide="instagram" class="w-5 h-5"></i>
+                    </a>
+                    <a href="/admin" class="text-gray-400 hover:text-gold-400 transition-colors" title="Admin">
+                        <i data-lucide="settings" class="w-5 h-5"></i>
+                    </a>
+                </div>
             </div>
 
             <!-- Mobile Menu Button -->
-            <button id="mobile-menu-btn" class="md:hidden text-white z-[110] relative p-1">
+            <button id="mobile-menu-btn" class="lg:hidden text-white z-[110] relative p-1">
                 <i data-lucide="menu" class="w-7 h-7" id="menu-icon"></i>
             </button>
         </div>
@@ -149,34 +182,33 @@
 
     <!-- Reference-Style Drawer Mobile Menu -->
     <div id="mobile-menu-overlay"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[99] opacity-0 pointer-events-none transition-opacity duration-300 md:hidden">
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[99] opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden">
     </div>
 
     <div id="mobile-menu"
-        class="fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-[#0a0a0a] border-l border-white/5 z-[100] transform translate-x-full transition-transform duration-500 ease-out flex flex-col md:hidden overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)]">
+        class="fixed top-0 right-0 h-full w-[85%] max-w-[400px] bg-[#0a0a0a] border-l border-white/5 z-[100] transform translate-x-full transition-transform duration-500 ease-out flex flex-col lg:hidden overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.8)]">
 
         <!-- Gold Header -->
         <div class="bg-gold-400 p-6 flex items-center justify-between rounded-bl-[40px] shadow-lg">
             <div class="flex items-center gap-4">
-                <img src="owner.jpg" alt="Rashid K. Parkar"
-                    class="h-16 w-16 rounded-full object-cover border-2 border-white/30 shadow-xl">
+                <img src="logo.png" alt="Excellence Logo"
+                    class="h-16 w-16 rounded-full object-cover border-2 border-white/30 shadow-xl bg-black/20">
                 <div>
-                    <h3 class="text-dark-900 font-bold text-lg leading-tight">Rashid K. Parkar</h3>
-                    <p class="text-dark-900/80 text-[10px] font-bold uppercase tracking-widest mt-1">Founder &
-                        Architect</p>
+                    <h3 class="text-dark-900 font-bold text-lg leading-tight">Excellence</h3>
+                    <p class="text-dark-900/80 text-[10px] font-bold uppercase tracking-widest mt-1">Real Estate &
+                        Interior</p>
                 </div>
             </div>
             <a href="/admin"
                 class="flex flex-col items-center gap-1 text-dark-900/70 hover:text-dark-900 transition-all hover:scale-110">
                 <i data-lucide="settings" class="w-5 h-5"></i>
-                <span class="text-[9px] font-black uppercase tracking-tighter">Admin</span>
             </a>
         </div>
 
         <!-- Scrollable Navigation Body -->
         <div class="flex-1 overflow-y-auto py-6">
             <nav class="space-y-2">
-                <a href="index.html#home" class="drawer-link group">
+                <a href="/#home" class="drawer-link group">
                     <div class="drawer-icon-box bg-gold-400/10 group-hover:bg-gold-400/20">
                         <i data-lucide="home" class="w-5 h-5 text-gold-400"></i>
                     </div>
@@ -188,7 +220,7 @@
                     </div>
                     <span class="drawer-text group-hover:text-white">About Excellence</span>
                 </a>
-                <a href="index.html#services" class="drawer-link group">
+                <a href="/#services" class="drawer-link group">
                     <div class="drawer-icon-box bg-white/5 group-hover:bg-white/10">
                         <i data-lucide="layout" class="w-5 h-5 text-white/70"></i>
                     </div>
@@ -200,17 +232,23 @@
                     </div>
                     <span class="drawer-text group-hover:text-gold-400">Interior Projects</span>
                 </a>
-                <a href="index.html#portfolio" class="drawer-link group">
+                <a href="/#portfolio" class="drawer-link group">
                     <div class="drawer-icon-box bg-white/5 group-hover:bg-white/10">
                         <i data-lucide="briefcase" class="w-5 h-5 text-white/70"></i>
                     </div>
                     <span class="drawer-text group-hover:text-white">Project Portfolio</span>
                 </a>
-                <a href="index.html#testimonials" class="drawer-link group">
+                <a href="/#testimonials" class="drawer-link group">
                     <div class="drawer-icon-box bg-white/5 group-hover:bg-white/10">
                         <i data-lucide="star" class="w-5 h-5 text-white/70"></i>
                     </div>
                     <span class="drawer-text group-hover:text-white">Client Reviews</span>
+                </a>
+                <a href="/#contact" class="drawer-link group">
+                    <div class="drawer-icon-box bg-white/5 group-hover:bg-white/10">
+                        <i data-lucide="mail" class="w-5 h-5 text-white/70"></i>
+                    </div>
+                    <span class="drawer-text group-hover:text-white">Contact Us</span>
                 </a>
             </nav>
 
@@ -224,7 +262,7 @@
                     <i data-lucide="arrow-right"
                         class="w-4 h-4 text-white/20 group-hover:text-gold-400 group-hover:translate-x-1 transition-all"></i>
                 </a>
-                <a href="index.html#contact" class="drawer-link group !py-3">
+                <a href="/#contact" class="drawer-link group !py-3">
                     <span class="drawer-text-secondary group-hover:text-gold-400">Contact Design Studio</span>
                     <i data-lucide="arrow-right"
                         class="w-4 h-4 text-white/20 group-hover:text-gold-400 group-hover:translate-x-1 transition-all"></i>
@@ -246,7 +284,7 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <!-- Highlighted Card: Islamic Ethical Values -->
                 <div
                     class="md:col-span-2 md:row-span-2 bg-gradient-to-br from-gold-400/20 to-transparent border border-gold-400/30 rounded-3xl p-10 reveal active relative overflow-hidden group">
@@ -420,12 +458,27 @@
             // Page Transition Click Interceptor
             document.addEventListener('click', (e) => {
                 const link = e.target.closest('a');
-                if (link && link.href && link.href.startsWith(window.location.origin) && !link.hash && link.target !== '_blank') {
-                    e.preventDefault();
-                    document.body.classList.remove('loaded');
-                    setTimeout(() => {
-                        window.location.href = link.href;
-                    }, 400);
+                if (link && link.href && !link.hash && link.target !== '_blank') {
+                    // Prevent transition if staying on same page
+                    if (link.href === window.location.href || link.href === window.location.href + '#') {
+                        e.preventDefault();
+                        return;
+                    }
+
+                    if (link.href.startsWith(window.location.origin)) {
+                        e.preventDefault();
+                        document.body.classList.remove('loaded');
+                        setTimeout(() => {
+                            window.location.href = link.href;
+                        }, 400);
+                    }
+                }
+            });
+
+            // Fix for back button black screen (bfcache)
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    document.body.classList.add('loaded');
                 }
             });
         });

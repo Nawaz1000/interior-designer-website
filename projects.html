@@ -9,17 +9,15 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="theme.css">
-    <script src="theme.js"></script>
+
     <script>
         // Mobile Redirection
-        if (window.innerWidth <= 1100) {
-            window.location.href = "/projects-mobile";
-        }
-        if (window.innerWidth < 768) {
+        // Mobile Redirection
+        if (window.innerWidth <= 1024) {
             window.location.href = "/projects-mobile";
         }
         window.addEventListener('resize', () => {
-            if (window.innerWidth <= 1100) {
+            if (window.innerWidth <= 1024) {
                 window.location.href = "/projects-mobile";
             }
         });
@@ -913,24 +911,25 @@
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 header">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="/" class="flex items-center gap-2 z-50 relative">
-                <img src="logo.png" alt="Excellence Logo" class="h-10 w-10 rounded-full object-cover">
+                <img src="/logo.png" alt="Excellence Logo" class="h-10 w-10 rounded-full object-cover">
                 <span class="text-lg font-serif font-bold tracking-wider hidden sm:inline-block">EXCELLENCE</span>
             </a>
 
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="index.html#home"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Home</a>
-                <a href="index.html#about"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">About</a>
-                <a href="index.html#services"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Services</a>
-                <a href="#" class="text-sm uppercase tracking-widest text-gold-400 transition-colors">Projects</a>
-                <a href="index.html#portfolio"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Portfolio</a>
-                <a href="index.html#testimonials"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Reviews</a>
-                <a href="/admin"
-                    class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Admin</a>
+            <div class="hidden lg:flex items-center gap-8">
+                <div class="flex items-center gap-8 mr-8">
+                    <a href="/#home"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Home</a>
+                    <a href="/#about"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">About</a>
+                    <a href="/#services"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Services</a>
+                    <a href="#" class="text-sm uppercase tracking-widest text-gold-400 transition-colors">Projects</a>
+                    <a href="/#portfolio"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Portfolio</a>
+                    <a href="/#testimonials"
+                        class="text-sm uppercase tracking-widest hover:text-gold-400 transition-colors">Reviews</a>
+                </div>
+
                 <div class="flex items-center gap-4 ml-4 pl-4 border-l border-white/10 text-white">
                     <a href="https://wa.me/919867866488" target="_blank" class="hover:text-[#25D366] transition-colors"
                         title="WhatsApp Us">
@@ -940,37 +939,31 @@
                         class="hover:text-gold-400 transition-colors" title="Instagram">
                         <i data-lucide="instagram" class="w-4 h-4"></i>
                     </a>
+                    <a href="/admin" class="hover:text-gold-400 transition-colors" title="Admin Portal">
+                        <i data-lucide="settings" class="w-4 h-4"></i>
+                    </a>
                 </div>
             </div>
 
-            <!-- Theme Toggle -->
-            <button onclick="toggleTheme()"
-                class="hidden md:block p-2 text-white hover:text-gold-400 transition-colors mr-4"
-                aria-label="Toggle Theme">
-                <i data-lucide="sun" class="w-5 h-5 theme-toggle-icon"></i>
-            </button>
 
-            <button id="mobile-menu-btn" class="md:hidden text-white z-50 relative">
+
+            <button id="mobile-menu-btn" class="lg:hidden text-white z-50 relative">
                 <i data-lucide="menu" class="w-6 h-6" id="menu-icon"></i>
             </button>
         </div>
 
         <div id="mobile-menu"
-            class="fixed inset-0 bg-dark-900/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden">
-            <a href="index.html#home"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Home</a>
-            <a href="index.html#about"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">About</a>
-            <a href="index.html#services"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Services</a>
-            <a href="#"
-                class="text-2xl font-serif uppercase tracking-widest text-gold-400 transition-colors mobile-link">Projects</a>
-            <a href="index.html#portfolio"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Portfolio</a>
-            <a href="index.html#testimonials"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Reviews</a>
-            <a href="/admin"
-                class="text-2xl font-serif uppercase tracking-widest hover:text-gold-400 transition-colors mobile-link">Admin</a>
+            class="fixed inset-0 bg-dark-900/98 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 lg:hidden">
+            <a href="/#home" class="block text-2xl font-serif font-bold hover:text-gold-400 transition-colors">Home</a>
+            <a href="/about" class="block text-2xl font-serif font-bold hover:text-gold-400 transition-colors">About</a>
+            <a href="/#services"
+                class="block text-2xl font-serif font-bold hover:text-gold-400 transition-colors">Services</a>
+            <a href="/projects" class="block text-2xl font-serif font-bold text-gold-400 transition-colors">Projects</a>
+            <a href="/#portfolio"
+                class="block text-2xl font-serif font-bold hover:text-gold-400 transition-colors">Portfolio</a>
+            <a href="/#testimonials"
+                class="block text-2xl font-serif font-bold hover:text-gold-400 transition-colors">Reviews</a>
+
             <a href="https://wa.me/919867866488" target="_blank"
                 class="text-2xl font-serif uppercase tracking-widest text-[#25D366] mobile-link flex items-center gap-2">
                 <i data-lucide="phone" class="w-6 h-6"></i> WhatsApp</a>
@@ -1114,12 +1107,13 @@
                 <div>
                     <h4 class="font-serif font-bold text-lg mb-6">Quick Links</h4>
                     <ul class="space-y-3">
-                        <li><a href="index.html#home"
-                                class="text-gray-400 hover:text-gold-400 transition-colors">Home</a></li>
-                        <li><a href="index.html#about" class="text-gray-400 hover:text-gold-400 transition-colors">About
+                        <li><a href="/#home" class="text-gray-400 hover:text-gold-400 transition-colors">Home</a></li>
+                        <li><a href="/about" class="text-gray-400 hover:text-gold-400 transition-colors">About
                                 Us</a></li>
-                        <li><a href="index.html#services"
+                        <li><a href="/#services"
                                 class="text-gray-400 hover:text-gold-400 transition-colors">Services</a></li>
+                        <li><a href="/projects" class="text-gray-400 hover:text-gold-400 transition-colors">Projects</a>
+                        </li>
                         <li><a href="https://wa.me/919867866488" target="_blank"
                                 class="text-gray-400 hover:text-gold-400 transition-colors">WhatsApp</a></li>
                     </ul>
